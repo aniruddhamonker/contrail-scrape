@@ -1,0 +1,11 @@
+.vscode/
+Include/
+Lib/
+Scripts/
+__pycache__/
+asyncio-basic.py*
+bin/
+local/
+pyvenv.cfg*
+tmp/
+tmpfile*
