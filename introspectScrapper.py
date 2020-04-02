@@ -44,7 +44,7 @@ class IntrospectBaseClass():
         text_response = cls.get_request(url)
         parsed_response = bs(text_response, 'xml')
         if attrs is None:
-            return parsed_response.prettify()
+            return parsed_response
         def __iter__():
             for element in parsed_response.findAll(attrs=attrs):
                 yield element
@@ -75,12 +75,12 @@ class IntrospectBaseClass():
                         try:
                             op_file.write(START_MARKER(introspect.name)+"\n"+introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
                             introspect_response = self.parse_response(self.root_url+'/'+'Snh_'+introspect.name)
-                            op_file.write(introspect_response)
+                            op_file.write(introspect_response.prettify())
                             op_file.write(END_OF_TEXT)
                             if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                 for sandesh_trace_buf in introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                     op_file.write(START_MARKER(sandesh_trace_buf.text)+"\n"+sandesh_trace_buf.text+"\n"+END_MARKER(sandesh_trace_buf)+"\n")
-                                    op_file.write(self.parse_response(self.root_url+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text))
+                                    op_file.write(self.parse_response(self.root_url+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text).prettify())
                                     op_file.write(END_OF_TEXT)                            
                             op_file.flush()
                         except Exception as write_exp:
