@@ -1,5 +1,5 @@
 
-from contrail_introspect_scrapper import IntrospectBaseClass
+from contrail_introspect_scrapper.base import IntrospectBaseClass
 
 class VrouterIntrospect(IntrospectBaseClass):
     def __init__(self, url):
@@ -42,7 +42,6 @@ class ConfigIntrospect(IntrospectBaseClass):
 
     def archive_introspect_output_files(self):
             return self._archive_introspect_output_files(self.files_to_archive, self.__class__.__name__)
-
 
 def main():
     '''
