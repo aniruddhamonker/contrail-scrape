@@ -1,5 +1,5 @@
 
-from contrail_introspect_scrapper.base import IntrospectBaseClass
+from base import IntrospectBaseClass
 
 class VrouterIntrospect(IntrospectBaseClass):
     def __init__(self, url):
@@ -54,14 +54,9 @@ def main():
     '''
 
     url = "http://10.85.188.101:8084"
-    introspect = ControllerIntrospect(url)
+    introspect = ConfigIntrospect(url)
     introspect.fetch_all_introspects()
     introspect.archive_introspect_output_files()        
     
 if __name__ == '__main__':
     main()
-
-#TO-DOs
-'''
-test
-'''
