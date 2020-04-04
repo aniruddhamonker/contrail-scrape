@@ -9,6 +9,7 @@ import threading
 import tarfile
 import os
 import time
+import subprocess
 
 NUM_THREADS = 20
 END_OF_TEXT = '\n'+"#"*50+'\n\n'
@@ -104,8 +105,8 @@ class IntrospectBaseClass():
         for introspect_thread in threads:
             introspect_thread.join()
     
-    @staticmethod
-    def _archive_introspect_output_files(files_to_compress, module_name, dir=None):
+    @classmethod
+    def _archive_introspect_output_files(cls, files_to_compress, module_name, dir=None):
         if dir is None:
             dir = os.getcwd()
         tar_filename = '{}/{}-{}.tar.gz'.format(dir, module_name, time.strftime('%Y-%m-%d-%H-%M'))
@@ -118,4 +119,13 @@ class IntrospectBaseClass():
                 except Exception as tarexp:
                     print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, module_name, tarexp))
         tar.close()
+        cls.delete_tmp_files(files_to_compress)
         return
+
+    @staticmethod
+    def delete_tmp_files(files_to_delete):
+        for file in files_to_delete:
+            rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
+            if rm_file_op.stderr.read():
+                print("Failed to delete fil {} due to error:\n{}".format(file, rm_file_op.stderr.read()))
+        return 
