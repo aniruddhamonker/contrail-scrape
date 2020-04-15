@@ -63,3 +63,12 @@ class ConfigParser():
                          ', '.join(config_vars))
 
         return parser.parse_args(remaining_argv)
+    
+    @staticmethod
+    def get_hosts_ips_and_port(yaml):
+        for key, value in yaml.items():
+            if isinstance(value, dict):
+                if 'hosts' in value and value['hosts']:
+                    yield value['hosts']
+                else:
+                    yield from get_hosts_ips_and_port(value)
