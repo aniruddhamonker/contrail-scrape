@@ -22,7 +22,7 @@ class ConfigParser():
 
         conf_parser = argparse.ArgumentParser(add_help=False)
         conf_parser.add_argument("-c", "--config",
-                                 default=None,
+                                 default="hosts.yaml",
                                  help="where to load YAML configuration",
                                  metavar="FILE")
 
