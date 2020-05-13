@@ -1,73 +1,71 @@
-'''
-This is a third party code imported from
-"https://gist.githubusercontent.com/multun/ccf5a8b855de7c50968aac127bc5605b/raw/d7554f918b8f0259220514d627dc566bd40a848e/config_parser.py"
-and modified to match config parsing options for module contrail_introspect_scrapper
-'''
 import sys
 import argparse
 import yaml
+import re
+from collections import namedtuple
 
 class ConfigParser():
-    def __init__(self, *pargs, **kwpargs):
-        self.options = []
-        self.pargs = pargs
-        self.kwpargs = kwpargs
-
-    def add(self, *args, **kwargs):
-        self.options.append((args, kwargs))
-
-    def parse(self, args=None):
-        if args is None:
-            args = sys.argv[1:]
-
-        conf_parser = argparse.ArgumentParser(add_help=False)
+    module = namedtuple("mod", "name, option, help, port")    
+    args = {
+        "vrouter": module("--vrouter", "-vr","contrail-vrouter", "8085"),
+        "cconfig": module("--cconfig", "-cfg", "contrail-config", "8084"),
+        "ccontrol": module("--ccontrol", "-cnt", "contrail-control", "8083"),
+        "canalytics": module("--canalytics", "-can", "contrail-analytics", "8090")
+    }
+    @classmethod
+    def parse_all_args(cls, args=None):
+        conf_parser = argparse.ArgumentParser()
         conf_parser.add_argument("-c", "--config",
-                                 default="hosts.yaml",
-                                 help="where to load YAML configuration",
-                                 metavar="FILE")
-
-        res, remaining_argv = conf_parser.parse_known_args(args)
-
-        config_vars = {}
-        if res.config is not None:
-            with open(res.config, 'r') as stream:
-                config_vars = yaml.load(stream)
-
-        parser = argparse.ArgumentParser(
-            *self.pargs,
-            # Inherit options from config_parser
-            parents=[conf_parser],
-            # Don't mess with format of description
-            formatter_class=argparse.RawDescriptionHelpFormatter,
-            **self.kwpargs,
-        )
-
-        for opt_args, opt_kwargs in self.options:
-            parser_arg = parser.add_argument(*opt_args, **opt_kwargs)
-            if parser_arg.dest in config_vars:
-                config_default = config_vars.pop(parser_arg.dest)
-                expected_type = str
-                if parser_arg.type is not None:
-                    expected_type = parser_arg.type
-
-                if not isinstance(config_default, expected_type):
-                    parser.error('YAML configuration entry {} '
-                                 'does not have type {}'.format(
-                                     parser_arg.dest,
-                                     expected_type))
-
-                parser_arg.default = config_default
-
-        if config_vars:
-            parser.error('unexpected configuration entries: ' + \
-                         ', '.join(config_vars))
-
-        return parser.parse_args(remaining_argv)
+                                 help="path to YAML configuration file",
+                                 metavar="FILE")                                       
+        for arg_opts in cls.args.values():
+            conf_parser.add_argument(arg_opts.option, arg_opts.name, \
+                action='append', metavar="<ip-addr>", help="IP address or hostname to fetch introspect from \
+                    {} module".format(arg_opts.help))
+        all_args = conf_parser.parse_args()
+        module_args = namedtuple("module_args","module, ip, port")
+        all_modules = []
+        if all_args.config:
+            with open(all_args.config) as config:
+                yaml_to_dict = yaml.load(config, Loader=yaml.FullLoader)
+                for mod_tuple in cls.parse_yaml_config(yaml_to_dict):
+                    all_modules.append(module_args(*mod_tuple))
+        else:
+            for module, ip in all_args.__dict__.items():
+                 if ip is not None:
+                     all_modules.append(module_args(module, ip, cls.args.get(module).port))
+        return all_modules
     
-    def get_hosts_ips_and_port(self, yaml):
-        for key, value in yaml.items():
+    @classmethod
+    def parse_yaml_config(cls, config_dict):
+        for key, value in config_dict.items():
             if isinstance(value, dict):
                 if 'hosts' in value and value['hosts']:
-                    yield (key, value['hosts'])
+                    yield (key, value['hosts'], value['port'])
                 else:
-                    yield from self.get_hosts_ips_and_port(value)
+                    yield from cls.parse_yaml_config(value)
+    
+    @classmethod
+    def construct_urls(cls):
+        all_args = cls.parse_all_args()
+        introspect_urls = []
+        for module in all_args:
+            for ip in module.ip:
+                url = 'http://{}:{}'.format(ip, module.port)
+                introspect_urls.append(url)
+        return introspect_urls
+
+    def __call__(self):
+        return self.construct_urls()
+
+
+'''
+def main():
+    cc = ConfigParser()
+    args = cc.parse_all_args()
+    import pdb; pdb.set_trace()
+
+if __name__ == "__main__":
+     main()
+
+'''
