@@ -17,8 +17,7 @@ START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name)
 TIMEOUT = 60
 
 class IntrospectBaseClass():
-    def __init__(self, root_url):
-        self.root_url = root_url
+    def __init__(self):
         self.__files_to_compress = list()
         pass
 
@@ -49,17 +48,17 @@ class IntrospectBaseClass():
                 yield element
         return __iter__()
     
-    def get_index_page_nodes(self):
+    def get_index_page_nodes(self, url):
         attrs = {'href': re.compile(r'xml')}
-        yield from self.parse_response(self.root_url, attrs=attrs)
+        yield from self.parse_response(url, attrs=attrs)
 
-    def _get_index_page_nodes_url(self):
-        index_page_nodes = [element.attrs for element in self.get_index_page_nodes()]
-        index_page_nodes_urls = [self.root_url+'/'+index_page_node.get('href')\
+    def _get_index_page_nodes_url(self, url):
+        index_page_nodes = [element.attrs for element in self.get_index_page_nodes(url)]
+        index_page_nodes_urls = [url+'/'+index_page_node.get('href')\
                                 for index_page_node in index_page_nodes]
         return index_page_nodes_urls
 
-    def _fetch_introspect(self, queue):
+    def _fetch_introspect(self, queue, url):
         sandesh_attrs = {'type': 'sandesh'}
         global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
@@ -73,13 +72,13 @@ class IntrospectBaseClass():
                         attrs=sandesh_attrs):
                         try:
                             op_file.write(START_MARKER(introspect.name)+"\n"+introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
-                            introspect_response = self.parse_response(self.root_url+'/'+'Snh_'+introspect.name)
+                            introspect_response = self.parse_response(index_page_node_url.split('/')[0:-1]+'/'+'Snh_'+introspect.name)
                             op_file.write(introspect_response.prettify())
                             op_file.write(END_OF_TEXT)
                             if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                 for sandesh_trace_buf in introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                     op_file.write(START_MARKER(sandesh_trace_buf.text)+"\n"+sandesh_trace_buf.text+"\n"+END_MARKER(sandesh_trace_buf)+"\n")
-                                    op_file.write(self.parse_response(self.root_url+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text).prettify())
+                                    op_file.write(self.parse_response(index_page_node_url.split('/')[0:-1]+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text).prettify())
                                     op_file.write(END_OF_TEXT)                            
                             op_file.flush()
                         except Exception as write_exp:
@@ -90,14 +89,14 @@ class IntrospectBaseClass():
             queue.task_done()
         return
 
-    def fetch_all(self):
+    def fetch_all(self, url):
         index_nodes_queue = queue.Queue()
-        for node in self._get_index_page_nodes_url():
+        for node in self._get_index_page_nodes_url(url):
             index_nodes_queue.put(node)
         threads = list()
         for node in range(index_nodes_queue.qsize()):
             try:
-                introspect_thread = threading.Thread(target=self._fetch_introspect, args=(index_nodes_queue,))
+                introspect_thread = threading.Thread(target=self._fetch_introspect, args=(index_nodes_queue,url))
                 introspect_thread.start()
                 threads.append(introspect_thread)    
             except threading.ThreadError as err:
