@@ -33,10 +33,15 @@ class IntrospectBaseClass():
             response.raise_for_status
         except requests.exceptions.ReadTimeout:
             print('Read Timeout Occurred for URL: {}'.format(url))
+        except requests.exceptions.ConnectionError as errc:
+            print ("Error Connecting:",errc)
+        except requests.exceptions.RequestException as err:
+            print ("OOps: Something Else",err)
         except Exception as err:
             print('{} Error encountered : {}\nResponse Code: {}'\
                    .format(type(err), err, response.status_code))
-        return response.text
+        return response.text if isinstance(response, requests.models.Response)\
+             else None
 
     @classmethod
     def parse_response(cls, url, attrs=None):
@@ -64,7 +69,9 @@ class IntrospectBaseClass():
         global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
             index_page_node_url = queue.get()
-            filename = "/tmp/"+index_page_node_url.split('/')[-1]
+            filename = "/tmp/{}-{}".format(index_page_node_url.split('/')[-2], index_page_node_url.split('/')[-1])
+           # if 'services' in filename:
+            # import pdb; pdb.set_trace()
             threading.current_thread().setName(filename)
             print("Thread: {} started".format(threading.current_thread().getName()))
             try:
@@ -83,9 +90,9 @@ class IntrospectBaseClass():
                                     op_file.write(END_OF_TEXT)                            
                             op_file.flush()
                         except Exception as write_exp:
-                            print("Exception {} for thread {}\nUnable to write output to file {}".format(write_exp, threading.current_thread().getName(), filename))
+                            print("Exception {} for thread {}\nUnable to write output to file {}\n".format(write_exp, threading.current_thread().getName(), filename))
             except Exception as exp:
-                print("Exception {} occurred for {}\nUnable to create output file: {}".format(exp, threading.current_thread().getName(), filename))
+                print("Exception {} occurred for {}\nUnable to create output file: {}\n".format(exp, threading.current_thread().getName(), filename))
             self.__files_to_compress.append(filename)
             queue.task_done()
         return
@@ -105,13 +112,14 @@ class IntrospectBaseClass():
         for introspect_thread in threads:
             introspect_thread.join()
     
-    @classmethod
-    def _archive_introspect_output_files(cls, files_to_compress, module_name, dir=None):
+    def archive_introspect_output_files(self, module_args, dir=None):
         if dir is None:
             dir = os.getcwd()
-        tar_filename = '{}/{}-{}.tar.gz'.format(dir, module_name, time.strftime('%Y-%m-%d-%H-%M'))
+        module_ip = module_args['url'].split('/')[-1]
+        module_name = module_args['module']
+        tar_filename = '{}/{}-{}-{}.tar.gz'.format(dir, module_name, module_ip, time.strftime('%Y-%m-%d-%H-%M'))
         with tarfile.open(tar_filename, mode="w:gz") as tar:
-            for file in files_to_compress:
+            for file in self.__files_to_compress:
                 try:
                     tar.add(file, arcname=file.replace("/tmp", module_name))
                 except tarfile.TarError as terr:
@@ -119,7 +127,8 @@ class IntrospectBaseClass():
                 except Exception as tarexp:
                     print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, module_name, tarexp))
         tar.close()
-        cls.delete_tmp_files(files_to_compress)
+        self.delete_tmp_files(self.__files_to_compress)
+        print("archive complete for node {} and module {}\n".format(module_ip, module_name))
         return
 
     @staticmethod

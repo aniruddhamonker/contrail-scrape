@@ -51,21 +51,12 @@ class ConfigParser():
         introspect_urls = []
         for module in all_args:
             for ip in module.ip:
-                url = 'http://{}:{}'.format(ip, module.port)
-                introspect_urls.append(url)
+                module_and_url = {
+                "url": 'http://{}:{}'.format(ip, module.port),
+                "module": module.module
+                }
+                introspect_urls.append(module_and_url)
         return introspect_urls
 
     def __call__(self):
         return self.construct_urls()
-
-
-'''
-def main():
-    cc = ConfigParser()
-    args = cc.parse_all_args()
-    import pdb; pdb.set_trace()
-
-if __name__ == "__main__":
-     main()
-
-'''
