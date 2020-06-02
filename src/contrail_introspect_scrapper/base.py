@@ -11,14 +11,14 @@ import os
 import time
 import subprocess
 
-NUM_THREADS = 20
 END_OF_TEXT = '\n'+"#"*50+'\n\n'
 START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name)
 TIMEOUT = 60
 
 class IntrospectBaseClass():
-    def __init__(self, root_url):
-        self.root_url = root_url
+    def __init__(self, all_nodes, num_threads):
+        self.all_nodes = all_nodes
+        self.num_threads = num_threads
         self.__files_to_compress = list()
         pass
 
@@ -53,17 +53,28 @@ class IntrospectBaseClass():
             for element in parsed_response.findAll(attrs=attrs):
                 yield element
         return __iter__()
-    
+
+    '''
     def get_index_page_nodes(self):
         attrs = {'href': re.compile(r'xml')}
         yield from self.parse_response(self.root_url, attrs=attrs)
-
+    '''
     def _get_index_page_nodes_url(self):
-        index_page_nodes = [element.attrs for element in self.get_index_page_nodes()]
+        all_index_page_node_urls = []
+        for node in self.all_nodes:
+            url = node['url']
+            index_page_nodes = [element.attrs for element in \
+                self.parse_response(url, {'href': re.compile(r'xml')} )]
+            all_index_page_node_urls.extend([url+'/'+index_page_node.get('href')\
+                                for index_page_node in index_page_nodes])
+        yield all_index_page_node_urls            
+
+    '''
+           index_page_nodes = [element.attrs for element in self.get_index_page_nodes()]
         index_page_nodes_urls = [self.root_url+'/'+index_page_node.get('href')\
                                 for index_page_node in index_page_nodes]
         return index_page_nodes_urls
-
+    '''
     def _fetch_introspect(self, queue):
         sandesh_attrs = {'type': 'sandesh'}
         global END_OF_TEXT, START_MARKER, END_MARKER
@@ -73,20 +84,21 @@ class IntrospectBaseClass():
            # if 'services' in filename:
             # import pdb; pdb.set_trace()
             threading.current_thread().setName(filename)
-            print("Thread: {} started".format(threading.current_thread().getName()))
+            #print("Thread: {} started".format(threading.current_thread().getName()))
             try:
                 with open(filename, 'w') as op_file:
                     for introspect in self.parse_response(index_page_node_url, \
                         attrs=sandesh_attrs):
                         try:
                             op_file.write(START_MARKER(introspect.name)+"\n"+introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
-                            introspect_response = self.parse_response(self.root_url+'/'+'Snh_'+introspect.name)
+                            introspect_url = re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+'Snh_'+introspect.name
+                            introspect_response = self.parse_response(introspect_url)
                             op_file.write(introspect_response.prettify())
                             op_file.write(END_OF_TEXT)
                             if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                 for sandesh_trace_buf in introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                                     op_file.write(START_MARKER(sandesh_trace_buf.text)+"\n"+sandesh_trace_buf.text+"\n"+END_MARKER(sandesh_trace_buf)+"\n")
-                                    op_file.write(self.parse_response(self.root_url+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text).prettify())
+                                    op_file.write(self.parse_response(re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+'/'+'Snh_SandeshTraceRequest?x='+sandesh_trace_buf.text).prettify())
                                     op_file.write(END_OF_TEXT)                            
                             op_file.flush()
                         except Exception as write_exp:
@@ -101,8 +113,8 @@ class IntrospectBaseClass():
         index_nodes_queue = queue.Queue()
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
-        threads = list()
-        for node in range(index_nodes_queue.qsize()):
+        threads = []
+        for node in range(self.num_threads):   #---start here---
             try:
                 introspect_thread = threading.Thread(target=self._fetch_introspect, args=(index_nodes_queue,))
                 introspect_thread.start()
