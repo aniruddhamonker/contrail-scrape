@@ -10,6 +10,7 @@ import tarfile
 import os
 import time
 import subprocess
+from collections import defaultdict
 
 END_OF_TEXT = '\n'+"#"*50+'\n\n'
 START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name)
@@ -19,12 +20,7 @@ class IntrospectBaseClass():
     def __init__(self, all_nodes, num_threads):
         self.all_nodes = all_nodes
         self.num_threads = num_threads
-        self.__files_to_compress = list()
-        pass
-
-    @property
-    def files_to_compress(self):
-        return self.__files_to_compress
+        self.__output_files = defaultdict(list)
     
     @staticmethod
     def get_request(url):
@@ -67,24 +63,16 @@ class IntrospectBaseClass():
                 self.parse_response(url, {'href': re.compile(r'xml')} )]
             all_index_page_node_urls.extend([url+'/'+index_page_node.get('href')\
                                 for index_page_node in index_page_nodes])
-        yield all_index_page_node_urls            
+        yield from all_index_page_node_urls            
 
-    '''
-           index_page_nodes = [element.attrs for element in self.get_index_page_nodes()]
-        index_page_nodes_urls = [self.root_url+'/'+index_page_node.get('href')\
-                                for index_page_node in index_page_nodes]
-        return index_page_nodes_urls
-    '''
     def _fetch_introspect(self, queue):
         sandesh_attrs = {'type': 'sandesh'}
         global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
             index_page_node_url = queue.get()
             filename = "/tmp/{}-{}".format(index_page_node_url.split('/')[-2], index_page_node_url.split('/')[-1])
-           # if 'services' in filename:
-            # import pdb; pdb.set_trace()
             threading.current_thread().setName(filename)
-            #print("Thread: {} started".format(threading.current_thread().getName()))
+            print("Thread: {} started".format(threading.current_thread().getName()))
             try:
                 with open(filename, 'w') as op_file:
                     for introspect in self.parse_response(index_page_node_url, \
@@ -105,7 +93,7 @@ class IntrospectBaseClass():
                             print("Exception {} for thread {}\nUnable to write output to file {}\n".format(write_exp, threading.current_thread().getName(), filename))
             except Exception as exp:
                 print("Exception {} occurred for {}\nUnable to create output file: {}\n".format(exp, threading.current_thread().getName(), filename))
-            self.__files_to_compress.append(filename)
+            self.__output_files[index_page_node_url.split('/')[-2]].append(filename)
             queue.task_done()
         return
 
@@ -114,7 +102,7 @@ class IntrospectBaseClass():
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
         threads = []
-        for node in range(self.num_threads):   #---start here---
+        for _ in range(self.num_threads):
             try:
                 introspect_thread = threading.Thread(target=self._fetch_introspect, args=(index_nodes_queue,))
                 introspect_thread.start()
@@ -124,29 +112,31 @@ class IntrospectBaseClass():
         for introspect_thread in threads:
             introspect_thread.join()
     
-    def archive_introspect_output_files(self, module_args, dir=None):
+    def archive_introspect_output_files(self, dir=None):
         if dir is None:
             dir = os.getcwd()
-        module_ip = module_args['url'].split('/')[-1]
-        module_name = module_args['module']
-        tar_filename = '{}/{}-{}-{}.tar.gz'.format(dir, module_name, module_ip, time.strftime('%Y-%m-%d-%H-%M'))
-        with tarfile.open(tar_filename, mode="w:gz") as tar:
-            for file in self.__files_to_compress:
+        for node in self.all_nodes:
+            module_ip = node['url'].split('/')[-1]
+            module_name = node['module']
+            tar_filename = '{}/{}-{}-{}.tar.gz'.format(dir, module_name, module_ip, time.strftime('%Y-%m-%d-%H-%M'))
+            with tarfile.open(tar_filename, mode="w:gz") as tar:
                 try:
-                    tar.add(file, arcname=file.replace("/tmp", module_name))
+                    for file in self.__output_files[module_ip]:
+                        tar.add(file, arcname=file.replace("/tmp", module_name))
                 except tarfile.TarError as terr:
                     print("Failed to create a tar file archive for {} due to error:\n{}".format(module_name, terr))
                 except Exception as tarexp:
                     print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, module_name, tarexp))
         tar.close()
-        self.delete_tmp_files(self.__files_to_compress)
+        self.delete_tmp_files(self.__output_files)
         print("archive complete for node {} and module {}\n".format(module_ip, module_name))
         return
 
     @staticmethod
     def delete_tmp_files(files_to_delete):
-        for file in files_to_delete:
-            rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
+        for files in files_to_delete.values():
+            for file in files:
+                rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
             if rm_file_op.stderr.read():
                 print("Failed to delete fil {} due to error:\n{}".format(file, rm_file_op.stderr.read()))
-        return 
+        return
