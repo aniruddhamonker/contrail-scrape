@@ -1,0 +1,91 @@
+---------------------------------
+DiscoveryClientSubscriberStatsReq
+---------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<DiscoveryClientSubscriberStatsResponse type="sandesh">
+ <subscriber identifier="1" type="list">
+  <list size="3" type="struct">
+   <DiscoveryClientSubscriberStats>
+    <serviceName identifier="1" type="string">
+     Collector
+    </serviceName>
+    <subscribe_sent identifier="2" type="u32">
+     1
+    </subscribe_sent>
+    <subscribe_fail identifier="3" type="u32">
+     0
+    </subscribe_fail>
+    <subscribe_rcvd identifier="4" type="u32">
+     1
+    </subscribe_rcvd>
+    <subscribe_retries identifier="5" type="u32">
+     0
+    </subscribe_retries>
+    <subscribe_last_ttl identifier="6" type="u32">
+     1594
+    </subscribe_last_ttl>
+   </DiscoveryClientSubscriberStats>
+   <DiscoveryClientSubscriberStats>
+    <serviceName identifier="1" type="string">
+     dns-server
+    </serviceName>
+    <subscribe_sent identifier="2" type="u32">
+     1
+    </subscribe_sent>
+    <subscribe_fail identifier="3" type="u32">
+     0
+    </subscribe_fail>
+    <subscribe_rcvd identifier="4" type="u32">
+     1
+    </subscribe_rcvd>
+    <subscribe_retries identifier="5" type="u32">
+     0
+    </subscribe_retries>
+    <subscribe_last_ttl identifier="6" type="u32">
+     1719
+    </subscribe_last_ttl>
+   </DiscoveryClientSubscriberStats>
+   <DiscoveryClientSubscriberStats>
+    <serviceName identifier="1" type="string">
+     xmpp-server
+    </serviceName>
+    <subscribe_sent identifier="2" type="u32">
+     1
+    </subscribe_sent>
+    <subscribe_fail identifier="3" type="u32">
+     0
+    </subscribe_fail>
+    <subscribe_rcvd identifier="4" type="u32">
+     1
+    </subscribe_rcvd>
+    <subscribe_retries identifier="5" type="u32">
+     0
+    </subscribe_retries>
+    <subscribe_last_ttl identifier="6" type="u32">
+     1469
+    </subscribe_last_ttl>
+   </DiscoveryClientSubscriberStats>
+  </list>
+ </subscriber>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</DiscoveryClientSubscriberStatsResponse>
+##################################################
+
+--------------------------------
+DiscoveryClientPublisherStatsReq
+--------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<DiscoveryClientPublisherStatsResponse type="sandesh">
+ <publisher identifier="1" type="list">
+  <list size="0" type="struct"/>
+ </publisher>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</DiscoveryClientPublisherStatsResponse>
+##################################################
+

@@ -1,0 +1,147 @@
+-------------
+AgentStatsReq
+-------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<__IpcStatsResp_list type="slist">
+ <IpcStatsResp type="sandesh">
+  <ipc_in_msgs identifier="1" type="i64">
+   0
+  </ipc_in_msgs>
+  <ipc_out_msgs identifier="2" type="i64">
+   0
+  </ipc_out_msgs>
+  <more identifier="0" type="bool">
+   true
+  </more>
+ </IpcStatsResp>
+ <PktTrapStatsResp type="sandesh">
+  <exceptions identifier="1" type="i64">
+   958
+  </exceptions>
+  <invalid_agent_hdr identifier="2" type="i64">
+   0
+  </invalid_agent_hdr>
+  <invalid_interface identifier="3" type="i64">
+   8
+  </invalid_interface>
+  <no_handler identifier="4" type="i64">
+   0
+  </no_handler>
+  <pkt_dropped identifier="5" type="i64">
+   8
+  </pkt_dropped>
+  <pkt_fragments_dropped identifier="6" type="i64">
+   0
+  </pkt_fragments_dropped>
+  <more identifier="0" type="bool">
+   true
+  </more>
+ </PktTrapStatsResp>
+ <FlowStatsResp type="sandesh">
+  <flow_active identifier="1" type="u64">
+   34
+  </flow_active>
+  <flow_created identifier="2" type="u64">
+   174
+  </flow_created>
+  <flow_aged identifier="3" type="u64">
+   140
+  </flow_aged>
+  <flow_drop_due_to_max_limit identifier="4" type="u64">
+   0
+  </flow_drop_due_to_max_limit>
+  <flow_drop_due_to_linklocal_limit identifier="5" type="u64">
+   0
+  </flow_drop_due_to_linklocal_limit>
+  <flow_max_system_flows identifier="6" type="u32">
+   629760
+  </flow_max_system_flows>
+  <flow_max_vm_flows identifier="7" type="u32">
+   0
+  </flow_max_vm_flows>
+  <flow_export_disable_drops identifier="8" type="u64">
+   0
+  </flow_export_disable_drops>
+  <flow_export_sampling_drops identifier="9" type="u64">
+   0
+  </flow_export_sampling_drops>
+  <flow_export_drops identifier="10" type="u64">
+   0
+  </flow_export_drops>
+  <flow_sample_export_count identifier="11" type="u64">
+   1090
+  </flow_sample_export_count>
+  <flow_msg_export_count identifier="12" type="u64">
+   431
+  </flow_msg_export_count>
+  <flow_export_count identifier="13" type="u64">
+   284
+  </flow_export_count>
+  <more identifier="0" type="bool">
+   true
+  </more>
+ </FlowStatsResp>
+ <XmppStatsResp type="sandesh">
+  <xmpp_list identifier="1" type="list">
+   <list size="2" type="struct">
+    <XmppStatsInfo>
+     <ip identifier="1" type="string">
+      172.18.101.103
+     </ip>
+     <in_msgs identifier="2" type="u64">
+      190
+     </in_msgs>
+     <out_msgs identifier="3" type="u64">
+      362
+     </out_msgs>
+     <reconnect identifier="4" type="u16">
+      1
+     </reconnect>
+     <config_in_msgs identifier="5" type="u64">
+      0
+     </config_in_msgs>
+    </XmppStatsInfo>
+    <XmppStatsInfo>
+     <ip identifier="1" type="string">
+      172.18.101.101
+     </ip>
+     <in_msgs identifier="2" type="u64">
+      200
+     </in_msgs>
+     <out_msgs identifier="3" type="u64">
+      457
+     </out_msgs>
+     <reconnect identifier="4" type="u16">
+      1
+     </reconnect>
+     <config_in_msgs identifier="5" type="u64">
+      89
+     </config_in_msgs>
+    </XmppStatsInfo>
+   </list>
+  </xmpp_list>
+  <more identifier="0" type="bool">
+   true
+  </more>
+ </XmppStatsResp>
+ <SandeshStatsResp type="sandesh">
+  <sandesh_in_msgs identifier="1" type="i64">
+   0
+  </sandesh_in_msgs>
+  <sandesh_out_msgs identifier="2" type="i64">
+   0
+  </sandesh_out_msgs>
+  <sandesh_http_sessions identifier="3" type="i16">
+   0
+  </sandesh_http_sessions>
+  <sandesh_reconnects identifier="4" type="i16">
+   0
+  </sandesh_reconnects>
+  <more identifier="0" type="bool">
+   false
+  </more>
+ </SandeshStatsResp>
+</__IpcStatsResp_list>
+##################################################
+

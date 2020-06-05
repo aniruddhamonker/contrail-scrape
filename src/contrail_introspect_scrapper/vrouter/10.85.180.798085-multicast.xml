@@ -1,0 +1,15 @@
+------------------------
+MasterPhysicalDevicesReq
+------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<MasterPhysicalDevicesResp type="sandesh">
+ <dev_list identifier="1" type="list">
+  <list size="0" type="struct"/>
+ </dev_list>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</MasterPhysicalDevicesResp>
+##################################################
+

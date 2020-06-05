@@ -1,0 +1,6608 @@
+------------------
+SandeshTaskRequest
+------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<SandeshTaskScheduler type="sandesh">
+ <running identifier="1" type="bool">
+  true
+ </running>
+ <use_spawn identifier="5" type="bool">
+  false
+ </use_spawn>
+ <total_count identifier="2" type="u64">
+  31053
+ </total_count>
+ <thread_count identifier="3" type="i32">
+  8
+ </thread_count>
+ <task_group_list identifier="4" type="list">
+  <list size="43" type="struct">
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::ConfigManager
+    </name>
+    <task_id identifier="2" type="u32">
+     25
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::ControllerXmpp
+    </name>
+    <task_id identifier="2" type="u32">
+     28
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        61
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        61
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="8" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Services
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        io::ReaderTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::DBExcludeTask
+    </name>
+    <task_id identifier="2" type="u32">
+     21
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        77
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        77
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="7" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Uve
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Diag
+    </name>
+    <task_id identifier="2" type="u32">
+     18
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowDelete
+    </name>
+    <task_id identifier="2" type="u32">
+     6
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        8
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        8
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        10
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        10
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        9
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        9
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowEvent
+    </name>
+    <task_id identifier="2" type="u32">
+     3
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        50
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        50
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        59
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        59
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        65
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        65
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        56
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        56
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowKSync
+    </name>
+    <task_id identifier="2" type="u32">
+     4
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        28
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        28
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        41
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        41
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        50
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        50
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        40
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        40
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowLogging
+    </name>
+    <task_id identifier="2" type="u32">
+     37
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        232
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        232
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="0" type="struct"/>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowMgmt
+    </name>
+    <task_id identifier="2" type="u32">
+     34
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1583
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1583
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1596
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1596
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1602
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1602
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1595
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1595
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowStatsManager
+    </name>
+    <task_id identifier="2" type="u32">
+     35
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        80
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        80
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="6" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Flow::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowMgmt
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Profile
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowStatsUpdate
+    </name>
+    <task_id identifier="2" type="u32">
+     8
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Uve
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowUpdate
+    </name>
+    <task_id identifier="2" type="u32">
+     5
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::HealthCheck
+    </name>
+    <task_id identifier="2" type="u32">
+     20
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        20
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        20
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Init
+    </name>
+    <task_id identifier="2" type="u32">
+     23
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="21" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ConfigManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowEvent
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowKSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowDelete
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::KSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Flow::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        xmpp::StateMachine
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        http client
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Sandesh
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Profile
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::InstanceManager
+    </name>
+    <task_id identifier="2" type="u32">
+     26
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        12
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        12
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::KSync
+    </name>
+    <task_id identifier="2" type="u32">
+     14
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        147
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        147
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        90
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        90
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::PktFlowResponder
+    </name>
+    <task_id identifier="2" type="u32">
+     15
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="7" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowEvent
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowKSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowDelete
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::PktHandler
+    </name>
+    <task_id identifier="2" type="u32">
+     17
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        895
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        895
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Profile
+    </name>
+    <task_id identifier="2" type="u32">
+     16
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::RouteWalker
+    </name>
+    <task_id identifier="2" type="u32">
+     29
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        105
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        105
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="6" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::KSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Sandesh
+    </name>
+    <task_id identifier="2" type="u32">
+     24
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Services
+    </name>
+    <task_id identifier="2" type="u32">
+     9
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1829
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1828
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        1
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        5
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        28
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        28
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        7
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        161
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        161
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Shutdown
+    </name>
+    <task_id identifier="2" type="u32">
+     22
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="17" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ConfigManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowEvent
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowKSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowDelete
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::KSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Flow::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Profile
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::StatsCollector
+    </name>
+    <task_id identifier="2" type="u32">
+     10
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        5
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        5
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="7" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::TbbKeepAwake
+    </name>
+    <task_id identifier="2" type="u32">
+     42
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        7922
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        7922
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="0" type="struct"/>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Uve
+    </name>
+    <task_id identifier="2" type="u32">
+     13
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        518
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        518
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Flow::StatsCollector
+    </name>
+    <task_id identifier="2" type="u32">
+     11
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3262
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3262
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3271
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3271
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     KSync::FlowAudit
+    </name>
+    <task_id identifier="2" type="u32">
+     7
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1589
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1589
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Ksync::KSyncTxQueue
+    </name>
+    <task_id identifier="2" type="u32">
+     38
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        1
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="0" type="struct"/>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     agent_ifmap::ShowCommand
+    </name>
+    <task_id identifier="2" type="u32">
+     43
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="0" type="struct"/>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     bgp::Config
+    </name>
+    <task_id identifier="2" type="u32">
+     32
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="12" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Services
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        io::ReaderTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        xmpp::StateMachine
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::ShowCommand
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     bgp::ShowCommand
+    </name>
+    <task_id identifier="2" type="u32">
+     31
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     db::DBTable
+    </name>
+    <task_id identifier="2" type="u32">
+     1
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1243
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1242
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        1
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="30" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowEvent
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowKSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowDelete
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        KSync::FlowAudit
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::FlowStatsUpdate
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Services
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Flow::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Uve
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::KSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Profile
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktHandler
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Diag
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        http::RequestHandlerTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::HealthCheck
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Sandesh
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ConfigManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::InstanceManager
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::RouteWalker
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::KSync
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     db::Walker
+    </name>
+    <task_id identifier="2" type="u32">
+     2
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="0" type="struct"/>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     http client
+    </name>
+    <task_id identifier="2" type="u32">
+     33
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        918
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        917
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        xmpp::StateMachine
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        http::RequestHandlerTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     http::RequestHandlerTask
+    </name>
+    <task_id identifier="2" type="u32">
+     19
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        96
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        96
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        http client
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     io::ReaderTask
+    </name>
+    <task_id identifier="2" type="u32">
+     27
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        58
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        58
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        433
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        433
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::RecvQueue
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        1
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::ControllerXmpp
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        xmpp::StateMachine
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::RecvQueue
+    </name>
+    <task_id identifier="2" type="u32">
+     12
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        17
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        16
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        1
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="12" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        db::DBTable
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Services
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::StatsCollector
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        io::ReaderTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::PktFlowResponder
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Profile
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Shutdown
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Sandesh
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::DBExcludeTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientReader
+    </name>
+    <task_id identifier="2" type="u32">
+     41
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::SandeshClientSM
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientSM
+    </name>
+    <task_id identifier="2" type="u32">
+     39
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        170
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        170
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::SandeshClientSession
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::SandeshClientReader
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientSession
+    </name>
+    <task_id identifier="2" type="u32">
+     40
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        153
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        153
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        sandesh::SandeshClientSM
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     timer::TimerTask
+    </name>
+    <task_id identifier="2" type="u32">
+     36
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        60
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        60
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="0" type="struct"/>
+    </task_policy_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     xmpp::StateMachine
+    </name>
+    <task_id identifier="2" type="u32">
+     30
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        324
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        324
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+    <task_policy_list identifier="4" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        bgp::Config
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        http client
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        io::ReaderTask
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+      <SandeshTaskPolicyEntry>
+       <task_name identifier="1" type="string">
+        Agent::Init
+       </task_name>
+       <tasks_running identifier="2" type="u32">
+        0
+       </tasks_running>
+      </SandeshTaskPolicyEntry>
+     </list>
+    </task_policy_list>
+   </SandeshTaskGroup>
+  </list>
+ </task_group_list>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</SandeshTaskScheduler>
+##################################################
+
+-------------------------
+SandeshTaskSummaryRequest
+-------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<SandeshTaskScheduler type="sandesh">
+ <running identifier="1" type="bool">
+  true
+ </running>
+ <use_spawn identifier="5" type="bool">
+  false
+ </use_spawn>
+ <total_count identifier="2" type="u64">
+  31200
+ </total_count>
+ <thread_count identifier="3" type="i32">
+  8
+ </thread_count>
+ <task_group_list identifier="4" type="list">
+  <list size="43" type="struct">
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::ConfigManager
+    </name>
+    <task_id identifier="2" type="u32">
+     25
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::ControllerXmpp
+    </name>
+    <task_id identifier="2" type="u32">
+     28
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        61
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        61
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::DBExcludeTask
+    </name>
+    <task_id identifier="2" type="u32">
+     21
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        77
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        77
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Diag
+    </name>
+    <task_id identifier="2" type="u32">
+     18
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowDelete
+    </name>
+    <task_id identifier="2" type="u32">
+     6
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        8
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        8
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        10
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        10
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        10
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        10
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowEvent
+    </name>
+    <task_id identifier="2" type="u32">
+     3
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        50
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        50
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        59
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        59
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        65
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        65
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        59
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        59
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowKSync
+    </name>
+    <task_id identifier="2" type="u32">
+     4
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        28
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        28
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        41
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        41
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        50
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        50
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        42
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        42
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowLogging
+    </name>
+    <task_id identifier="2" type="u32">
+     37
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        235
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        235
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowMgmt
+    </name>
+    <task_id identifier="2" type="u32">
+     34
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="5" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1583
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1583
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1596
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1596
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1602
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1602
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        3
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1597
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1597
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowStatsManager
+    </name>
+    <task_id identifier="2" type="u32">
+     35
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        80
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        80
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowStatsUpdate
+    </name>
+    <task_id identifier="2" type="u32">
+     8
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::FlowUpdate
+    </name>
+    <task_id identifier="2" type="u32">
+     5
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::HealthCheck
+    </name>
+    <task_id identifier="2" type="u32">
+     20
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        20
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        20
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Init
+    </name>
+    <task_id identifier="2" type="u32">
+     23
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::InstanceManager
+    </name>
+    <task_id identifier="2" type="u32">
+     26
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        12
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        12
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::KSync
+    </name>
+    <task_id identifier="2" type="u32">
+     14
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        161
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        161
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        93
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        93
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::PktFlowResponder
+    </name>
+    <task_id identifier="2" type="u32">
+     15
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::PktHandler
+    </name>
+    <task_id identifier="2" type="u32">
+     17
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        900
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        900
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Profile
+    </name>
+    <task_id identifier="2" type="u32">
+     16
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        159
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        159
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::RouteWalker
+    </name>
+    <task_id identifier="2" type="u32">
+     29
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        105
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        105
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Sandesh
+    </name>
+    <task_id identifier="2" type="u32">
+     24
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Services
+    </name>
+    <task_id identifier="2" type="u32">
+     9
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="4" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        2
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1837
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1837
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        5
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        28
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        28
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        7
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        163
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        163
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Shutdown
+    </name>
+    <task_id identifier="2" type="u32">
+     22
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::StatsCollector
+    </name>
+    <task_id identifier="2" type="u32">
+     10
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        5
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        5
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::TbbKeepAwake
+    </name>
+    <task_id identifier="2" type="u32">
+     42
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        7936
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        7936
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Agent::Uve
+    </name>
+    <task_id identifier="2" type="u32">
+     13
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        522
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        522
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Flow::StatsCollector
+    </name>
+    <task_id identifier="2" type="u32">
+     11
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="3" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3266
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3266
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        3277
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        3277
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     KSync::FlowAudit
+    </name>
+    <task_id identifier="2" type="u32">
+     7
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1592
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1592
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     Ksync::KSyncTxQueue
+    </name>
+    <task_id identifier="2" type="u32">
+     38
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        1
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     agent_ifmap::ShowCommand
+    </name>
+    <task_id identifier="2" type="u32">
+     43
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     bgp::Config
+    </name>
+    <task_id identifier="2" type="u32">
+     32
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     bgp::ShowCommand
+    </name>
+    <task_id identifier="2" type="u32">
+     31
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        2
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        2
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     db::DBTable
+    </name>
+    <task_id identifier="2" type="u32">
+     1
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1246
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1246
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     db::Walker
+    </name>
+    <task_id identifier="2" type="u32">
+     2
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     http client
+    </name>
+    <task_id identifier="2" type="u32">
+     33
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        918
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        917
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     http::RequestHandlerTask
+    </name>
+    <task_id identifier="2" type="u32">
+     19
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        135
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        135
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     io::ReaderTask
+    </name>
+    <task_id identifier="2" type="u32">
+     27
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        72
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        72
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        433
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        433
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::RecvQueue
+    </name>
+    <task_id identifier="2" type="u32">
+     12
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        31
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        30
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        1
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientReader
+    </name>
+    <task_id identifier="2" type="u32">
+     41
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        1
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        1
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientSM
+    </name>
+    <task_id identifier="2" type="u32">
+     39
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        170
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        170
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     sandesh::SandeshClientSession
+    </name>
+    <task_id identifier="2" type="u32">
+     40
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        153
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        153
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     timer::TimerTask
+    </name>
+    <task_id identifier="2" type="u32">
+     36
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="1" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        60
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        60
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+   <SandeshTaskGroup>
+    <name identifier="1" type="string">
+     xmpp::StateMachine
+    </name>
+    <task_id identifier="2" type="u32">
+     30
+    </task_id>
+    <total_run_time identifier="5" type="string"/>
+    <task_entry_list identifier="3" type="list">
+     <list size="2" type="struct">
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        -1
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        0
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        0
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+      <SandeshTaskEntry>
+       <instance_id identifier="1" type="i32">
+        0
+       </instance_id>
+       <tasks_created identifier="2" type="u64">
+        324
+       </tasks_created>
+       <total_tasks_completed identifier="3" type="u64">
+        324
+       </total_tasks_completed>
+       <tasks_running identifier="4" type="u32">
+        0
+       </tasks_running>
+       <waitq_size identifier="5" type="u32">
+        0
+       </waitq_size>
+       <deferq_size identifier="6" type="u32">
+        0
+       </deferq_size>
+      </SandeshTaskEntry>
+     </list>
+    </task_entry_list>
+   </SandeshTaskGroup>
+  </list>
+ </task_group_list>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</SandeshTaskScheduler>
+##################################################
+
+-------------------------
+SandeshTaskMonitorRequest
+-------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<SandeshMonitorResponse type="sandesh">
+ <running identifier="1" type="bool">
+  true
+ </running>
+ <inactivity_time_msec identifier="2" type="u64">
+  20000
+ </inactivity_time_msec>
+ <poll_interval_msec identifier="3" type="u64">
+  400
+ </poll_interval_msec>
+ <poll_count identifier="4" type="u64">
+  399
+ </poll_count>
+ <last_activity identifier="5" type="u64">
+  16781820551828
+ </last_activity>
+ <last_enqueue_count identifier="6" type="u64">
+  31192
+ </last_enqueue_count>
+ <last_done_count identifier="7" type="u64">
+  31190
+ </last_done_count>
+ <tbb_keepawake_time identifier="8" type="u64">
+  20
+ </tbb_keepawake_time>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</SandeshMonitorResponse>
+##################################################
+

@@ -1,0 +1,60 @@
+-------
+PingReq
+-------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<PingErrResp type="sandesh">
+ <error_response identifier="1" type="string">
+  Invalid source IP
+ </error_response>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</PingErrResp>
+##################################################
+
+-------------
+TraceRouteReq
+-------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<TraceRouteErrResp type="sandesh">
+ <error_response identifier="1" type="string">
+  Invalid source IP
+ </error_response>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</TraceRouteErrResp>
+##################################################
+
+--------------
+OverlayPingReq
+--------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<PingErrResp type="sandesh">
+ <error_response identifier="1" type="string">
+  Invalid source IP
+ </error_response>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</PingErrResp>
+##################################################
+
+---------------
+OverlayTraceReq
+---------------
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/universal_parse.xsl"?>
+<TraceRouteErrResp type="sandesh">
+ <error_response identifier="1" type="string">
+  Invalid source IP
+ </error_response>
+ <more identifier="0" type="bool">
+  false
+ </more>
+</TraceRouteErrResp>
+##################################################
+
