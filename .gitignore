@@ -10,3 +10,4 @@ pyvenv.cfg*
 tmp/
 tmpfile*
 src/contrail_introspect_scrapper/main_old.py
+base_bkp.py

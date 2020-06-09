@@ -117,21 +117,30 @@ class IntrospectBaseClass():
     def archive_introspect_output_files(self, dir=None):
         if dir is None:
             dir = os.getcwd()
+        final_tarfiles = defaultdict(list)
         for node in self.all_nodes:
             module_ip = node['url'].split('/')[-1]
             module_name = node['module']
             tar_filename = '{}/{}-{}-{}.tar.gz'.format(dir, module_name, re.sub(r'(.*):\d+', r'\1', module_ip), time.strftime('%Y-%m-%d-%H-%M'))
-            with tarfile.open(tar_filename, mode="w:gz") as tar:
-                try:
-                    for file in self.__output_files[module_ip]:
-                        tar.add(file, arcname=file.replace("/tmp", module_name))
-                except tarfile.TarError as terr:
-                    print("Failed to create a tar file archive for {} due to error:\n{}".format(module_name, terr))
-                except Exception as tarexp:
-                    print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, module_name, tarexp))
-            tar.close()
+            self.tar_files(self.__output_files[module_ip], tar_filename,'.')
+            final_tarfiles['all_nodes'].append(tar_filename)
             print("Introspect collection completed successfully for node {} and module {}\n".format(module_ip, module_name))
+        #self.tar_files(final_tarfiles['all_nodes'], "{}/all_introspect-{}.tar.gz".format(dir, time.strftime('%Y-%m-%d-%H-%M')))
         self.delete_tmp_files(self.__output_files)
+        #self.delete_tmp_files(final_tarfiles)
+        return
+    
+    @staticmethod
+    def tar_files(files, tarfile_name, archive_name=None):
+        with tarfile.open(tarfile_name, mode="w:gz") as tar:
+            try:
+                for file in files:
+                    tar.add(file, arcname=archive_name, recursive=False)
+            except tarfile.TarError as terr:
+                print("Failed to create a tar file archive for {} due to error:\n{}".format(archive_name, terr))
+            except Exception as tarexp:
+                print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, archive_name, tarexp))
+        tar.close()
         return
 
     @staticmethod
