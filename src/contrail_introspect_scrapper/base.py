@@ -20,7 +20,8 @@ class IntrospectBaseClass():
     def __init__(self, all_nodes, num_threads):
         self.all_nodes = all_nodes
         self.num_threads = num_threads
-        self.__output_files = defaultdict(list)
+        #self.__output_files = defaultdict(list)
+        self.__output_files = []
     
     @classmethod
     def get_request(cls, url, retrcnt=5):
@@ -60,7 +61,7 @@ class IntrospectBaseClass():
             url = node['url']
             index_page_nodes = [element.attrs for element in \
                 self.parse_response(url, {'href': re.compile(r'xml')} )]
-            all_index_page_node_urls.extend([url+'/'+index_page_node.get('href')\
+            all_index_page_node_urls.extend([(node['module'], url+'/'+index_page_node.get('href'))\
                                 for index_page_node in index_page_nodes])
         #import pdb; pdb.set_trace()
         yield from all_index_page_node_urls            
@@ -69,16 +70,24 @@ class IntrospectBaseClass():
         sandesh_attrs = {'type': 'sandesh'}
         global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
-            index_page_node_url = queue.get()
-            filename = "/tmp/{}-{}".format(index_page_node_url.split('/')[-2], index_page_node_url.split('/')[-1])
+            index_page_node = queue.get()
+            index_page_node_url = index_page_node[1]
+            module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP')
+            module_name = index_page_node[0]
+            tmp_dir = "/tmp/{}-{}".format(module_name, module_ip)
+            if not os.path.exists(tmp_dir):
+                os.mkdir(tmp_dir)
+            filename = "{}/{}".format(tmp_dir, index_page_node_url.split('/')[-1])
             threading.current_thread().setName(filename)
             #print("Thread: {} started".format(threading.current_thread().getName()))
             try:
                 with open(filename, 'w') as op_file:
                     for introspect in self.parse_response(index_page_node_url, \
                         attrs=sandesh_attrs):
-                        op_file.write(START_MARKER(introspect.name)+"\n"+introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
-                        introspect_url = re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+'Snh_'+introspect.name
+                        op_file.write(START_MARKER(introspect.name)+"\n"\
+                            +introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
+                        introspect_url = re.sub(r'(http.*/).*$', r'\1', \
+                            index_page_node_url)+'Snh_'+introspect.name
                         introspect_response = self.parse_response(introspect_url)
                         op_file.write(introspect_response.prettify())
                         op_file.write(END_OF_TEXT)
@@ -94,11 +103,11 @@ class IntrospectBaseClass():
             except Exception as exp:
                 #import pdb; pdb.set_trace()
                 print("Exception {} occurred for {}\nUnable to create output file: {}\n".format(type(exp), threading.current_thread().getName(), filename))
-            self.__output_files[index_page_node_url.split('/')[-2]].append(filename)
+            self.__output_files.append(filename)
             queue.task_done()
         return
 
-    def fetch_all(self):
+    def fetch_all_introspects(self):
         index_nodes_queue = queue.Queue()
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
@@ -113,41 +122,25 @@ class IntrospectBaseClass():
         print("Current active thread count is {}\n".format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
-    
-    def archive_introspect_output_files(self, dir=None):
-        if dir is None:
-            dir = os.getcwd()
-        final_tarfiles = defaultdict(list)
-        for node in self.all_nodes:
-            module_ip = node['url'].split('/')[-1]
-            module_name = node['module']
-            tar_filename = '{}/{}-{}-{}.tar.gz'.format(dir, module_name, re.sub(r'(.*):\d+', r'\1', module_ip), time.strftime('%Y-%m-%d-%H-%M'))
-            self.tar_files(self.__output_files[module_ip], tar_filename, module_name+'-'+module_ip)
-            final_tarfiles['all_nodes'].append(tar_filename)
-            print("Introspect collection completed successfully for node {} and module {}\n".format(module_ip, module_name))
-        self.tar_files(final_tarfiles['all_nodes'], "{}/all_introspect-{}.tar.gz".format(dir, time.strftime('%Y-%m-%d-%H-%M')), 'all_introspects')
-        self.delete_tmp_files(self.__output_files)
-        self.delete_tmp_files(final_tarfiles)
-        return
-    
-    @staticmethod
-    def tar_files(files, tarfile_name, archive_dir=None):
-        with tarfile.open(tarfile_name, mode="w:gz") as tar:
-            try:
-                for file in files:
-                    tar.add(file, arcname=archive_dir+'/'+os.path.basename(file))
-            except tarfile.TarError as terr:
-                print("Failed to create a tar file archive for {} due to error:\n{}".format(archive_dir, terr))
-            except Exception as tarexp:
-                print("Exception of type {} occurred when adding file {} to tar archive\nArchive failed for module {}\n{}".format(type(tarexp), file, archive_dir, tarexp))
+
+    def archive_all_files(self):
+        with tarfile.open("all_introspects.tgz", mode="w:gz") as tar:
+            for file in self.__output_files:
+                try:
+                    archive_name = "all-introspects/"+file.strip("/tmp/")
+                    tar.add(file, arcname=archive_name)
+                except tarfile.TarError as terr:
+                    print("Failed to create a tar file archive due to error:\n{}".format(type(terr)))
+                except Exception as tarexp:
+                    print("Exception of type {} occurred when adding file {} to tar archive\n{}".format(type(tarexp), file, tarexp))
         tar.close()
+        self.delete_tmp_files(self.__output_files)
         return
 
     @staticmethod
     def delete_tmp_files(files_to_delete):
-        for files in files_to_delete.values():
-            for file in files:
-                rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
+        for file in files_to_delete:
+            rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
             if rm_file_op.stderr.read():
-                print("Failed to delete fil {} due to error:\n{}".format(file, rm_file_op.stderr.read()))
+                print("Failed to delete file {} due to error:\n{}".format(file, rm_file_op.stderr.read()))
         return
