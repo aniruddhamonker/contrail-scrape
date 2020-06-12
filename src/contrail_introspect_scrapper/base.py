@@ -11,43 +11,48 @@ import os
 import time
 import subprocess
 from collections import defaultdict
+from main_logger import logger
 
-END_OF_TEXT = '\n'+"#"*50+'\n\n'
-START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name)
-TIMEOUT = 60
+END_OF_TEXT = '\n'+"#"*50+'\n\n' # type: str
+START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name) # type: str
 
-class IntrospectBaseClass():
-    def __init__(self, all_nodes, num_threads):
-        self.all_nodes = all_nodes
-        self.num_threads = num_threads
-        #self.__output_files = defaultdict(list)
-        self.__output_files = []
-    
+class IntrospectBaseClass:
+    def __init__(self, all_nodes, num_threads, debug=False):
+        # type: (List[str, str], int) -> None
+        self.all_nodes = all_nodes # type: List[Dict[str, str]]
+        self.num_threads = num_threads # type: int
+        self.output_files = [] # type: List[str]
+        self.debug = debug
+        if self.debug:
+            logger.setLevel(logging.DEBUG)
+
     @classmethod
     def get_request(cls, url, retrcnt=5):
+        # type: (IntrospectBaseClass, str, int) -> str
         try:
-            response = requests.get(url, timeout=TIMEOUT)
+            response = requests.get(url, timeout=60) # type: requests.models.Response
             response.raise_for_status
+            logger.debug("Fetched url '{}' with response code: {}\n"\
+                .format(url, response.status_code))
         except requests.exceptions.ReadTimeout:
-            print('Read Timeout Occurred for URL: {}'.format(url))
+            logger.error('Read Timeout Occurred for URL: {}'.format(url))
         except requests.exceptions.ConnectionError:
-            print ("Error Connecting for url: {}".format(url))
-            print("Retrying {}: retry attempt {}".format(url, retrcnt))
             if retrcnt >=1:
+                logger.debug("Error connecting url: {}, retry attempt: {}"\
+                    .format(url, 5-retrcnt))
                 cls.get_request(url, retrcnt-1)
             else:
-                 print("All retry attempts failed for url: {} , moving on..".format(url))
-        except requests.exceptions.RequestException as err:
-            print ("OOps: Something Else",err)
-        #except Exception as err:
-         #   print('{} Error encountered : {}\n'\
-           #        .format(type(err), err))
+                 logger.warning("Error Connecting for url: {}\tattempts tried: 5"\
+                     .format(url))
+        except requests.exceptions.RequestException:
+            logger.error("OOps: Something Else")
         return response.text 
-        
-    @classmethod
+
+    @classmethod  
     def parse_response(cls, url, attrs=None):
-        text_response = cls.get_request(url)
-        parsed_response = bs(text_response, 'xml')
+        # type: (IntrospectBaseClass, str, Optional[str]) -> Optional[str, Iterator[str]]
+        text_response = cls.get_request(url) # type: str
+        parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
         if attrs is None:
             return parsed_response
         def __iter__():
@@ -56,30 +61,33 @@ class IntrospectBaseClass():
         return __iter__()
 
     def _get_index_page_nodes_url(self):
-        all_index_page_node_urls = []
+        # type: () -> Iterator[Tuple[str, str]]
+        all_index_page_node_urls = [] # type: List[Tuple[str, str]]
         for node in self.all_nodes:
-            url = node['url']
+            url = node['url'] # type: str
             index_page_nodes = [element.attrs for element in \
-                self.parse_response(url, {'href': re.compile(r'xml')} )]
-            all_index_page_node_urls.extend([(node['module'], url+'/'+index_page_node.get('href'))\
+                self.parse_response(url, {'href': re.compile(r'xml')} )] # type: List[str]
+            all_index_page_node_urls.extend([(node['module'], \
+                url+'/'+index_page_node.get('href'))\
                                 for index_page_node in index_page_nodes])
-        #import pdb; pdb.set_trace()
         yield from all_index_page_node_urls            
 
     def _fetch_introspect(self, queue):
-        sandesh_attrs = {'type': 'sandesh'}
+        # type: (queue.Queue) -> None
+        sandesh_attrs = {'type': 'sandesh'} #type: Dict[str, str]
         global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
-            index_page_node = queue.get()
-            index_page_node_url = index_page_node[1]
-            module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP')
-            module_name = index_page_node[0]
-            tmp_dir = "/tmp/{}-{}".format(module_name, module_ip)
+            index_page_node = queue.get() # type: Tuple[str, str]
+            index_page_node_url = index_page_node[1] # type: str
+            module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP') # type: str
+            module_name = index_page_node[0] # type: str
+            tmp_dir = "/tmp/{}-{}".format(module_name, module_ip) # type: str
             if not os.path.exists(tmp_dir):
                 os.mkdir(tmp_dir)
-            filename = "{}/{}".format(tmp_dir, index_page_node_url.split('/')[-1])
+            filename = "{}/{}".format(tmp_dir, index_page_node_url.split('/')[-1]) # type: str
             threading.current_thread().setName(filename)
-            #print("Thread: {} started".format(threading.current_thread().getName()))
+            logger.debug("Thread: {} is processing introspect: {}"\
+                .format(threading.currentThread.__name__, index_page_node_url ))
             try:
                 with open(filename, 'w') as op_file:
                     for introspect in self.parse_response(index_page_node_url, \
@@ -87,60 +95,83 @@ class IntrospectBaseClass():
                         op_file.write(START_MARKER(introspect.name)+"\n"\
                             +introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
                         introspect_url = re.sub(r'(http.*/).*$', r'\1', \
-                            index_page_node_url)+'Snh_'+introspect.name
-                        introspect_response = self.parse_response(introspect_url)
+                            index_page_node_url)+'Snh_'+introspect.name # type: str
+                        introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
                         op_file.write(introspect_response.prettify())
                         op_file.write(END_OF_TEXT)
                         if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
-                            for sandesh_trace_buf in introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
-                                op_file.write(START_MARKER(sandesh_trace_buf.text)+"\n"+sandesh_trace_buf.text+"\n"+END_MARKER(sandesh_trace_buf)+"\n")
-                                sandesh_trace_url = re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+'Snh_SandeshTraceRequest?x='+ "{}".format(sandesh_trace_buf.text)
+                            for sandesh_trace_buf in introspect_response.findAll\
+                                (attrs={"link":"SandeshTraceRequest"}):
+                                op_file.write(START_MARKER(sandesh_trace_buf.text)+\
+                                    "\n"+sandesh_trace_buf.text+"\n"+\
+                                        END_MARKER(sandesh_trace_buf)+"\n")
+                                sandesh_trace_url = \
+                                    re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+\
+                                        'Snh_SandeshTraceRequest?x='+ "{}"\
+                                            .format(sandesh_trace_buf.text)
                                 op_file.write(self.parse_response(sandesh_trace_url).prettify())
                                 op_file.write(END_OF_TEXT)                            
                         op_file.flush()
-            except UnboundLocalError:
-                pass
+            except UnboundLocalError as uberr:
+                logger.error("{}: {}".format(type(uberr), uberr))
             except Exception as exp:
-                #import pdb; pdb.set_trace()
-                print("Exception {} occurred for {}\nUnable to create output file: {}\n".format(type(exp), threading.current_thread().getName(), filename))
-            self.__output_files.append(filename)
+                logger.error("Exception {} occurred for {}\nUnable to create output file: {}\n"\
+                    .format(type(exp), threading.current_thread().getName(), filename))
+            self.output_files.append(filename)
             queue.task_done()
         return
 
     def fetch_all_introspects(self):
-        index_nodes_queue = queue.Queue()
+        # type: () -> None
+        index_nodes_queue = queue.Queue() # type: queue.Queue
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
-        threads = []
+        logger.debug("total number of introspect urls in the queue: {}"\
+            .format(index_nodes_queue.qsize()))
+        threads = [] # type: List[threading.Thread]
+        logger.debug("Initiating threads to fetch {} introspects from the queue"\
+            .format(index_nodes_queue.qsize))
         for _ in range(self.num_threads):
             try:
-                introspect_thread = threading.Thread(target=self._fetch_introspect, args=(index_nodes_queue,))
-                introspect_thread.start()
+                introspect_thread = threading.Thread\
+                    (target=self._fetch_introspect, args=(index_nodes_queue,)) # type: threading.Thread
+                introspect_thread.start() 
                 threads.append(introspect_thread)    
             except threading.ThreadError as err:
-                print("Failed to create thread {}\n{}\n{}".format(threading.current_thread.__name__, type(err), err))
-        print("Current active thread count is {}\n".format(threading.active_count()))
+                logger.error("Failed to create thread {}\n{}\n{}"\
+                    .format(threading.current_thread.__name__, type(err), err))
+        logger.debug("Current active thread count is {}\n"\
+            .format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
+        logger.info("Finishing introspection of all nodes\n")
+        return
 
     def archive_all_files(self):
-        with tarfile.open("all_introspects.tgz", mode="w:gz") as tar:
-            for file in self.__output_files:
+        # type: () -> None
+        logger.info("begining archive process..\n")
+        with tarfile.open("all-introspects.tgz", mode="w:gz") as tar:
+            for file in self.output_files:
                 try:
-                    archive_name = "all-introspects/"+file.strip("/tmp/")
+                    archive_name = "all-introspects/"+file.strip("/tmp/") # type: str
                     tar.add(file, arcname=archive_name)
                 except tarfile.TarError as terr:
-                    print("Failed to create a tar file archive due to error:\n{}".format(type(terr)))
+                    logger.error("Failed to create a tar file archive due to error:\n{}"\
+                        .format(type(terr)))
                 except Exception as tarexp:
-                    print("Exception of type {} occurred when adding file {} to tar archive\n{}".format(type(tarexp), file, tarexp))
+                    logger.error("Exception of type {} occurred when adding file {} to tar archive\n{}"\
+                        .format(type(tarexp), file, tarexp))
         tar.close()
-        self.delete_tmp_files(self.__output_files)
+        self.delete_tmp_files(self.output_files)
         return
 
     @staticmethod
     def delete_tmp_files(files_to_delete):
+    # type: (List[str]) -> None
         for file in files_to_delete:
-            rm_file_op = subprocess.Popen('rm  {}'.format(file), shell=True, stderr=subprocess.PIPE)
+            rm_file_op = subprocess.Popen('rm  {}'\
+                .format(file), shell=True, stderr=subprocess.PIPE)
             if rm_file_op.stderr.read():
-                print("Failed to delete file {} due to error:\n{}".format(file, rm_file_op.stderr.read()))
+                logger.error("Failed to delete file {} due to error:\n{}"\
+                    .format(file, rm_file_op.stderr.read()))
         return
