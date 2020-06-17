@@ -46,7 +46,7 @@ class IntrospectBaseClass:
                      .format(url))
         except requests.exceptions.RequestException:
             logger.error("OOps: Something Else")
-        return response.text 
+        return response.text
 
     @classmethod  
     def parse_response(cls, url, attrs=None):
@@ -140,7 +140,7 @@ class IntrospectBaseClass:
             except threading.ThreadError as err:
                 logger.error("Failed to create thread {}\n{}\n{}"\
                     .format(threading.current_thread.__name__, type(err), err))
-        logger.debug("Current active thread count is {}\n"\
+        logger.info("Current active thread count is {}\n"\
             .format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
