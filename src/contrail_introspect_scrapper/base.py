@@ -31,9 +31,11 @@ class IntrospectBaseClass:
         # type: (IntrospectBaseClass, str, int) -> str
         try:
             response = requests.get(url, timeout=60) # type: requests.models.Response
-            response.raise_for_status
-            logger.debug("Fetched url '{}' with response code: {}\n"\
+            if response:
+                response.raise_for_status
+                logger.debug("Fetched url '{}' with response code: {}\n"\
                 .format(url, response.status_code))
+                return response.text
         except requests.exceptions.ReadTimeout:
             logger.error('Read Timeout Occurred for URL: {}'.format(url))
         except requests.exceptions.ConnectionError:
@@ -46,7 +48,6 @@ class IntrospectBaseClass:
                      .format(url))
         except requests.exceptions.RequestException:
             logger.error("OOps: Something Else")
-        return response.text
 
     @classmethod  
     def parse_response(cls, url, attrs=None):
@@ -81,43 +82,40 @@ class IntrospectBaseClass:
             index_page_node_url = index_page_node[1] # type: str
             module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP') # type: str
             module_name = index_page_node[0] # type: str
-            tmp_dir = "/tmp/{}-{}".format(module_name, module_ip) # type: str
+            introspect_node = re.search(r'/(\w+).xml', index_page_node_url).group(1)
+            tmp_dir = "/tmp/scrape/{}-{}/{}".format(module_name, module_ip, introspect_node) # type: str
             if not os.path.exists(tmp_dir):
-                os.mkdir(tmp_dir)
-            filename = "{}/{}".format(tmp_dir, index_page_node_url.split('/')[-1]) # type: str
-            threading.current_thread().setName(filename)
+                os.makedirs(tmp_dir)
+            threading.current_thread().setName("{}-{}-{}"\
+                .format(module_ip, module_name, introspect_node))
             logger.debug("Thread: {} is processing introspect: {}"\
-                .format(threading.currentThread.__name__, index_page_node_url ))
-            try:
-                with open(filename, 'w') as op_file:
-                    for introspect in self.parse_response(index_page_node_url, \
-                        attrs=sandesh_attrs):
-                        op_file.write(START_MARKER(introspect.name)+"\n"\
-                            +introspect.name+"\n"+END_MARKER(introspect.name)+"\n")
+                .format(threading.currentThread().name, index_page_node_url ))
+            for introspect in self.parse_response(index_page_node_url, \
+                attrs=sandesh_attrs):
+                filename = tmp_dir+'/'+introspect.name
+                try:
+                    with open(filename, 'w') as op_file:
                         introspect_url = re.sub(r'(http.*/).*$', r'\1', \
                             index_page_node_url)+'Snh_'+introspect.name # type: str
                         introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
                         op_file.write(introspect_response.prettify())
-                        op_file.write(END_OF_TEXT)
                         if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                             for sandesh_trace_buf in introspect_response.findAll\
                                 (attrs={"link":"SandeshTraceRequest"}):
-                                op_file.write(START_MARKER(sandesh_trace_buf.text)+\
-                                    "\n"+sandesh_trace_buf.text+"\n"+\
-                                        END_MARKER(sandesh_trace_buf)+"\n")
-                                sandesh_trace_url = \
-                                    re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+\
-                                        'Snh_SandeshTraceRequest?x='+ "{}"\
-                                            .format(sandesh_trace_buf.text)
-                                op_file.write(self.parse_response(sandesh_trace_url).prettify())
-                                op_file.write(END_OF_TEXT)                            
+                                filename = tmp_dir+'/'+sandesh_trace_buf.text
+                                with open(filename, 'w') as op_file_trace:
+                                    sandesh_trace_url = \
+                                        re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+\
+                                            'Snh_SandeshTraceRequest?x='+ "{}"\
+                                                .format(sandesh_trace_buf.text)
+                                    op_file_trace.write(self.parse_response(sandesh_trace_url).prettify())
+                                    op_file_trace.flush()                  
                         op_file.flush()
-            except UnboundLocalError as uberr:
-                logger.error("{}: {}".format(type(uberr), uberr))
-            except Exception as exp:
-                logger.error("Exception {} occurred for {}\nUnable to create output file: {}\n"\
-                    .format(type(exp), threading.current_thread().getName(), filename))
-            self.output_files.append(filename)
+                except UnboundLocalError as uberr:
+                    logger.error("{}: {}".format(type(uberr), uberr))
+                except Exception as exp:
+                    logger.error("Exception {} occurred for {}\nUnable to create output file: {}\n"\
+                        .format(type(exp), threading.current_thread().getName(), filename))
             queue.task_done()
         return
 
@@ -130,7 +128,7 @@ class IntrospectBaseClass:
             .format(index_nodes_queue.qsize()))
         threads = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
-            .format(index_nodes_queue.qsize))
+            .format(index_nodes_queue.qsize()))
         for _ in range(self.num_threads):
             try:
                 introspect_thread = threading.Thread\
@@ -151,27 +149,23 @@ class IntrospectBaseClass:
         # type: () -> None
         logger.info("begining archive process..\n")
         with tarfile.open("all-introspects.tgz", mode="w:gz") as tar:
-            for file in self.output_files:
-                try:
-                    archive_name = "all-introspects/"+file.strip("/tmp/") # type: str
-                    tar.add(file, arcname=archive_name)
-                except tarfile.TarError as terr:
-                    logger.error("Failed to create a tar file archive due to error:\n{}"\
-                        .format(type(terr)))
-                except Exception as tarexp:
-                    logger.error("Exception of type {} occurred when adding file {} to tar archive\n{}"\
-                        .format(type(tarexp), file, tarexp))
+            try:
+                tar.add('/tmp/scrape', arcname='scrape')
+            except tarfile.TarError as terr:
+                logger.error("Failed to create a tar file archive due to error:\n{}"\
+                    .format(type(terr)))
+            except Exception as tarexp:
+                logger.error("Exception of type {} occurred when archiving files\n{}"\
+                    .format(type(tarexp), tarexp))
         tar.close()
-        self.delete_tmp_files(self.output_files)
+        self.delete_tmp_files()
         return
 
     @staticmethod
-    def delete_tmp_files(files_to_delete):
-    # type: (List[str]) -> None
-        for file in files_to_delete:
-            rm_file_op = subprocess.Popen('rm  {}'\
-                .format(file), shell=True, stderr=subprocess.PIPE)
-            if rm_file_op.stderr.read():
-                logger.error("Failed to delete file {} due to error:\n{}"\
-                    .format(file, rm_file_op.stderr.read()))
+    def delete_tmp_files():
+        rm_file_op = subprocess.Popen('rm  -rf {}'\
+            .format('/tmp/scrape'), shell=True, stderr=subprocess.PIPE)
+        if rm_file_op.stderr.read():
+            logger.error("Failed to perform cleanup due to error:\n{}"\
+                .format(rm_file_op.stderr.read()))
         return
