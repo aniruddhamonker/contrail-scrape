@@ -2,7 +2,6 @@ from config_parser import ConfigParser
 from base import IntrospectBaseClass
 
 all_nodes = ConfigParser()
-for node_args in all_nodes():
-    introspect = IntrospectBaseClass(node_args.get('url'))
-    introspect.fetch_all()
-    introspect.archive_introspect_output_files(node_args)
+introspect = IntrospectBaseClass(all_nodes(), 50, debug=True)
+introspect.fetch_all_introspects()
+introspect.archive_all_files()
