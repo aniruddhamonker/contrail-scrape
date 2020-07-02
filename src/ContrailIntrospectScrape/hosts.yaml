@@ -1,0 +1,56 @@
+---
+all:
+  control_plane:
+    control:
+      hosts:
+        - 10.85.188.101
+        - 10.85.188.102
+        - 10.85.188.103
+      port: 8083
+    config:
+      hosts:
+        - 10.85.188.101
+        - 10.85.188.102
+        - 10.85.188.103
+      port: 8084
+    analytics:
+      hosts:
+        - 10.85.188.101
+        - 10.85.188.102
+        - 10.85.188.103
+      port: 8090
+    alarmgen:
+      hosts:
+        # - host1
+        # - host2
+      port: 5995
+    collector:
+      hosts:
+        # - host1
+        # - host2
+    discovery:
+      hosts:
+        # - host1
+      port: 5997
+    schema:
+      hosts:
+        # - host1
+        # - host2
+      port: 8087
+    svc-monitor:
+      hosts:
+        # - host1
+        # - host2
+      port: 8088
+  vrouters:
+    kernel:
+      hosts:
+        - 10.85.180.79
+        - 10.85.188.104
+        - 10.85.188.105
+      port: 8085
+    dpdk:
+      hosts:
+        - 10.85.180.80
+      port: 8085
+...

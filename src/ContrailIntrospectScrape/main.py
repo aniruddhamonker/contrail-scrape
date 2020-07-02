@@ -1,5 +1,5 @@
-from config_parser import ConfigParser
-from base import IntrospectBaseClass
+from ContrailIntrospectScrape.config_parser import ConfigParser
+from ContrailIntrospectScrape.base import IntrospectBaseClass
 import sys
 
 version = '0.1.0'
