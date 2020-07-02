@@ -62,14 +62,6 @@ class IntrospectBaseClass:
             # import pdb; pdb.set_trace()
             return None
         parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
-        """ try:
-            text_response = cls.get_request(url) # type: str
-            parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
-        except TypeError:
-            pass #handled upstream in get_request
-            return None
-        except UnboundLocalError:
-            return None """
         if attrs is None:
             return parsed_response
         def __iter__():
@@ -79,24 +71,13 @@ class IntrospectBaseClass:
 
     def _get_index_page_nodes_url(self):
         # type: () -> Iterator[Tuple[str, str]]
-        # all_index_page_node_urls = [] # type: List[Tuple[str, str]]
-        # index_page_nodes = []
         for node in self.all_nodes:
             url = node['url'] # type: str
             try:
                 for element in self.parse_response(url, {'href': re.compile(r'xml')}):
-                    # if element.attr:
-                        # index_page_nodes.append(element.attrs)
                     yield (node['module'], url+'/'+element.attrs.get('href'))
             except TypeError:
                 continue
-
-            # index_page_nodes = [element.attrs for element in \
-            #     self.parse_response(url, {'href': re.compile(r'xml')} )] # type: List[str]
-            # all_index_page_node_urls.extend([(node['module'], \
-            #     url+'/'+index_page_node.get('href'))\
-            #                     for index_page_node in index_page_nodes])
-        # yield from all_index_page_node_urls            
 
     def _fetch_introspect(self, queue):
         # type: (queue.Queue) -> None
@@ -127,7 +108,7 @@ class IntrospectBaseClass:
                         if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                             for sandesh_trace_buf in introspect_response.findAll\
                                 (attrs={"link":"SandeshTraceRequest"}):
-                                filename = tmp_dir+'/'+sandesh_trace_buf.text
+                                filename = tmp_dir+'/'+sandesh_trace_buf.text.replace(" ", "_")
                                 with open(filename, 'w') as op_file_trace:
                                     introspect_url = \
                                         re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+\
