@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="contrail-introspect-scrape",
+    name="contrail-introspect-scraper",
     version="0.1.0",
     description="Collect Introspects from all Contrail nodes concurrently",
     long_description=README,
