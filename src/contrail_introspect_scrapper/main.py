@@ -10,5 +10,11 @@ if all_nodes.version:
     print("CONTRAIL-INTROSPECT-SCRAPE\nVERSION: {}".format(version))
     sys.exit()
 introspect = IntrospectBaseClass(all_nodes(), 50, debug=all_nodes.debug)
-introspect.fetch_all_introspects()
-introspect.archive_all_files()
+try:
+    introspect.fetch_all_introspects()
+    introspect.archive_all_files()
+except KeyboardInterrupt:
+    print("Interrupted\n")
+    print("Performing Cleanup...")
+    introspect.delete_tmp_files()
+    sys.exit(0)
