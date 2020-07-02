@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup as bs
 import html5lib
 import queue
 import re
-import queue
 import threading
 import tarfile
 import os

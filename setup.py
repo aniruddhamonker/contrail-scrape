@@ -10,26 +10,26 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="realpython-reader",
-    version="1.0.0",
-    description="Read the latest Real Python tutorials",
+    name="contrail-introspect-scrape",
+    version="0.1.0",
+    description="Collect Introspects from all Contrail nodes concurrently",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/realpython/reader",
-    author="Real Python",
-    author_email="office@realpython.com",
+    url="https://github.com/aniruddhamonker/contrail-introspect-scrapper",
+    author="Aniruddh Amonker",
+    author_email="aniruddh.amonker@live.com",
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.6.8",
     ],
-    packages=["reader"],
+    packages=["ContrailIntrospectScrape", "ContrailIntrospectCli"],
     include_package_data=True,
-    install_requires=["feedparser", "html2text"],
+    install_requires=["BeautifulSoup", "html5lib"],
     entry_points={
         "console_scripts": [
-            "realpython=reader.__main__:main",
+            "scrape=src.ContrailIntrospectScrape.__main__", "scrape-ist=src.ContrailIntrospectCli.ist:main"
         ]
     },
 )

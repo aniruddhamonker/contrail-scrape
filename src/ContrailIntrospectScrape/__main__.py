@@ -3,7 +3,6 @@ from ContrailIntrospectScrape.base import IntrospectBaseClass
 import sys
 
 version = '0.1.0'
-
 all_nodes = ConfigParser()
 # import pdb; pdb.set_trace()
 if all_nodes.version:
