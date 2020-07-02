@@ -24,6 +24,9 @@ class ConfigParser():
         conf_parser.add_argument('-vvv', "--debug", action='store_true', help="turn on debug mode")
         conf_parser.add_argument('-v', '--version', action='store_true', help="print the version number")
         all_args = conf_parser.parse_args()
+        if not any(all_args.__dict__.values()):
+            print("No Valid Input Arguments provided\nUse \"--help\" for available options\n")
+            sys.exit(1)
         return all_args
     
     def format_all_args(self):
