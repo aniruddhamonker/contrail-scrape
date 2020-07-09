@@ -7,13 +7,11 @@ import re
 import threading
 import tarfile
 import os
+import sys
 import time
 import subprocess
 from collections import defaultdict
-from ContrailIntrospectScrape.main_logger import logger
-
-END_OF_TEXT = '\n'+"#"*50+'\n\n' # type: str
-START_MARKER = END_MARKER = lambda introspect_name: "-"*len(introspect_name) # type: str
+from main_logger import logger
 
 class IntrospectBaseClass:
     def __init__(self, all_nodes, num_threads, debug=False):
@@ -26,27 +24,27 @@ class IntrospectBaseClass:
             logger.setLevel(logging.DEBUG)
 
     @classmethod
-    def get_request(cls, url, retrcnt=5):
+    def get_request(cls, url, retrcnt=3):
         # type: (IntrospectBaseClass, str, int) -> str
         try:
             response = requests.get(url, timeout=5) # type: requests.models.Response
-            if response:
-                response.raise_for_status()
-                logger.debug("Fetched url '{}' with response code: {}\n"\
-                .format(url, response.status_code))
-                return response.text
+            response.raise_for_status()
+            logger.debug("Fetched url '{}' with response code: {}\n"\
+            .format(url, response.status_code))
+            return response.text
         except requests.exceptions.ReadTimeout:
             logger.error('Read Timeout Occurred for URL: {}'.format(url))
         except requests.exceptions.ConnectionError:
             if retrcnt >=1:
-                logger.debug("Error connecting url: {}, retry attempt: {}"\
-                    .format(url, 6-retrcnt))
+                logger.error("Error connecting url: {}, retry attempt: {}"\
+                    .format(url, 4-retrcnt))
                 cls.get_request(url, retrcnt-1)
             else:
-                 logger.warning("Error Connecting for url: {}\tattempts tried: 5"\
+                logger.error("Error Connecting for url: {}\tattempts tried: 3"\
                      .format(url))
+                logger.error("Check if introspect port is correct\n")
         except requests.exceptions.HTTPError:
-            logger.error("introspect returned error {} for url {}"\
+            logger.error("introspect returned error response {} for url {}"\
                 .format(response.status_code, url))
         except requests.exceptions.RequestException:
             logger.error("OOps: Something Else")
@@ -57,7 +55,7 @@ class IntrospectBaseClass:
         text_response = cls.get_request(url) # type: str
         if not text_response:
             # import pdb; pdb.set_trace()
-            return None
+            raise ValueError
         parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
         if attrs is None:
             return parsed_response
@@ -73,55 +71,61 @@ class IntrospectBaseClass:
             try:
                 for element in self.parse_response(url, {'href': re.compile(r'xml')}):
                     yield (node['module'], url+'/'+element.attrs.get('href'))
-            except TypeError:
+            except ValueError:
                 continue
 
     def _fetch_introspect(self, queue):
         # type: (queue.Queue) -> None
         sandesh_attrs = {'type': 'sandesh'} #type: Dict[str, str]
-        global END_OF_TEXT, START_MARKER, END_MARKER
         while not queue.empty():
             index_page_node = queue.get() # type: Tuple[str, str]
-            index_page_node_url = index_page_node[1] # type: str
-            module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP') # type: str
-            module_name = index_page_node[0] # type: str
-            introspect_node = re.search(r'/(\w+).xml', index_page_node_url).group(1)
-            tmp_dir = "/tmp/scrape/{}-{}/{}".format(module_name, module_ip, introspect_node) # type: str
-            if not os.path.exists(tmp_dir):
-                os.makedirs(tmp_dir)
-            threading.current_thread().setName("{}-{}-{}"\
-                .format(module_ip, module_name, introspect_node))
-            logger.debug("Thread: {} is processing introspect: {}"\
-                .format(threading.currentThread().name, index_page_node_url ))
+            tmp_dir, index_page_node_url = self.get_output_dir(index_page_node)
             for introspect in self.parse_response(index_page_node_url, \
                 attrs=sandesh_attrs):
                 filename = tmp_dir+'/'+introspect.name
-                try:
-                    with open(filename, 'w') as op_file:
-                        introspect_url = re.sub(r'(http.*/).*$', r'\1', \
-                            index_page_node_url)+'Snh_'+introspect.name # type: str
-                        introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
-                        op_file.write(introspect_response.prettify())
-                        if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
-                            for sandesh_trace_buf in introspect_response.findAll\
-                                (attrs={"link":"SandeshTraceRequest"}):
-                                filename = tmp_dir+'/'+sandesh_trace_buf.text.replace(" ", "_")
-                                with open(filename, 'w') as op_file_trace:
-                                    introspect_url = \
-                                        re.sub(r'(http.*/).*$', r'\1', index_page_node_url)+\
-                                            'Snh_SandeshTraceRequest?x='+ "{}"\
-                                                .format(sandesh_trace_buf.text)
-                                    op_file_trace.write(self.parse_response(introspect_url).prettify())
-                                    op_file_trace.flush()                  
-                        op_file.flush()
-                except UnboundLocalError as uberr:
-                    logger.error("{}: {} occurred for file {}".format(type(uberr), uberr, filename))
-                except AttributeError:
-                    pass
-                except Exception as exp:
-                    logger.debug("Exception {} occurred for url {}".format(type(exp), introspect_url))
-                    logger.error("Unable to create output file: {}\n".format(filename))
+                introspect_url = re.sub(r'(http.*/).*$', r'\1', \
+                    index_page_node_url)+'Snh_'+introspect.name # type: str
+                try:                 
+                    introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
+                except ValueError:
+                    logger.error("Failed to create output file for introspect: {}\n"\
+                        .format(introspect.name))
+                    continue
+                self.create_and_write_files(filename, introspect_response)
+                if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
+                    self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
             queue.task_done()
+
+    def fetch_sandesh_traces(self, introspect_response, filepath, url):
+        for sandesh_trace_buf in introspect_response.findAll\
+                    (attrs={"link":"SandeshTraceRequest"}):
+            filename = filepath+'/'+sandesh_trace_buf.text.replace(" ", "_")
+            introspect_url = re.sub(r'(http.*/).*$', r'\1', url)+\
+                'Snh_SandeshTraceRequest?x='+ "{}".format(sandesh_trace_buf.text)
+            sandesh_trace = self.parse_response(introspect_url)
+            self.create_and_write_files(filename, sandesh_trace)
+        return
+
+    @staticmethod
+    def get_output_dir(index_page_node):
+        index_page_node_url = index_page_node[1] # type: str
+        module_ip = re.search(r'//(?P<IP>.*):', index_page_node_url).group('IP') # type: str
+        module_name = index_page_node[0] # type: str
+        introspect_node = re.search(r'/(\w+).xml', index_page_node_url).group(1)
+        tmp_dir = "/tmp/scrape/{}-{}/{}".format(module_name, module_ip, introspect_node) # type: str
+        if not os.path.exists(tmp_dir):
+            os.makedirs(tmp_dir)
+        return (tmp_dir, index_page_node_url)
+
+    @staticmethod
+    def create_and_write_files(filename, introspect_response):
+        try:
+            with open(filename, 'w') as op_file:
+                op_file.write(introspect_response.prettify())
+                op_file.flush()
+        except Exception as exp:
+            logger.error("Exception {} occurred\n".format(type(exp)))
+            logger.error("Failed to create output file {}".format(filename))
         return
 
     def fetch_all_introspects(self):
@@ -131,6 +135,9 @@ class IntrospectBaseClass:
             index_nodes_queue.put(node)
         logger.debug("total number of introspect urls in the queue: {}"\
             .format(index_nodes_queue.qsize()))
+        if index_nodes_queue.empty():
+            logger.error("No nodes found in the queue. check connectivity to introspect nodes\n")
+            sys.exit(0)
         threads = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
             .format(index_nodes_queue.qsize()))

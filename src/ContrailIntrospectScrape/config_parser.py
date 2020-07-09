@@ -2,7 +2,7 @@ import sys
 import argparse
 import yaml
 import re
-from ContrailIntrospectScrape.metadata import module_args as margs
+from metadata import module_args as margs
 from collections import namedtuple
 
 class ConfigParser():
