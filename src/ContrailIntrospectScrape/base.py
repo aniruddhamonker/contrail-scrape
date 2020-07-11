@@ -92,9 +92,21 @@ class IntrospectBaseClass:
                         .format(introspect.name))
                     continue
                 self.create_and_write_files(filename, introspect_response)
+                if introspect.name == 'SandeshUVETypesReq':
+                    self.fetch_all_uve_types(introspect_url, tmp_dir)
                 if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                     self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
             queue.task_done()
+    
+    def fetch_all_uve_types(self, introspect_url, filepath):
+        all_uve_types = self.parse_response(introspect_url)
+        for uve in all_uve_types.findAll('type_name'):
+            uve_name = 'SandeshUVECacheReq?tname=' + uve.text
+            uve_url = re.sub(r'(http.*/).*$', r'\1', introspect_url) + 'Snh_' + uve_name
+            uve_response = self.parse_response(uve_url)
+            filename = filepath + '/' + uve_name
+            self.create_and_write_files(filename, uve_response)
+        return
 
     def fetch_sandesh_traces(self, introspect_response, filepath, url):
         for sandesh_trace_buf in introspect_response.findAll\
