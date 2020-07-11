@@ -50,19 +50,20 @@ ServiceMap = {
 
 class Introspect:
     def __init__ (self, host, port, filename):
-
         self.host_url = "http://" + host + ":" + str(port) + "/"
         self.filename = filename
 
     def get (self, path):
         """ get introspect output """
         self.output_etree = []
-        # import pdb; pdb.set_trace()
-
-        # load xml output from given file
+        #load xml output from given file
+        #import pdb; pdb.set_trace()
         if self.filename:
             try:
-                path_filter = re.search(r'^Snh_(\w+)?', path).group(1)
+                if 'SandeshUVECacheReq' in path:
+                    path_filter = re.search(r'^Snh_(.*)$', path).group(1)
+                else:
+                    path_filter = re.search(r'^Snh_(\w+)?', path).group(1)
                 dup_count = 0
                 for root, _, filenames in os.walk(os.getcwd()):
                     for file in fnmatch.filter(filenames, path_filter):
