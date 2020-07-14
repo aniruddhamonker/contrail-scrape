@@ -2028,7 +2028,7 @@ def main():
     parser.add_argument('--file',     type=str,             help="Introspect file")
 
     roleparsers = parser.add_subparsers(dest='roleparsers')
-
+    filename = 'dummy'
     for svc in sorted(ServiceMap.keys()):
         p = roleparsers.add_parser(svc, help=ServiceMap[svc])
         if 'CLI_%s' % (svc) in globals():
@@ -2043,3 +2043,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
