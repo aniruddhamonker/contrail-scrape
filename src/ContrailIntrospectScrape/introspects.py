@@ -1,4 +1,5 @@
 from base import BaseClass
+from tqdm import tqdm
 import logging
 from main_logger import logger
 import queue
@@ -7,9 +8,9 @@ import threading
 import sys
 
 class IntrospectClass(BaseClass):
-    def __init__(self, all_nodes, num_threads, debug=False):
+    def __init__(self, introspect_args, num_threads, debug=False):
     # type: (List[str, str], int) -> None
-        self.all_nodes = all_nodes # type: List[Dict[str, str]]
+        self.introspect_args = introspect_args # type: List[Dict[str, str]]
         self.num_threads = num_threads # type: int
         self.debug = debug
         if self.debug:
@@ -17,20 +18,27 @@ class IntrospectClass(BaseClass):
 
     def _get_index_page_nodes_url(self):
     # type: () -> Iterator[Tuple[str, str]]
-        for node in self.all_nodes:
+        for node in self.introspect_args:
             url = node['url'] # type: str
             try:
                 for element in self.parse_response(url, {'href': re.compile(r'xml')}):
                     yield (node['module'], url+'/'+element.attrs.get('href'))
             except ValueError:
                 continue
+    
+    def get_output_dir(self, index_page_node):
+        module_ip = re.search(r'//(?P<IP>.*):', index_page_node[1]).group('IP') # type: str
+        module_name = index_page_node[0] # type: str
+        introspect_node = re.search(r'/(\w+).xml', index_page_node[1]).group(1)
+        return self._get_output_dir(module_ip, module_name, introspect_node)
 
     def _fetch_introspect(self, queue):
         # type: (queue.Queue) -> None
         sandesh_attrs = {'type': 'sandesh'} #type: Dict[str, str]
         while not queue.empty():
             index_page_node = queue.get() # type: Tuple[str, str]
-            tmp_dir, index_page_node_url = self.get_output_dir(index_page_node)
+            index_page_node_url = index_page_node[1] # type: str
+            tmp_dir = self.get_output_dir(index_page_node)
             for introspect in self.parse_response(index_page_node_url, \
                 attrs=sandesh_attrs):
                 filename = tmp_dir+'/'+introspect.name
@@ -42,11 +50,12 @@ class IntrospectClass(BaseClass):
                     logger.error("Failed to create output file for introspect: {}\n"\
                         .format(introspect.name))
                     continue
-                self.create_and_write_files(filename, introspect_response)
+                self.create_and_write_files(filename, introspect_response.prettify())
                 if introspect.name == 'SandeshUVETypesReq':
                     self.fetch_all_uve_types(introspect_url, tmp_dir)
                 if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                     self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
+            self.pbar.update()
             queue.task_done()
     
     def fetch_all_uve_types(self, introspect_url, filepath):
@@ -56,7 +65,7 @@ class IntrospectClass(BaseClass):
             uve_url = re.sub(r'(http.*/).*$', r'\1', introspect_url) + 'Snh_' + uve_name
             uve_response = self.parse_response(uve_url)
             filename = filepath + '/' + uve_name
-            self.create_and_write_files(filename, uve_response)
+            self.create_and_write_files(filename, uve_response.prettify())
         return
 
     def fetch_sandesh_traces(self, introspect_response, filepath, url):
@@ -70,7 +79,7 @@ class IntrospectClass(BaseClass):
             except ValueError:
                 logger.error("Failed to create output file for introspect: {}\n"\
                         .format(sandesh_trace_buf.text.replace(" ", "_")))
-            self.create_and_write_files(filename, sandesh_trace)
+            self.create_and_write_files(filename, sandesh_trace.prettify())
         return
 
     def fetch_all_introspects(self):
@@ -78,6 +87,8 @@ class IntrospectClass(BaseClass):
         index_nodes_queue = queue.Queue() # type: queue.Queue
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
+        self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \
+            unit='thread', desc="Introspect Progress")
         logger.debug("total number of introspect urls in the queue: {}"\
             .format(index_nodes_queue.qsize()))
         if index_nodes_queue.empty():
@@ -95,9 +106,10 @@ class IntrospectClass(BaseClass):
             except threading.ThreadError as err:
                 logger.error("Failed to create thread {}\n{}\n{}"\
                     .format(threading.current_thread.__name__, type(err), err))
-        logger.info("Current active thread count is {}\n"\
+        logger.debug("Current active thread count is {}\n"\
             .format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
+        self.pbar.close()
         logger.info("Finishing introspection of all nodes\n")
         return
