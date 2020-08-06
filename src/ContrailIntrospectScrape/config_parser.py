@@ -7,20 +7,21 @@ from collections import namedtuple
 
 class ConfigParser():
     def __init__(self):
+        with open('metadata.yaml') as meta:
+            self.margs = yaml.load(meta, Loader=yaml.FullLoader) 
         self.__all_args = self.parse_all_args()
         self.__debug = True if self.__all_args.debug else False
         self.__version = True if self.__all_args.version else False
 
-    @staticmethod
-    def parse_all_args(args=None):
+    def parse_all_args(self, args=None):
         conf_parser = argparse.ArgumentParser()
-        conf_parser.add_argument("-c", "--config",
+        conf_parser.add_argument("-c", "--yaml-config",
                                  help="path to YAML configuration file",
-                                 metavar="FILE")                                       
-        for arg_opts in margs.values():
-            conf_parser.add_argument(arg_opts.option, arg_opts.name, \
-                action='append', metavar="<ip-addr>", help="IP address or hostname to fetch introspect from \
-                    {} module".format(arg_opts.help))
+                                 metavar="FILE")                        
+        for arg in self.margs['argparser'].values():
+            conf_parser.add_argument(arg['short_name'], arg['option_name'], \
+            action='append', metavar="<ip-addr>", help="IP address or hostname to fetch introspect from \
+                {} module".format(arg['help']))
         conf_parser.add_argument('-vvv', "--debug", action='store_true', help="turn on debug mode")
         conf_parser.add_argument('-v', '--version', action='store_true', help="print the version number")
         all_args = conf_parser.parse_args()
@@ -30,7 +31,6 @@ class ConfigParser():
         return all_args
     
     def format_all_args(self):
-        # all_args = self.parse_all_args()
         module_args = namedtuple("module_args","module, ip, port")
         all_formatted_args = []
         if self.__all_args.config:
@@ -41,7 +41,7 @@ class ConfigParser():
         else:
             for key, val in self.__all_args.__dict__.items():
                  if val is not None and isinstance(val, list):
-                     all_formatted_args.append(module_args(key, val, margs.get(key).port))
+                     all_formatted_args.append(module_args(key, val, self.margs['argparser'][key]['port']))
         yield from all_formatted_args
     
     @classmethod
@@ -57,15 +57,16 @@ class ConfigParser():
         introspect_urls = []
         # import pdb; pdb.set_trace()
         for arg in self.format_all_args():
-            # if isinstance(arg, namedtuple):
-             for ip in arg.ip:
+            mtype = "analytics-api" if arg.module == "analytics_api_uves" else "introspect"
+            for ip in arg.ip:
                 module_and_url = {
+                "type": mtype,
                 "url": 'http://{}:{}'.format(ip, arg.port),
                 "module": arg.module
                 }
                 introspect_urls.append(module_and_url)
         return introspect_urls
-
+    
     @property
     def debug(self):
         return self.__debug
