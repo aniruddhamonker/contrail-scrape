@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
-from metadata import analytics_api_nodes
 from base import BaseClass
 from main_logger import logger
 import logging
@@ -10,9 +9,12 @@ import os
 import re
 import queue
 import threading
+import time
 
 class AnalyticsApiClass(BaseClass):
     def __init__(self, debug=False):
+        self.errors = False
+        self.logfile = logger.handlers[0].__dict__['baseFilename']
         if debug:
             self.debug = debug
             logger.setLevel(logging.DEBUG)
@@ -20,7 +22,7 @@ class AnalyticsApiClass(BaseClass):
     def get_api_nodes(self, queue):
         while not queue.empty():
             api_arg = queue.get()
-            for node in analytics_api_nodes:
+            for node in ['uves', 'queries', 'alarms']:
                 node_dir_path = self.get_output_dir(api_arg['url'], node)
                 api_node_url = api_arg['url']+'/analytics/'+ node
                 # yield (api_node_url, node_dir_path)
@@ -59,7 +61,6 @@ class AnalyticsApiClass(BaseClass):
 
     def fetch_all_analytics_apis(self, api_args):
         analytics_api_queue = queue.Queue()
-        # import pdb; pdb.set_trace()
         for arg in api_args:
             analytics_api_queue.put(arg)
         logger.debug("total number of analytics api nodes in the queue: {}"\
@@ -67,7 +68,8 @@ class AnalyticsApiClass(BaseClass):
         threads = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch apis of {} analytics nodes from the queue"\
             .format(analytics_api_queue.qsize()))
-        self.pbar = tqdm(total=28*len(api_args), ncols=150, unit='uves', desc="Analytics-api Progress")
+        self.pbar = tqdm(total=28*len(api_args), ncols=100, \
+            unit='uves', desc="Analytics-api Progress", position=1)
         for _ in range(analytics_api_queue.qsize()):
             try:
                 analytics_api_thread = threading.Thread\
@@ -77,12 +79,18 @@ class AnalyticsApiClass(BaseClass):
             except threading.ThreadError as err:
                 logger.error("Failed to create thread {}\n{}\n{}"\
                     .format(threading.current_thread.__name__, type(err), err))
+                self.errors = True
         logger.debug("Current active thread count is {}\n"\
             .format(threading.active_count()))
         for analytics_api_thread in threads:
             analytics_api_thread.join()
         self.pbar.close()
-        logger.info("Finishing api scraping of analytics nodes\n")
+        if self.errors == True:
+            print("\nFinishing api scraping of all analytics nodes with errors\n")
+            print("Please check log file {} for details".format(self.logfile))
+        else:
+            print("\nFinishing api scraping of all analytics nodes")
+            print("No Errors reported")
         return
 
 
