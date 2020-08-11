@@ -19,7 +19,7 @@ class BaseClass:
         try:
             response = requests.get(url, timeout=5) # type: requests.models.Response
             response.raise_for_status()
-            logger.debug("Fetched url '{}' with response code: {}\n"\
+            logger.debug("Fetched url '{}' with response code: {}"\
             .format(url, response.status_code))
             return response.text
         except requests.exceptions.ReadTimeout:
@@ -30,9 +30,9 @@ class BaseClass:
                     .format(url, 4-retrcnt))
                 cls.get_request(url, retrcnt-1)
             else:
-                logger.error("Error Connecting for url: {}\tattempts tried: 3"\
+                print("Error Connecting node: {}\tattempts tried: 3"\
                      .format(url))
-                logger.error("Check if introspect port is correct\n")
+                print("Check if introspect port is correct")
         except requests.exceptions.HTTPError:
             logger.error("introspect returned error response {} for url {}"\
                 .format(response.status_code, url))
@@ -75,15 +75,15 @@ class BaseClass:
 
     def archive_all_files(self):
         # type: () -> None
-        logger.info("begining archive process..\n")
+        print("Begining archive process..\n")
         with tarfile.open("contrail-scrape.tgz", mode="w:gz") as tar:
             try:
                 tar.add('/tmp/scrape', arcname='scrape')
             except tarfile.TarError as terr:
-                logger.error("Failed to create a tar file archive due to error:\n{}"\
+                logger.error("Failed to create a tar file archive due to error: {}"\
                     .format(type(terr)))
             except Exception as tarexp:
-                logger.error("Exception of type {} occurred when archiving files\n{}"\
+                logger.error("Exception of type {} occurred when archiving files {}"\
                     .format(type(tarexp), tarexp))
         tar.close()
         self.delete_tmp_files()
@@ -94,6 +94,6 @@ class BaseClass:
         rm_file_op = subprocess.Popen('rm  -rf {}'\
             .format('/tmp/scrape'), shell=True, stderr=subprocess.PIPE)
         if rm_file_op.stderr.read():
-            logger.error("Failed to perform cleanup due to error:\n{}"\
+            logger.error("Failed to perform cleanup due to error: {}"\
                 .format(rm_file_op.stderr.read()))
         return
