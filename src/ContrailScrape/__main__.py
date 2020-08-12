@@ -1,7 +1,7 @@
-from config_parser import ConfigParser
-from introspects import IntrospectClass
-from analytics_uves import AnalyticsApiClass
-from base import BaseClass
+from ContrailScrape.config_parser import ConfigParser
+from ContrailScrape.introspects import IntrospectClass
+from ContrailScrape.analytics_uves import AnalyticsApiClass
+from ContrailScrape.base import BaseClass
 import sys
 
 version = "0.1.0"

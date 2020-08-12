@@ -12,7 +12,9 @@ class IntrospectClass(BaseClass):
     # type: (List[str, str], int) -> None
         self.introspect_args = introspect_args # type: List[Dict[str, str]]
         self.num_threads = num_threads # type: int
+        self.errors = False
         self.debug = debug
+        self.logfile = logger.handlers[0].__dict__['baseFilename']
         if self.debug:
             logger.setLevel(logging.DEBUG)
 
@@ -24,6 +26,7 @@ class IntrospectClass(BaseClass):
                 for element in self.parse_response(url, {'href': re.compile(r'xml')}):
                     yield (node['module'], url+'/'+element.attrs.get('href'))
             except ValueError:
+                self.errors = True
                 continue
     
     def get_output_dir(self, index_page_node):
@@ -47,8 +50,9 @@ class IntrospectClass(BaseClass):
                 try:                 
                     introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
                 except ValueError:
-                    logger.error("Failed to create output file for introspect: {}\n"\
+                    logger.error("Failed to create output file for introspect: {}"\
                         .format(introspect.name))
+                    self.errors = True
                     continue
                 self.create_and_write_files(filename, introspect_response.prettify())
                 if introspect.name == 'SandeshUVETypesReq':
@@ -77,8 +81,9 @@ class IntrospectClass(BaseClass):
             try:
                 sandesh_trace = self.parse_response(introspect_url)
             except ValueError:
-                logger.error("Failed to create output file for introspect: {}\n"\
+                logger.error("Failed to create output file for introspect: {}"\
                         .format(sandesh_trace_buf.text.replace(" ", "_")))
+                self.errors = True
             self.create_and_write_files(filename, sandesh_trace.prettify())
         return
 
@@ -87,16 +92,16 @@ class IntrospectClass(BaseClass):
         index_nodes_queue = queue.Queue() # type: queue.Queue
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
-        self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \
-            unit='thread', desc="Introspect Progress")
         logger.debug("total number of introspect urls in the queue: {}"\
             .format(index_nodes_queue.qsize()))
         if index_nodes_queue.empty():
-            logger.error("No nodes found in the queue. check connectivity to introspect nodes\n")
+            print("No introspect nodes found. Check connectivity to introspect nodes\n")
             sys.exit(0)
         threads = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
             .format(index_nodes_queue.qsize()))
+        self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \
+            unit='thread', desc="Introspection Progress", position=1)
         for _ in range(self.num_threads):
             try:
                 introspect_thread = threading.Thread\
@@ -106,10 +111,15 @@ class IntrospectClass(BaseClass):
             except threading.ThreadError as err:
                 logger.error("Failed to create thread {}\n{}\n{}"\
                     .format(threading.current_thread.__name__, type(err), err))
-        logger.debug("Current active thread count is {}\n"\
+        logger.debug("Current active thread count is {}"\
             .format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
         self.pbar.close()
-        logger.info("Finishing introspection of all nodes\n")
+        if self.errors == True:
+            print("Finishing introspection of all nodes with Errors")
+            print("Please check log file {} for details".format(self.logfile))
+        else:
+            print("Finishing introspection of all nodes")
+            print("No Errors reported")
         return
