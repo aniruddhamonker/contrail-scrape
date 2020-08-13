@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
-from base import BaseClass
+from ContrailScrape.base import BaseClass
 from main_logger import logger
 import logging
 import json
@@ -9,7 +9,6 @@ import os
 import re
 import queue
 import threading
-import time
 
 class AnalyticsApiClass(BaseClass):
     def __init__(self, debug=False):

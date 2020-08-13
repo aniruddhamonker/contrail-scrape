@@ -1,4 +1,4 @@
-from base import BaseClass
+from ContrailScrape.base import BaseClass
 from tqdm import tqdm
 import logging
 from main_logger import logger
