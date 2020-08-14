@@ -22,13 +22,15 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
     ],
+    package_dir={'': 'src'},
     packages=["ContrailScrape"],
-    include_package_data=True,
-    install_requires=["beautifulsoup4", "tqdm", "lxml", "PrettyTable", "html5lib" ],
+    package_data = {'ContrailScrape': ['data/*.yaml']},
+    data_files = [('/etc/contrail-scrape', ['src/ContrailScrape/data/hosts.yaml'])],
+    install_requires=["beautifulsoup4", "tqdm==4.48.2", "lxml", "PrettyTable", "html5lib" ],
     entry_points={
         "console_scripts": [
-            "contrail-scrape=ContrailScrape.__main__:main",
-            "contrail-scrape-ist=ContrailScrape.contrail-scrape-ist:main",
+            "contrail-scrape=__main__:main",
+            "contrail-scrape-ist=scrape_ist:main",
         ]
     },
 )
