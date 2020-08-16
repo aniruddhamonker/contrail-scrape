@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="contrail-scrape",
-    version="0.1.1",
+    version="0.1.2",
     description="crawler for all the APIs of Juniper Contrail nodes",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -25,11 +25,12 @@ setup(
     package_dir={'': 'src'},
     packages=["ContrailScrape"],
     package_data = {'ContrailScrape': ['data/*.yaml']},
-    install_requires=["beautifulsoup4", "tqdm==4.48.2", "lxml", "PrettyTable", "html5lib" ],
+    install_requires=["beautifulsoup4", "tqdm==4.48.2", "lxml", \
+        "PrettyTable", "html5lib",],
     entry_points={
         "console_scripts": [
-            "contrail-scrape=main:main",
-            "contrail-scrape-ist=scrape_ist:main",
+            "contrail-scrape = ContrailScrape.main:main",
+            "contrail-scrape-ist = ContrailScrape.scrape_ist:main",
         ]
     },
 )
