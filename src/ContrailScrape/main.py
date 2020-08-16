@@ -4,7 +4,7 @@ from ContrailScrape.analytics_uves import AnalyticsApiClass
 from ContrailScrape.base import BaseClass
 import sys
 
-version = "0.1.0"
+version = "0.1.1"
 
 def get_version():
     print("CONTRAIL-INTROSPECT-SCRAPE\nVERSION: {}".format(version))
