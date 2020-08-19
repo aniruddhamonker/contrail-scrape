@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="contrail-scrape",
-    version="0.1.2",
+    version="0.1.4",
     description="crawler for all the APIs of Juniper Contrail nodes",
     long_description=README,
     long_description_content_type="text/markdown",

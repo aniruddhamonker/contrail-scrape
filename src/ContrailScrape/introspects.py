@@ -1,7 +1,7 @@
 from ContrailScrape.base import BaseClass
 from tqdm import tqdm
 import logging
-from main_logger import logger
+from ContrailScrape.main_logger import logger
 import queue
 import re
 import threading
