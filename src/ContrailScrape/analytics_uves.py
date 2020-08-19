@@ -1,14 +1,14 @@
 import requests
-from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
-from ContrailScrape.base import BaseClass
-from ContrailScrape.main_logger import logger
 import logging
 import json
 import os
 import re
 import queue
 import threading
+from bs4 import BeautifulSoup as bs
+from ContrailScrape.base import BaseClass
+from ContrailScrape.main_logger import logger
 
 class AnalyticsApiClass(BaseClass):
     def __init__(self, debug=False):
