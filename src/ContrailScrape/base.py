@@ -7,7 +7,7 @@ import os
 import time
 import subprocess
 from collections import defaultdict
-from ContrailScrape.main_logger import logger
+from ContrailScrape import logger
 
 class BaseClass:
     def __init__(self):

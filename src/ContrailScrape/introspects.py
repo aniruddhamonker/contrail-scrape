@@ -1,11 +1,10 @@
-from ContrailScrape.base import BaseClass
 from tqdm import tqdm
 import logging
-from ContrailScrape.main_logger import logger
 import queue
 import re
 import threading
 import sys
+from ContrailScrape import BaseClass, logger
 
 class IntrospectClass(BaseClass):
     def __init__(self, introspect_args, num_threads, debug=False):

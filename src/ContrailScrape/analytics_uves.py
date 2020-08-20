@@ -7,8 +7,7 @@ import re
 import queue
 import threading
 from bs4 import BeautifulSoup as bs
-from ContrailScrape.base import BaseClass
-from ContrailScrape.main_logger import logger
+from ContrailScrape import BaseClass, logger
 
 class AnalyticsApiClass(BaseClass):
     def __init__(self, debug=False):

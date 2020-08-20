@@ -1,8 +1,5 @@
-from ContrailScrape.config_parser import ConfigParser
-from ContrailScrape.introspects import IntrospectClass
-from ContrailScrape.analytics_uves import AnalyticsApiClass
-from ContrailScrape.base import BaseClass
 import sys
+import ContrailScrape
 
 version = "0.1.4"
 
@@ -12,18 +9,18 @@ def get_version():
 
 def fetch_all_introspects(introspect_args, debug):
     if introspect_args:
-        introspect = IntrospectClass(introspect_args, 50, debug)
+        introspect = ContrailScrape.IntrospectClass(introspect_args, 50, debug)
         return introspect.fetch_all_introspects()
 
 def fetch_analytics_api(api_args, debug):
     if api_args:
-        analytics_api = AnalyticsApiClass(debug)
+        analytics_api = ContrailScrape.AnalyticsApiClass(debug)
         return analytics_api.fetch_all_analytics_apis(api_args)
 
 def main():
-    config_parser = ConfigParser()
+    config_parser = ContrailScrape.ConfigParser()
     all_args = config_parser()
-    base = BaseClass()
+    base = ContrailScrape.BaseClass()
     if config_parser.version:
         get_version()
     try:
