@@ -57,13 +57,12 @@ class Introspect:
         """ get introspect output """
         self.output_etree = []
         #load xml output from given file
-        #import pdb; pdb.set_trace()
         if self.filename:
             try:
-                if 'SandeshUVECacheReq' in path:
-                    path_filter = re.search(r'^Snh_(.*)$', path).group(1)
-                else:
+                if 'Snh_' in path:
                     path_filter = re.search(r'^Snh_(\w+)?', path).group(1)
+                else:
+                    path_filter = path.replace(' ', '_')
                 dup_count = 0
                 for root, _, filenames in os.walk(os.getcwd()):
                     for file in fnmatch.filter(filenames, path_filter):
@@ -77,11 +76,11 @@ class Introspect:
                         else:
                             print("file {} not found under directory: {}\n"\
                                 .format(file, os.getcwd()))
-                print("Loading from introspect xml %s" % self.filename)
+                print("Loading from introspect xml:  %s" % self.filename)
                 self.output_etree.append(etree.parse(self.filename))
-            except Exception as inst:
-                print("ERROR: parsing %s failed " % self.filename)
-                print(inst)
+            except Exception:
+                print("ERROR: parsing failed, file not found ")
+                # print(inst)
                 sys.exit(1)
         else:
             while True:
@@ -645,7 +644,8 @@ class CLI_basic(object):
                 self.IST.printTbl(xpath, max_width, *default_columns)
 
     def SnhNodeStatus(self, args):
-        self.IST.get('Snh_SandeshUVECacheReq?tname=NodeStatus')
+        # self.IST.get('Snh_SandeshUVECacheReq?tname=NodeStatus')
+        self.IST.get('NodeStatus')
         if args.raw:
             self.IST.printText('//NodeStatus')
         else:
@@ -665,7 +665,8 @@ class CLI_basic(object):
             self.IST.printText('//trace_buf_name')
             #self.IST.printText('//*[not(*)]')
         else:
-            self.IST.get('Snh_SandeshTraceRequest?x=' + str(args.name))
+            # self.IST.get('Snh_SandeshTraceRequest?x=' + str(args.name))
+            self.IST.get(str(args.name))
             self.IST.printText('//element')
             #self.IST.printText('//*[not(*)]')
 
@@ -674,7 +675,8 @@ class CLI_basic(object):
             self.IST.get('Snh_SandeshUVETypesReq')
             self.IST.printText('//type_name')
         else:
-            self.IST.get('Snh_SandeshUVECacheReq?x=' + args.name)
+            # self.IST.get('Snh_SandeshUVECacheReq?x=' + args.name)
+            self.IST.get(str(args.name))
             self.IST.printText('//*[@type="sandesh"]/data/*')
 
 class CLI_cfg_api(CLI_basic):
@@ -1332,12 +1334,12 @@ class CLI_vr(CLI_basic):
                                          parents = [self.common_parser],
                                          help='Show vRouter interfaces')
         subp.add_argument('search', nargs='?', default='',
-                          help='Search string')
-        subp.add_argument('-u', '--uuid', default='', help='Interface uuid')
-        subp.add_argument('-v', '--vn', default='', help='Virutal network')
-        subp.add_argument('-n', '--name', default='', help='Interface name')
-        subp.add_argument('-m', '--mac', default='', help='VM mac address')
-        subp.add_argument('-i', '--ipv4', default='', help='VM IP address')
+                          help='Search by name , VN name , mac-addr, ipv4 addr, or uuid')
+        # subp.add_argument('-u', '--uuid', default='', help='Interface uuid')
+        # subp.add_argument('-v', '--vn', default='', help='Virutal network')
+        # subp.add_argument('-n', '--name', default='', help='Interface name')
+        # subp.add_argument('-m', '--mac', default='', help='VM mac address')
+        # subp.add_argument('-i', '--ipv4', default='', help='VM IP address')
         subp.set_defaults(func=self.SnhItf)
 
         ## show kinterfaces
@@ -1357,8 +1359,10 @@ class CLI_vr(CLI_basic):
         subp = self.subparser.add_parser('vn',
                                          parents = [self.common_parser],
                                          help='Show Virtual Network')
-        subp.add_argument('name', nargs='?', default='', help='VN name')
-        subp.add_argument('-u', '--uuid', default='', help='VN uuid')
+        subp.add_argument('search', nargs='?', default='',
+                           help='Search VN name or uuid')
+        # subp.add_argument('name', nargs='?', default='', help='VN name')
+        # subp.add_argument('-u', '--uuid', default='', help='VN uuid')
         subp.set_defaults(func=self.SnhVn)
 
         subp = self.subparser.add_parser('vrf',
@@ -1647,9 +1651,10 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath, default_columns)
 
     def SnhItf(self, args):
-        path = 'Snh_ItfReq?name=' + args.name + '&type=&uuid=' \
-                + args.uuid + '&vn=' + args.vn + '&mac=' + args.mac \
-                + '&ipv4_address=' + args.ipv4
+        # path = 'Snh_ItfReq?name=' + args.name + '&type=&uuid=' \
+        #         + args.uuid + '&vn=' + args.vn + '&mac=' + args.mac \
+        #         + '&ipv4_address=' + args.ipv4
+        path = 'Snh_ItfReq?'
         self.IST.get(path)
 
         xpath = "//ItfSandeshData"
@@ -1663,7 +1668,7 @@ class CLI_vr(CLI_basic):
     def SnhKInterfaceReq(self, args):
         path = 'Snh_KInterfaceReq'
         self.IST.get(path)
-
+        import pdb; pdb.set_trace()
         xpath = "//KInterfaceInfo"
         if args.search: xpath += "[contains(., '%s')]" % args.search
 
@@ -1673,10 +1678,12 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath, default_columns)
 
     def SnhVn(self, args):
-        path = 'Snh_VnListReq?name=' + args.name + '&uuid=' + args.uuid
+        # path = 'Snh_VnListReq?name=' + args.name + '&uuid=' + args.uuid
+        # path = 'Snh_VnListReq?name=&uuid='
+        path = 'Snh_VnListReq?name='
         self.IST.get(path)
-
         xpath = "//VnSandeshData"
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         default_columns = ["name", "uuid", "layer2_forwarding",
                            "ipv4_forwarding", "enable_rpf", "bridging"]
 
@@ -1981,30 +1988,30 @@ def main():
     token = os.environ.get('INTROSPECT_TOKEN', None)
     filename = None
 
-    try:
-        host = argv[argv.index('--host') + 1]
-    except ValueError:
-        pass
+    # try:
+    #     host = argv[argv.index('--host') + 1]
+    # except ValueError:
+    #     pass
 
-    try:
-        port = argv[argv.index('--port') + 1]
-    except ValueError:
-        pass
+    # try:
+    #     port = argv[argv.index('--port') + 1]
+    # except ValueError:
+    #     pass
 
-    try:
-        proxy = argv[argv.index('--proxy') + 1]
-    except ValueError:
-        pass
+    # try:
+    #     proxy = argv[argv.index('--proxy') + 1]
+    # except ValueError:
+    #     pass
 
-    try:
-        token = argv[argv.index('--token') + 1]
-    except ValueError:
-        pass
+    # try:
+    #     token = argv[argv.index('--token') + 1]
+    # except ValueError:
+    #     pass
 
-    try:
-        filename = argv[argv.index('--file') + 1]
-    except ValueError:
-        pass
+    # try:
+    #     filename = argv[argv.index('--file') + 1]
+    # except ValueError:
+    #     pass
 
     # if filename and not os.path.isfile(filename):
     #     print("Failed to find " + filename)
@@ -2021,14 +2028,14 @@ def main():
         description='A script to make Contrail Introspect output CLI friendly.')
     parser.add_argument('--version',  action="store_true",  help="Script version")
     parser.add_argument('--debug',    action="store_true",  help="Verbose mode")
-    parser.add_argument('--host',     type=str,             help="Introspect host address. Default: localhost")
-    parser.add_argument('--port',     type=int,             help="Introspect port number")
-    parser.add_argument('--proxy',    type=str,             help="Introspect proxy URL")
-    parser.add_argument('--token',    type=str,             help="Token for introspect proxy requests")
-    parser.add_argument('--file',     type=str,             help="Introspect file")
+    # parser.add_argument('--host',     type=str,             help="Introspect host address. Default: localhost")
+    # parser.add_argument('--port',     type=int,             help="Introspect port number")
+    # parser.add_argument('--proxy',    type=str,             help="Introspect proxy URL")
+    # parser.add_argument('--token',    type=str,             help="Token for introspect proxy requests")
+    # parser.add_argument('--file',     type=str,             help="Introspect file")
 
     roleparsers = parser.add_subparsers(dest='roleparsers')
-    filename = 'dummy'
+    filename = 'File Not Found'
     for svc in sorted(ServiceMap.keys()):
         p = roleparsers.add_parser(svc, help=ServiceMap[svc])
         if 'CLI_%s' % (svc) in globals():
