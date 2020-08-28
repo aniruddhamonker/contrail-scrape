@@ -200,7 +200,9 @@ class Introspect:
 
         if etreenode.text and etreenode.tag == 'element':
             return indent + etreenode.text + "\n"
-        elif etreenode.text:
+        elif etreenode.text and re.search(r'\w+', etreenode.text):
+        # elif etreenode.text:
+            etreenode.text = re.sub(r'^\n\s+|\n\s+', '', etreenode.text)
             return indent + etreenode.tag + ': ' + \
                     etreenode.text.replace('\n', '\n' + \
                     indent + (len(etreenode.tag)+2)*' ') + "\n"
@@ -291,14 +293,13 @@ class Introspect:
             addr_type = ADDR_INET4
         elif is_ipv6(address):
             addr_type = ADDR_INET6
-
         for tree in self.output_etree:
             for route in tree.xpath(xpathExpr):
                 if 'inet' in family:
-                    prefix = route.find("src_ip").text + '/' + \
-                                route.find("src_plen").text
+                    prefix = route.find("src_ip").text.strip() + '/' + \
+                                route.find("src_plen").text.strip()
                 else:
-                    prefix = route.find("mac").text
+                    prefix = route.find("mac").text.strip()
 
                 if family == 'inet' and addr_type == ADDR_INET4:
                     if not addressInNetwork(address, prefix):
@@ -318,29 +319,33 @@ class Introspect:
                 for path in route.xpath(".//PathSandeshData"):
                     nh = path.xpath("nh/NhSandeshData")[0]
 
-                    peer = path.find("peer").text
+                    peer = path.find("peer").text.strip()
                     pref = path.xpath("path_preference_data/"
                                       "PathPreferenceSandeshData/"
-                                      "preference")[0].text
+                                      "preference")[0].text.strip()
 
                     path_info = "%s[%s] pref:%s\n" % (indent, peer, pref)
 
                     path_info += indent + ' '
-                    nh_type = nh.find('type').text
+
+                    try:
+                        nh_type = nh.find('type').text.strip()
+                    except:
+                        nh_type = ''
                     if nh_type == "interface":
-                        mac = nh.find('mac').text
-                        itf = nh.find("itf").text
-                        label = path.find("label").text
+                        mac = nh.find('mac').text.strip()
+                        itf = nh.find("itf").text.strip()
+                        label = path.find("label").text.strip()
                         path_info += ("to %s via %s, assigned_label:%s, "
                                         % (mac, itf, label))
 
                     elif nh_type == "tunnel":
-                        tunnel_type = nh.find("tunnel_type").text
-                        dip = nh.find("dip").text
-                        sip = nh.find("sip").text
-                        label = path.find("label").text
+                        tunnel_type = nh.find("tunnel_type").text.strip()
+                        dip = nh.find("dip").text.strip()
+                        sip = nh.find("sip").text.strip()
+                        label = path.find("label").text.strip()
                         if nh.find('mac') is not None:
-                            mac = nh.find('mac').text
+                            mac = nh.find('mac').text.strip()
                             path_info += ("to %s via %s dip:%s "
                                           "sip:%s label:%s, "
                                           % (mac, tunnel_type, dip,
@@ -350,12 +355,12 @@ class Introspect:
                                           % (tunnel_type, dip, sip, label))
 
                     elif nh_type == "receive":
-                        itf = nh.find("itf").text
+                        itf = nh.find("itf").text.strip()
                         path_info += "via %s, " % (itf)
 
                     elif nh_type == "arp":
-                        mac = nh.find('mac').text
-                        itf = nh.find("itf").text
+                        mac = nh.find('mac').text.strip()
+                        itf = nh.find("itf").text.strip()
                         path_info += "via %s, " % (mac)
 
                     elif 'Composite' in str(nh_type):
@@ -363,17 +368,17 @@ class Introspect:
                         path_info += "via %s, " % (comp_nh)
 
                     elif 'vlan' in str(nh_type):
-                        mac = nh.find('mac').text
-                        itf = nh.find("itf").text
+                        mac = nh.find('mac').text.strip()
+                        itf = nh.find("itf").text.strip()
                         path_info += "to %s via %s, " % (mac, itf)
 
-                    nh_index = nh.find("nh_index").text
+                    nh_index = nh.find("nh_index").text.strip()
                     if nh.find("policy") is not None:
-                        policy = nh.find("policy").text
+                        policy = nh.find("policy").text.strip()
                     else:
                         policy = ''
-                    active_label = path.find("active_label").text
-                    vxlan_id = path.find("vxlan_id").text
+                    active_label = path.find("active_label").text.strip()
+                    vxlan_id = path.find("vxlan_id").text.strip()
                     path_info += ("nh_index:%s , nh_type:%s, nh_policy:%s, "
                                   "active_label:%s, vxlan_id:%s" %
                                  (nh_index, nh_type, policy,
@@ -382,11 +387,14 @@ class Introspect:
                     if mode == "detail":
                         path_info += "\n"
                         path_info += indent + ' dest_vn:' + \
-                            str(path.xpath("dest_vn_list/list/element/text()"))
+                            str(list(map(lambda x: x.text.strip(), path.xpath("dest_vn_list/list/element"))))
+                            # str(path.xpath("dest_vn_list/list/element/text()"))
                         path_info += ', sg:' + \
-                            str(path.xpath("sg_list/list/element/text()"))
+                            str(list(map(lambda x: x.text.strip(), path.xpath("sg_list/list/element"))))
+                            # str(path.xpath("sg_list/list/element/text()")).strip()
                         path_info += ', communities:' +  \
-                            str(path.xpath("communities/list/element/text()"))
+                            str(list(map(lambda x: x.text.strip(), path.xpath("communities/list/element"))))
+                            # str(path.xpath("communities/list/element/text()")).strip()
                     output += path_info + "\n"
 
                 print(output.rstrip())
@@ -1347,12 +1355,12 @@ class CLI_vr(CLI_basic):
                                          parents = [self.common_parser],
                                          help='Show vRouter interfaces')
         subp.add_argument('search', nargs='?', default='',
-                          help='Search string')
-        subp.add_argument('-u', '--uuid', default='', help='Interface uuid')
-        subp.add_argument('-v', '--vn', default='', help='Virutal network')
-        subp.add_argument('-n', '--name', default='', help='Interface name')
-        subp.add_argument('-m', '--mac', default='', help='VM mac address')
-        subp.add_argument('-i', '--ipv4', default='', help='VM IP address')
+                          help='Search by interface name')
+        # subp.add_argument('-u', '--uuid', default='', help='Interface uuid')
+        # subp.add_argument('-v', '--vn', default='', help='Virutal network')
+        # subp.add_argument('-n', '--name', default='', help='Interface name')
+        # subp.add_argument('-m', '--mac', default='', help='VM mac address')
+        # subp.add_argument('-i', '--ipv4', default='', help='VM IP address')
         subp.set_defaults(func=self.SnhKInterfaceReq)
 
         ## show vn
@@ -1668,7 +1676,7 @@ class CLI_vr(CLI_basic):
     def SnhKInterfaceReq(self, args):
         path = 'Snh_KInterfaceReq'
         self.IST.get(path)
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         xpath = "//KInterfaceInfo"
         if args.search: xpath += "[contains(., '%s')]" % args.search
 
@@ -1690,10 +1698,10 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath, default_columns)
 
     def SnhVrf(self, args):
-        path = 'Snh_VrfListReq?name=' + args.name
+        path = 'Snh_VrfListReq?name='
         self.IST.get(path)
-
         xpath = "//VrfSandeshData"
+        if args.name: xpath += "[contains(., '%s')]" % args.name
         default_columns = ["name", "ucindex", "mcindex", "brindex",
                            "evpnindex", "vxlan_id", "vn"]
 
@@ -1730,7 +1738,6 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath, default_columns)
 
     def SnhRoute(self, args):
-
         if args.family =='':
             if args.address == '' or is_ipv4(args.address):
                 args.family = 'inet'
