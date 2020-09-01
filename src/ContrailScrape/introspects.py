@@ -56,6 +56,10 @@ class IntrospectClass(BaseClass):
                 self.create_and_write_files(filename, introspect_response.prettify())
                 if introspect.name == 'SandeshUVETypesReq':
                     self.fetch_all_uve_types(introspect_url, tmp_dir)
+                if introspect.name == 'VrfListReq':
+                    import pdb;pdb.set_trace()
+                    vrf_inet4uc_indexes = map(lambda vrf: vrf.text, introspect_response.findAll(name='ucindex'))
+                    self.fetch_routes_per_vrf(vrf_indexes, introspect_url, tmp_dir)
                 if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                     self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
             self.pbar.update()
@@ -67,8 +71,8 @@ class IntrospectClass(BaseClass):
             uve_name = 'SandeshUVECacheReq?tname=' + uve.text
             uve_url = re.sub(r'(http.*/).*$', r'\1', introspect_url) + 'Snh_' + uve_name
             uve_response = self.parse_response(uve_url)
-            filename = filepath + '/' + uve_name
-            self.create_and_write_files(filename, uve_response.prettify())
+            filename = filepath + '/' + uve.text
+            self.create_and_write_files(filename, str(uve_response))
         return
 
     def fetch_sandesh_traces(self, introspect_response, filepath, url):
@@ -86,6 +90,19 @@ class IntrospectClass(BaseClass):
             self.create_and_write_files(filename, sandesh_trace.prettify())
         return
 
+    def fetch_routes_per_vrf(self, vrf_index, filepath, url):
+        inet4uc_url = re.sub(r'(http.*/).*$', r'\1', url) + \
+            'Snh_Inet4UcRouteReq?vrf_index=' + vrf_index
+        inet4uc_response = self.parse_response(inet4uc_url)
+        filename = filepath + '/Inet4UcRouteReq?vrf_index=' + vrf_index
+        self.create_and_write_files(filename, inet4uc_response.prettify())
+        layer2rte_url = re.sub(r'(http.*/).*$', r'\1', url) + \
+            'Snh_Layer2RouteReq?vrf_index=' + vrf_index
+        layer2rte_res = self.parse_response(layer2rte_url)
+        filename = filepath + 'Snh_Layer2RouteReq?vrf_index=' + vrf_index
+        self.create_and_write_files(filename, layer2rte_res.prettify())
+        return
+
     def fetch_all_introspects(self):
         # type: () -> None
         index_nodes_queue = queue.Queue() # type: queue.Queue
@@ -100,7 +117,7 @@ class IntrospectClass(BaseClass):
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
             .format(index_nodes_queue.qsize()))
         self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \
-            unit='thread', desc="Introspection Progress", position=1)
+            unit='thread', desc="Introspection Progress", position=1, leave=True)
         for _ in range(self.num_threads):
             try:
                 introspect_thread = threading.Thread\
@@ -114,11 +131,12 @@ class IntrospectClass(BaseClass):
             .format(threading.active_count()))
         for introspect_thread in threads:
             introspect_thread.join()
+        self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
-            print("Finishing introspection of all nodes with Errors")
-            print("Please check log file {} for details".format(self.logfile))
+            tqdm.write("Finishing introspection of all nodes with Errors\n \
+                Please check log file {} for details".format(self.logfile))
         else:
-            print("Finishing introspection of all nodes")
-            print("No Errors reported")
+            tqdm.write("Finishing introspection of all nodes \
+                \nNo Errors reported")
         return
