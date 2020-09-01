@@ -14,32 +14,13 @@ class ConfigParser():
         self.__debug = True if self.__all_args.debug else False
         self.__version = True if self.__all_args.version else False
 
-    # def parse_all_args(self, args=None):
-    #     conf_parser = argparse.ArgumentParser()
-    #     conf_parser.add_argument("-c", "--yaml-config",
-    #                              help="path to YAML configuration file",
-    #                              metavar="FILE")                        
-    #     for arg in self.margs['argparser'].values():
-    #         conf_parser.add_argument(arg['short_name'], arg['option_name'], \
-    #         action='append', metavar="<ip-addr>")
-    #     conf_parser.add_argument('-vvv', "--debug", action='store_true', \
-    #         help="turn on debug mode")
-    #     conf_parser.add_argument('-v', '--version', action='store_true', \
-    #         help="print the version number")
-    #     all_args = conf_parser.parse_args()
-    #     if not any(all_args.__dict__.values()):
-    #         print("No Valid Input Arguments provided \
-    #             \nUse \"--help\" for available options\n")
-    #         sys.exit(1)
-    #     return all_args
-    
     def parse_all_args(self, args=None):
-        conf_parser = argparse.ArgumentParser()
-        conf_parser.add_argument("yaml-config <FILE>",
+        conf_parser = argparse.ArgumentParser(description="A tool to scrape APIs and Introspects of various Contrail nodes")
+        conf_parser.add_argument("--yaml-config", metavar='FILE',
                                  help="path to YAML configuration file")                        
         for arg in self.margs['argparser'].values():
-            conf_parser.add_argument('{} <ip-addr>'.format(arg['option_name']), \
-            action='append', help=arg['help'], default=None)
+            conf_parser.add_argument(arg['option_name'], \
+            action='append', metavar="HOST", help=arg['help'])
         conf_parser.add_argument("--debug", action='store_true', \
             help="turn on debug mode")
         conf_parser.add_argument('--version', action='store_true', \
@@ -79,7 +60,7 @@ class ConfigParser():
         introspect_urls = []
         for arg in self.format_all_args():
             mtype = "analytics-api" \
-                if arg.module == "analytics_api_uves" else "introspect"
+                if arg.module == "analytics_api" else "introspect"
             for ip in arg.ip:
                 module_and_url = {
                 "type": mtype,
