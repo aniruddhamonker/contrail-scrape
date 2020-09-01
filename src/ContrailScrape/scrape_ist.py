@@ -201,8 +201,7 @@ class Introspect:
         if etreenode.text and etreenode.tag == 'element':
             return indent + etreenode.text + "\n"
         elif etreenode.text and re.search(r'\w+', etreenode.text):
-        # elif etreenode.text:
-            etreenode.text = re.sub(r'^\n\s+|\n\s+', '', etreenode.text)
+            etreenode.text = etreenode.text.strip()
             return indent + etreenode.tag + ': ' + \
                     etreenode.text.replace('\n', '\n' + \
                     indent + (len(etreenode.tag)+2)*' ') + "\n"
@@ -1715,6 +1714,7 @@ class CLI_vr(CLI_basic):
     def SnhAcl(self, args):
         self.IST.get('Snh_AclReq?uuid=' + args.uuid)
         xpath = "//AclSandeshData"
+        if args.uuid: xpath += "[contains(., '%s')]" % args.uuid
         default_columns = ["uuid", "name", "dynamic_acl"]
         self.output_formatters(args, xpath, default_columns)
 
