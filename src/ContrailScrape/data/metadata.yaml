@@ -45,8 +45,23 @@ argparser:
     short_name: -col
     help: contrail-analytics-collector
     port: "8089"
-  analytics_api_uves:
-    option_name: --analytics-api-uves
+  device-manager:
+    option_name: --dev-mgr
+    short_name: -dm
+    help: contrail device manager
+    port: "8096"
+  contrail-dns:
+    option_name: --dns
+    short_name: -dns
+    help: contrail-dns
+    port: "8092"
+  contrail-query:
+    option_name: --query
+    short_name: -qe
+    help: contrail-query-engine
+    port: "8091"
+  analytics_api:
+    option_name: --analytics-api
     short_name: -uves
     help: contrail analytics uves and alarms
     port: "8081"
