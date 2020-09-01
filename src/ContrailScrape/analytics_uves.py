@@ -82,13 +82,14 @@ class AnalyticsApiClass(BaseClass):
             .format(threading.active_count()))
         for analytics_api_thread in threads:
             analytics_api_thread.join()
+        self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
-            print("\nFinishing api scraping of all analytics nodes with errors\n")
-            print("Please check log file {} for details".format(self.logfile))
+            self.pbar.write("Finishing api scraping of all analytics nodes with errors\n \
+                Please check log file {} for details".format(self.logfile))
         else:
-            print("\nFinishing api scraping of all analytics nodes")
-            print("No Errors reported")
+            self.pbar.write("Finishing api scraping of all analytics nodes\n \
+                No Errors reported")
         return
 
 
