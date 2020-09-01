@@ -4,7 +4,7 @@ import ContrailScrape
 version = "0.1.4"
 
 def get_version():
-    print("CONTRAIL-INTROSPECT-SCRAPE\nVERSION: {}".format(version))
+    print("CONTRAIL-SCRAPE\nVERSION: {}".format(version))
     sys.exit()
 
 def fetch_all_introspects(introspect_args, debug):
