@@ -44,11 +44,23 @@ class BaseClass:
         # type: (IntrospectBaseClass, str, Optional[str]) -> Optional[str, Iterator[str]]
         text_response = cls.get_request(url) # type: str
         if not text_response:
-            # import pdb; pdb.set_trace()
             raise ValueError
         parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
         if attrs is None:
-            return parsed_response
+            if 'Snh_PageReq?x=' not in url and parsed_response.find("PageReqData"):
+                if parsed_response.find("PageReqData").find("next_page").text:
+                    all_pages = parsed_response.find("PageReqData").find("all").text
+                    url = re.sub(r'(http:.*/).*$',r'\1Snh_PageReq?x=', url) + all_pages
+                    cls.parse_response(url)
+            if parsed_response.find("next_batch"):
+                next_batch = {
+                    'link': parsed_response.find("next_batch").attrs['link'],
+                    'text': parsed_response.find("next_batch").text
+                    }
+                # url = 'Snh_{}?x={}'.format(link, text)
+                return parsed_response, next_batch
+            else:
+                return parsed_response, None
         def __iter__():
             for element in parsed_response.findAll(attrs=attrs):
                 yield element
