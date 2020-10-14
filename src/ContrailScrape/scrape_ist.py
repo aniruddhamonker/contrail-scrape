@@ -65,21 +65,27 @@ class Introspect:
                     path_filter = path.replace(' ', '_')
                 dup_count = 0
                 for root, _, filenames in os.walk(os.getcwd()):
-                    for file in fnmatch.filter(filenames, path_filter):
+                    for file in fnmatch.filter(filenames, "%s*"%(path_filter)):
                         if file and not dup_count:
                             self.filename = os.path.join(root, file)
+                            self.output_etree.append(etree.parse(self.filename))
+                            print("Loading from introspect xml:  %s" % self.filename)
                             dup_count+=1
-                        elif file and dup_count:
-                            print("multiple files found for the same introspect,\
-                                please check the current directory\n")
+                        elif file == self.filename and dup_count:
+                            print("multiple files found for the same introspect,"\
+                            "please check the directory path\n")
                             sys.exit(1)
+                        elif file != self.filename and dup_count:
+                            self.filename = os.path.join(root, file)
+                            self.output_etree.append(etree.parse(self.filename))
+                            print("Appending data from multiple files: %s" % self.filename)
                         else:
                             print("file {} not found under directory: {}\n"\
                                 .format(file, os.getcwd()))
-                print("Loading from introspect xml:  %s" % self.filename)
-                self.output_etree.append(etree.parse(self.filename))
+                # print("Loading from introspect xml:  %s" % self.filename)
+                # self.output_etree.append(etree.parse(self.filename))
             except Exception:
-                print("ERROR: parsing failed, file not found ")
+                print("ERROR: parsing failed, file {} not found ".format(path_filter))
                 # print(inst)
                 sys.exit(1)
         else:
@@ -161,7 +167,6 @@ class Introspect:
 
     @staticmethod
     def dumpTbl(items, max_width, columns):
-
         if not len(items):
             return
 
@@ -169,7 +174,6 @@ class Introspect:
             fields = columns
         else:
             fields = [ e.tag for e in items[0] if e.tag != "more"]
-
         tbl = PrettyTable(fields)
         tbl.align = 'l'
         tbl.max_width = max_width
@@ -177,18 +181,27 @@ class Introspect:
             row = []
             for field in fields:
                 f = entry.find(field)
+                if f is None:
+                    f = entry.find('nh/NhSandeshData/%s'%(field))
                 if f is not None:
-                    if f.text:
-                        row.append(f.text)
-                    elif list(f):
+                    if list(f):
                         for e in f:
                             row.append(Introspect.elementToStr('', e).rstrip())
+                    elif f.text:
+                        # row.append(f.text)
+                        row.append(f.text.strip())
                     else:
                         row.append("n/a")
                 else:
-                    row.append("-")
+                    row.append("-") 
             tbl.add_row(row)
         print(tbl)
+
+    # @staticmethod
+    # def get_elements_recursively(root_element):
+    #     for ele in root_element.getchildren():
+    #         yield ele.tag
+    #         yield from Introspect.get_elements_recursively(ele)
 
     @staticmethod
     def elementToStr(indent, etreenode):
@@ -199,7 +212,8 @@ class Introspect:
             return elementStr
 
         if etreenode.text and etreenode.tag == 'element':
-            return indent + etreenode.text + "\n"
+            # return indent + etreenode.text + "\n"
+            return indent + etreenode.text.strip() + "\n"
         elif etreenode.text and re.search(r'\w+', etreenode.text):
             etreenode.text = etreenode.text.strip()
             return indent + etreenode.tag + ': ' + \
@@ -228,23 +242,25 @@ class Introspect:
             return path_info.rstrip()
 
         now = datetime.utcnow()
-
-        path_modified = path.find("last_modified").text
+        path_modified = (path.find("last_modified").text or '').strip()
         t1 = datetime.strptime(path_modified, '%Y-%b-%d %H:%M:%S.%f')
         path_age = str(now - t1).replace(',', '')
-        path_proto = path.find("protocol").text
-        path_source = path.find("source").text
-        path_lp = path.find("local_preference").text
-        path_as = path.find("as_path").text
-        path_nh = path.find("next_hop").text
-        path_label = path.find("label").text
-        path_vn = path.find("origin_vn").text
-        path_pri_tbl = path.find("primary_table").text
-        path_vn_path = str(path.xpath("origin_vn_path/list/element/text()"))
-        path_encap = str(path.xpath("tunnel_encap/list/element/text()"))
-        path_comm = str(path.xpath("communities/list/element/text()"))
+        path_proto = (path.find("protocol").text or '').strip()
+        path_source = (path.find("source").text or '').strip()
+        path_lp = (path.find("local_preference").text or '').strip()
+        path_as = (path.find("as_path").text or '').strip()
+        path_nh = (path.find("next_hop").text or '').strip()
+        path_label = (path.find("label").text or '').strip()
+        path_vn = (path.find("origin_vn").text or '').strip()
+        path_pri_tbl = (path.find("primary_table").text or '').strip()
+        # path_vn_path = (str(path.xpath("origin_vn_path/list/element/text()")) or '').strip()
+        # path_encap = (str(path.xpath("tunnel_encap/list/element/text()")) or '').strip()
+        # path_comm = (str(path.xpath("communities/list/element/text()")) or '').strip()
         # path_sqn = path.find("sequence_no").text
         # path_flags = path.find("flags").text
+        path_vn_path = str(list(map(lambda x: x.text.strip(), path.xpath("origin_vn_path/list/element"))))
+        path_encap = (str(list(map(lambda x: x.text.strip(), path.xpath("tunnel_encap/list/element")))))
+        path_comm = (str(list(map(lambda x: x.text.strip(), path.xpath("communities/list/element")))))
 
         path_info = ("%s[%s|%s] age: %s, localpref: %s, nh: %s, "
                      "encap: %s, label: %s, AS path: %s" %
@@ -266,8 +282,8 @@ class Introspect:
         route_info = ''
         now = datetime.utcnow()
 
-        prefix = route.find("prefix").text
-        prefix_modified = route.find("last_modified").text
+        prefix = (route.find("prefix").text or '').strip()
+        prefix_modified = (route.find("last_modified").text or '').strip()
         t1 = datetime.strptime(prefix_modified, '%Y-%b-%d %H:%M:%S.%f')
         prefix_age = str(now - t1).replace(',', '')
 
@@ -279,7 +295,7 @@ class Introspect:
 
         return route_info.rstrip()
 
-    def showRoute_VR(self, xpathExpr, family, address, mode):
+    def showRoute_VR(self, xpathExpr, family, address, mode, prefix_len):
         """ method to show route output from vrouter intropsect """
         indent = ' ' * 4
 
@@ -297,6 +313,8 @@ class Introspect:
                 if 'inet' in family:
                     prefix = route.find("src_ip").text.strip() + '/' + \
                                 route.find("src_plen").text.strip()
+                    if prefix_len and route.find("src_plen").text.strip() != prefix_len:
+                        continue
                 else:
                     prefix = route.find("mac").text.strip()
 
@@ -363,7 +381,7 @@ class Introspect:
                         path_info += "via %s, " % (mac)
 
                     elif 'Composite' in str(nh_type):
-                        comp_nh = str(nh.xpath(".//itf/text()"))
+                        comp_nh = list(map(lambda itf: itf.text.strip(), nh.xpath(".//itf")))
                         path_info += "via %s, " % (comp_nh)
 
                     elif 'vlan' in str(nh_type):
@@ -398,22 +416,27 @@ class Introspect:
 
                 print(output.rstrip())
 
-    def showRoute_CTR(self, last, mode):
+    def showRoute_CTR(self, last, mode, table, prefix):
         """ show route output from control node intropsect """
         indent = ' ' * 4
         now = datetime.utcnow()
         printedTbl = {}
-        xpath_tbl = '//ShowRouteTable'
-        xpath_rt = './/ShowRoute'
+        xpath_tbl = table if table else '//ShowRouteTable'
+        xpath_rt = prefix if prefix else './/ShowRoute'
+        # xpath_tbl = '//ShowRouteTable'
+        # xpath_rt = './/ShowRoute'
         xpath_pth = './/ShowRoutePath'
         for tree in self.output_etree:
             for table in tree.xpath(xpath_tbl):
-                tbl_name = table.find('routing_table_name').text
-                prefix_count = table.find('prefixes').text
-                tot_path_count = table.find('paths').text
-                pri_path_count = table.find('primary_paths').text
-                sec_path_count = table.find('secondary_paths').text
-                ifs_path_count = table.find('infeasible_paths').text
+                tbl_name = table.find('routing_table_name').text.strip()
+                prefix_count = table.find('prefixes').text.strip()
+                tot_path_count = table.find('paths').text.strip()
+                pri_path_count = table.find('primary_paths').text.strip()
+                sec_path_count = table.find('secondary_paths').text.strip()
+                ifs_path_count = table.find('infeasible_paths').text.strip()
+
+                if not table.xpath(xpath_rt):
+                    continue
 
                 if not(tbl_name in printedTbl):
                     print(("\n%s: %s destinations, %s routes "
@@ -423,21 +446,20 @@ class Introspect:
                                ifs_path_count)))
                     printedTbl[tbl_name] = True
 
-
                 # start processing each route
                 for route in table.xpath(xpath_rt):
                     paths = route.xpath(xpath_pth)
                     if not (len(paths)):
                         continue
-                    prefix = route.find("prefix").text
-                    prefix_modified = route.find("last_modified").text
+                    prefix = route.find("prefix").text.strip()
+                    prefix_modified = route.find("last_modified").text.strip()
                     t1 = datetime.strptime(prefix_modified,
                                            '%Y-%b-%d %H:%M:%S.%f')
                     prefix_age = str(now - t1).replace(',', '')
 
                     if (last and (now - t1).total_seconds() > last):
                         for path in paths:
-                            path_modified = path.find("last_modified").text
+                            path_modified = path.find("last_modified").text.strip()
                             t1 = datetime.strptime(path_modified,
                                                    '%Y-%b-%d %H:%M:%S.%f')
                             # path_age = str(now - t1).replace(',', '')
@@ -754,15 +776,17 @@ class CLI_cfg_schema(CLI_basic):
         subp = self.subparser.add_parser('object',
                                          parents = [self.common_parser],
                                          help='List Schema-transformer Ojbects')
-        subp.add_argument('name', nargs='?', default='',
-                          help='object_id or fq_name')
-        subp.add_argument('-t', '--type', default='',
-                          help='Object type')
+        subp.add_argument('search', nargs='?', default='',
+                          help='search by object uuid or object fq-name')
+        # subp.add_argument('-t', '--type', default='',
+        #                   help='Object type')
         subp.set_defaults(func=self.SnhStObjectReq)
 
     def SnhVnList(self, args):
-        path = 'Snh_VnList?vn_name=%s' % (args.name)
+        # path = 'Snh_VnList?vn_name=%s' % (args.name)
+        path = 'Snh_VnList'
         xpath = '//VirtualNetwork'
+        if args.name: xpath += '[contains(., " %s\n")]'%(args.name)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -774,15 +798,19 @@ class CLI_cfg_schema(CLI_basic):
         self.output_formatters(args, xpath)
 
     def SnhServiceChainList(self, args):
-        path = 'Snh_ServiceChainList?sc_name=%s' % (args.name)
+        # path = 'Snh_ServiceChainList?sc_name=%s' % (args.name)
+        path = 'Snh_ServiceChainList'
         xpath = '//ServiceChain'
+        if args.name: xpath += '[contains(., " %s\n")]'%(args.name)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
     def SnhStObjectReq(self, args):
-        path = ('Snh_StObjectReq?object_type=%s&object_id_or_fq_name=%s' %
-                (args.type, args.name))
+        # path = ('Snh_StObjectReq?object_type=%s&object_id_or_fq_name=%s' %
+        #         (args.type, args.name))
+        path = 'Snh_StObjectReq'
         xpath = '//StObject'
+        if args.search: xpath += '[contains(., " %s\n")]'%(args.search)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -820,17 +848,17 @@ class CLI_ctr(CLI_basic):
                                          parents = [self.common_parser],
                                          help='Show BGP/XMPPP neighbors')
         subp.add_argument('search', nargs='?', default='',type=str,
-                          help='search string')
-        subp.add_argument('-t', '--type',
-                          choices=['BGP', 'XMPP'], default='',
-                          help='Neighbor types (BGP or XMPP)')
+                          help='search by peer type, peer name or ip address')
+        # subp.add_argument('-t', '--type',
+        #                   choices=['BGP', 'XMPP'], default='',
+        #                   help='Neighbor types (BGP or XMPP)')
         subp.set_defaults(func=self.SnhBgpNeighbor)
 
         subp = self.subparser.add_parser('ri',
                                          parents = [self.common_parser],
                                          help='Show routing instances')
         subp.add_argument('search', nargs='?', default='', type=str,
-                          help='Search string')
+                          help='Search by Routing Instance name, export or import route targets')
         subp.set_defaults(func=self.SnhRoutingInstance)
 
         ## route sub parser
@@ -858,10 +886,10 @@ class CLI_ctr(CLI_basic):
         subp = rp.add_parser('show', help='Show route')
         subp.add_argument('prefix', nargs='?', default='',
                           help='Show routes matching given prefix')
-        subp.add_argument('-f', '--family',
-                          choices=['inet', 'inet6', 'evpn', 'ermvpn',
-                                   'rtarget', 'inetvpn', 'l3vpn'],
-                          help='Show routes for given family.')
+        # subp.add_argument('-f', '--family',
+        #                   choices=['inet', 'inet6', 'evpn', 'ermvpn',
+        #                            'rtarget', 'inetvpn', 'l3vpn'],
+        #                   help='Show routes for given family.')
         subp.add_argument('-l', '--last', type=valid_period,
                           help=('Show routes modified during last time period'
                                 ' (e.g. 10s, 5m, 2h, or 5d)'))
@@ -869,27 +897,27 @@ class CLI_ctr(CLI_basic):
                           help='Display detailed output')
         subp.add_argument('-r', '--raw', action="store_true",
                           help='Display raw output in text')
-        subp.add_argument('-p', '--protocol',
-                          choices=['BGP', 'XMPP', 'local',
-                                   'ServiceChain', 'Static'],
-                          help='Show routes learned from given protocol')
-        subp.add_argument('-v', '--vrf', default='',
-                          help='Show routes in given routing instance '
-                               'specified as fqn')
-        subp.add_argument('-s', '--source', default='',
-                          help='Show routes learned from given source')
+        # subp.add_argument('-p', '--protocol',
+        #                   choices=['BGP', 'XMPP', 'local',
+        #                            'ServiceChain', 'Static'],
+                        #   help='Show routes learned from given protocol')
+        # subp.add_argument('-v', '--vrf', default='',
+        #                   help='Show routes in given routing instance '
+        #                        'specified as fqn')
+        # subp.add_argument('-s', '--source', default='',
+        #                   help='Show routes learned from given source')
         subp.add_argument('-t', '--table', default='',
                           help='Show routes in given table')
-        subp.add_argument('--longer_match', action="store_true",
-                          help='Shows more specific routes')
-        subp.add_argument('--shorter_match', action="store_true",
-                          help='Shows less specific routes')
+        # subp.add_argument('--longer_match', action="store_true",
+        #                   help='Shows more specific routes')
+        # subp.add_argument('--shorter_match', action="store_true",
+        #                   help='Shows less specific routes')
         subp.set_defaults(func=self.SnhShowRoute)
 
         subp = rp.add_parser('static', parents = [self.common_parser],
                              help='Show static routes')
         subp.add_argument('search', nargs='?', default='',type=str,
-                          help='search string')
+                          help='search by route prefix or routing-instance name')
         subp.set_defaults(func=self.SnhShowStaticRoute)
 
         subp = rp.add_parser('aggregate', parents = [self.common_parser],
@@ -1046,15 +1074,19 @@ class CLI_ctr(CLI_basic):
         subp.set_defaults(func=self.SnhShowRtGroupReq)
 
     def SnhShowStaticRoute(self, args):
-        path = 'Snh_ShowStaticRouteReq?search_string=%s' % (args.search)
+        path = 'Snh_ShowStaticRouteReq?'
         xpath = '//StaticRouteEntriesInfo'
+        if args.search:
+            xpath += '[contains(., "%s")]' % (args.search)
         self.IST.get(path)
         self.IST.showStaticRoute(xpath, args.format, args.max_width,
                                  args.columns)
 
     def SnhShowRouteAggregate(self, args):
-        path = 'Snh_ShowRouteAggregateReq?search_string=%s' % (args.search)
+        path = 'Snh_ShowRouteAggregateReq?'
         xpath = '//aggregate_route_entries'
+        if args.search:
+            xpath += '[contains(., "%s")]' % (args.search)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -1070,14 +1102,17 @@ class CLI_ctr(CLI_basic):
             return
 
         if args.type == 'table':
-            path = ('Snh_ShowMulticastManagerReq?search_string=%s' %
-                    (args.table))
-            xpath = '//ShowMulticastManager'
+            # path = ('Snh_ShowMulticastManagerReq?search_string=%s' %
+            #         (args.table))
+            path = 'Snh_ShowMulticastManagerReq?'
+            xpath = '//ShowMulticastManager[contains(., "%s")]' % (args.table)
             if not args.max_width:
                 args.max_width = 60
         elif args.type == 'tree' and args.table:
-            path = 'Snh_ShowMulticastManagerDetailReq?x=%s' % (args.table)
+            # path = 'Snh_ShowMulticastManagerDetailReq?x=%s' % (args.table)
+            path = 'ShowMulticastManagerDetailReq.' + args.table
             xpath = '//ShowMulticastTree'
+            # xpath = '//ShowMulticastTree[contains(., "%s")]' % (args.table)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -1230,7 +1265,8 @@ class CLI_ctr(CLI_basic):
             self.output_formatters(args, p, default_columns)
 
     def SnhXmppMsg(self, args):
-        self.IST.get('Snh_SandeshTraceRequest?x=XmppMessageTrace')
+        # self.IST.get('Snh_SandeshTraceRequest?x=XmppMessageTrace')
+        self.IST.get('fXmppMessageTrace')
         self.IST.printText('//element')
 
     def SnhXmppStats(self, args):
@@ -1243,12 +1279,11 @@ class CLI_ctr(CLI_basic):
 
     def SnhBgpNeighbor(self, args):
         self.IST.get('Snh_BgpNeighborReq?search_string=' + args.search)
-
-        if args.type:
-            xpath = "//BgpNeighborResp[encoding='" + args.type + "']"
-        else:
-            xpath = "//BgpNeighborResp"
-
+        # if args.type:
+            # xpath = "//BgpNeighborResp[encoding='" + args.type + "']"
+        # else:
+        xpath = "//BgpNeighborResp"
+        if args.search: xpath += '[contains(., "  %s\n")]'%(args.search)
         default_columns = ["peer", "peer_address", "peer_asn", "encoding",
                            "peer_type", "state", "send_state", "flap_count",
                            "flap_time"]
@@ -1258,7 +1293,7 @@ class CLI_ctr(CLI_basic):
     def SnhRoutingInstance(self, args):
         self.IST.get('Snh_ShowRoutingInstanceReq?search_string=' + args.search)
         xpath = "//ShowRoutingInstance"
-
+        if args.search: xpath += '[contains(., " %s\n")]'% args.search
         default_columns = ["name", "vn_index", "vxlan_id", "import_target",
                            "export_target", "routing_policies"]
 
@@ -1268,6 +1303,7 @@ class CLI_ctr(CLI_basic):
     def SnhShowRouteSummary(self, args):
         self.IST.get('Snh_ShowRouteSummaryReq?search_string=' + args.search)
         xpath = "//ShowRouteTableSummary"
+        if args.search: xpath += "[contains(name, '  %s')]" % args.search
         if args.family != 'all':
             xpath += "[contains(name, '%s.0')]" % args.family
 
@@ -1281,16 +1317,18 @@ class CLI_ctr(CLI_basic):
 
     def SnhShowRTable(self, args):
         self.IST.get('Snh_ShowRouteSummaryReq?search_string=' + args.search)
-        xpath = "//ShowRouteTableSummary/name"
+        # xpath = "//ShowRouteTableSummary/name"
+        xpath = "//ShowRouteTableSummary"
+        if args.search: xpath += "[contains(name, '  %s')]" % args.search
         if args.family != 'all':
-            xpath = ("//ShowRouteTableSummary[contains(name, '%s.0')]/name" %
-                     args.family)
-
+            # xpath = ("//ShowRouteTableSummary[contains(name, '%s.0')]/name" %
+            #          args.family)
+            xpath += "[contains(name, '%s.0')]/name" %args.family
         self.IST.printText(xpath)
 
     def SnhShowRoute(self, args):
-        shorter_match = ''
-        longer_match = ''
+        # shorter_match = ''
+        # longer_match = ''
         if is_ipv4(args.prefix):
             args.prefix = args.prefix + '%2F32'
             args.shorter_match = True
@@ -1298,36 +1336,40 @@ class CLI_ctr(CLI_basic):
             args.prefix = args.prefix + '%2F128'
             args.shorter_match = True
 
-        if args.shorter_match:
-            shorter_match = '1'
-        if args.longer_match:
-            longer_match = '1'
+        # if args.shorter_match:
+        #     shorter_match = '1'
+        # if args.longer_match:
+        #     longer_match = '1'
 
-        protocol = args.protocol or ''
-        family = args.family or ''
+        # protocol = args.protocol or ''
+        # family = args.family or ''
+        
+        # path = ('Snh_ShowRouteReq?'
+        #         'routing_table=%s&routing_instance=%s&prefix=%s'
+        #         '&longer_match=%s&shorter_match=%s&count='
+        #         '&start_routing_table=&start_routing_instance='
+        #         '&start_prefix=&source=%s&protocol=%s&family=%s' %
+        #         (args.table, args.vrf, args.prefix,
+        #          longer_match, shorter_match, args.source,
+        #          protocol, family ))
 
-        path = ('Snh_ShowRouteReq?'
-                'routing_table=%s&routing_instance=%s&prefix=%s'
-                '&longer_match=%s&shorter_match=%s&count='
-                '&start_routing_table=&start_routing_instance='
-                '&start_prefix=&source=%s&protocol=%s&family=%s' %
-                (args.table, args.vrf, args.prefix,
-                 longer_match, shorter_match, args.source,
-                 protocol, family ))
+        path = 'Snh_ShowRouteReq?'
 
         self.IST.get(path)
-
+        table = '//ShowRouteTable[./routing_table_name = "\n     %s\n    "]'\
+            %(args.table) if args.table else None
+        prefix = './/ShowRoute[contains(., "%s")]'\
+            %(args.prefix) if args.prefix else None
         if args.detail:
             mode = 'detail'
         elif args.raw:
             mode = 'raw'
         else:
             mode ='brief'
-
         # Family/source/protocl match is supported only from 3.2.
         # To handle the same in older releases, pass the prarmeters
         # to showrouter method
-        self.IST.showRoute_CTR(args.last, mode)
+        self.IST.showRoute_CTR(args.last, mode, table, prefix)
 
 class CLI_vr(CLI_basic):
     def __init__(self, parser, host, port, filename):
@@ -1385,11 +1427,11 @@ class CLI_vr(CLI_basic):
         subp.add_argument('-v', '--vrf', type=int, default=0,
                           help='VRF index, default: 0 (IP fabric)')
         subp.add_argument('-f', '--family',
-                          choices=['inet', 'inet6','bridge','layer2', 'evpn'],
+                          choices=['inet', 'inet6','layer2'],
                           default='',
                           help='Route family')
         subp.add_argument('-p', '--prefix', default='/',
-                          help='IPv4 or IPv6 prefix')
+                          help='IPv4 or IPv6 prefix - x.x.x.x/x CIDR notation')
         subp.add_argument('-d', '--detail', action="store_true",
                           help='Display detailed output')
         subp.add_argument('-r', '--raw', action="store_true",
@@ -1405,7 +1447,7 @@ class CLI_vr(CLI_basic):
         subp = self.subparser.add_parser('acl',
                                          parents = [self.common_parser],
                                          help='Show ACL info')
-        subp.add_argument('uuid', nargs='?', default='', help='ACL uuid')
+        subp.add_argument('search', nargs='?', default='', help='search by ACL uuid or name')
         subp.set_defaults(func=self.SnhAcl)
 
         ## show health check
@@ -1417,15 +1459,17 @@ class CLI_vr(CLI_basic):
 
         ## show ifmap
         subp = self.subparser.add_parser('ifmap', help='IFMAP info')
-        subp.add_argument('-t', '--table', default='',
-                                  help='Table names. e.g. virtual-router, '
-                                       'virtual-machine-interface, '
-                                       'virtual-machine, instance-ip')
-        subp.add_argument('-n', '--node', default='', help='Node sub string')
-        subp.add_argument('-l', '--link_type', default='',
-                          help='Link type sub string')
-        subp.add_argument('-ln', '--link_node', default='',
-                          help='Link node sub string')
+        # subp.add_argument('-t', '--table', default='',
+        #                           help='Table names. e.g. virtual-router, '
+        #                                'virtual-machine-interface, '
+        #                                'virtual-machine, instance-ip')
+        # subp.add_argument('-n', '--node', default='', help='Node sub string')
+        # subp.add_argument('-l', '--link_type', default='',
+        #                   help='Link type sub string')
+        # subp.add_argument('-ln', '--link_node', default='',
+        #                   help='Link node sub string')
+        subp.add_argument('search', nargs='?', help='search by Table names e.g virtual-router, \
+            virtual-machine-interface, virtual-machine, instance-ip')
         subp.set_defaults(func=self.SnhShowIFMap)
 
         ## show baas
@@ -1491,13 +1535,13 @@ class CLI_vr(CLI_basic):
                                          help='NextHop info')
         subp.add_argument('index', nargs='?', type=int,
                           help='NH index')
-        subp.add_argument('-t', '--type',
-                          choices=['arp', 'discard', 'receive', 'resolve',
-                                   'l2-receive', 'interface', 'tunnel',
-                                   'composite'],
-                          help='NH type')
-        subp.add_argument('-p', '--policy', choices=['enabled', 'disabled'],
-                          help='NH policy')
+        # subp.add_argument('-t', '--type',
+        #                   choices=['arp', 'discard', 'receive', 'resolve',
+        #                            'l2-receive', 'interface', 'tunnel',
+        #                            'composite'],
+        #                   help='NH type')
+        # subp.add_argument('-p', '--policy', choices=['enabled', 'disabled'],
+        #                   help='NH policy')
         subp.set_defaults(func=self.SnhNhList)
 
         ## show vm info
@@ -1512,13 +1556,13 @@ class CLI_vr(CLI_basic):
         subp = self.subparser.add_parser('mpls',
                                          parents = [self.common_parser],
                                          help='MPLS info')
-        subp.add_argument('label', nargs='?', type=int,
-                          help='MPLS label value')
-        subp.add_argument('-t', '--type',
-                          choices=['arp', 'discard', 'receive', 'resolve',
-                                   'l2-receive', 'interface', 'tunnel',
-                                   'composite'],
-                          help='NH type')
+        subp.add_argument('search', nargs='?', type=int,
+                          help='search by MPLS label value or next hop index')
+        # subp.add_argument('-t', '--type',
+        #                   choices=['arp', 'discard', 'receive', 'resolve',
+        #                            'l2-receive', 'interface', 'tunnel',
+        #                            'composite'],
+        #                   help='NH type')
         subp.set_defaults(func=self.SnhMpls)
 
         ## show vrfassign lists
@@ -1545,9 +1589,10 @@ class CLI_vr(CLI_basic):
 
         subp = vp.add_parser('config', parents = [self.common_parser],
                              help='Config info')
-        subp.add_argument('id', nargs='?', type=int, help='vxlan uuid')
-        subp.add_argument('--vn', default='', type=str, help='vn')
-        subp.add_argument('--active', default='', type=str, help='active')
+        # subp.add_argument('search', nargs='?', type=int, help='search by vxlan id or vn uuid')
+        subp.add_argument('search', nargs='?', help='search by vxlan id or vn uuid')
+        # subp.add_argument('--vn', default='', type=str, help='vn')
+        # subp.add_argument('--active', default='', type=str, help='active')
 
         subp.set_defaults(func=self.SnhVxLanConfig)
 
@@ -1566,22 +1611,28 @@ class CLI_vr(CLI_basic):
         subp.set_defaults(func=self.Snh_IntfMirrorCfgDisplayReq)
 
     def Snh_MirrorCfgVnInfoReq(self, args):
-        path = 'Snh_MirrorCfgVnInfoReq?vn_name=%s' % (args.name)
+        # path = 'Snh_MirrorCfgVnInfoReq?vn_name=%s' % (args.name)
+        path = 'Snh_MirrorCfgVnInfoReq'
         xpath = 'VnAclInfo'
+        if args.name: xpath += '[contains(., " %s\n")]'%(args.name)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
     def Snh_IntfMirrorCfgDisplayReq(self, args):
-        path = 'Snh_IntfMirrorCfgDisplayReq?handle=%s' % (args.handle)
+        # path = 'Snh_IntfMirrorCfgDisplayReq?handle=%s' % (args.handle)
+        path = 'Snh_IntfMirrorCfgDisplayReq' 
         xpath = 'IntfMirrorCfgSandesh'
+        if args.handle: xpath += '[contains(., " %s\n")]'%(args.handle)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
     def SnhVxLanConfig(self, args):
-        id = str(args.id) or ''
-        path = ('Snh_VxLanConfigReq?vxlan_id=%s&vn=%s&active=%s' %
-                (id, args.vn, args.active))
+        # search = str(args.search) or ''
+        # path = ('Snh_VxLanConfigReq?vxlan_id=%s&vn=%s&active=%s' %
+        #         (id, args.vn, args.active))
+        path = 'Snh_VxLanConfigReq'
         xpath = '//VxLanConfigEntry'
+        if args.search: xpath += '[contains(., " %s\n")]'%(args.search)
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -1591,11 +1642,14 @@ class CLI_vr(CLI_basic):
         else:
             id = None
         path = 'Snh_VxLanReq'
+        xpath = '//VxLanSandeshData'
         if (id):
             path += '?vxlan_id=%s' % (id)
-        xpath = '//VxLanSandeshData'
+            xpath += '[contains(., "  %s\n")]'%(id)
         self.IST.get(path)
-        self.output_formatters(args, xpath)
+        default_columns = ['vxlan_id', 'type', 'ref_count', 'valid',\
+            'policy', 'vrf', 'nh_index', 'vxlan_flag', 'flood_unknown_unicast']
+        self.output_formatters(args, xpath, default_columns)
 
     def SnhLinkLocalServiceInfo(self, args):
         path = 'Snh_LinkLocalServiceInfo'
@@ -1611,22 +1665,27 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath)
 
     def SnhMpls(self, args):
-        type = args.type or ''
-        if (args.label):
-          label = str(args.label) or ''
+        # type = args.type or ''
+        if (args.search):
+          search = str(args.search) or ''
         else:
-          label = None
-        path = 'Snh_MplsReq?type=%s' % (type)
-        if (label):
-          path += '&label=%s' % (label)
+          search = None
+        # path = 'Snh_MplsReq?type=%s' % (type)
+        path = 'Snh_MplsReq?type='
         xpath = '//MplsSandeshData'
+        if (search):
+        #   path += '&label=%s' % (label)
+          xpath += '[contains(., " %s\n")]'%(search)
         self.IST.get(path)
-        self.output_formatters(args, xpath)
+        default_columns = ['label', 'type', 'ref_count', 'valid', \
+            'policy', 'itf', 'mac', 'mcast', 'nh_index', 'vxlan_flag']
+        self.output_formatters(args, xpath, default_columns)
 
     def SnhVmList (self, args):
         uuid = args.uuid or ''
         path = 'Snh_VmListReq?uuid=%s' % (uuid)
         xpath = '//VmSandeshData'
+        if args.uuid: xpath += "[contains(., '%s')]" % args.uuid
         self.IST.get(path)
         self.output_formatters(args, xpath)
 
@@ -1635,16 +1694,18 @@ class CLI_vr(CLI_basic):
             index = str(args.index) or ''
         else:
             index = None
-        type = args.type or ''
-        policy = args.policy or ''
-        path = 'Snh_NhListReq?type=%s' % (type)
+        # type = args.type or ''
+        # policy = args.policy or ''
+        path = 'Snh_NhListReq?type='
         if (index):
             path += '&nh_index=%s' % (index) ## always need to be 2nd
-        path += '&policy_enabled=%s' % (policy)
-        xpath = '//NhSandeshData'
+            xpath = '//NhSandeshData[contains(., " %s\n")]'%(index)
+        else:
+            xpath = '//NhSandeshData'
+        # path += '&policy_enabled=%s' % (policy)
+        # xpath = '//NhSandeshData'
         default_columns = ['type', 'nh_index', 'policy', 'itf', 'mac', 'vrf',
                            'valid', 'ref_count', 'mc_list']
-
         self.IST.get(path)
         self.output_formatters(args, xpath, default_columns)
 
@@ -1652,6 +1713,7 @@ class CLI_vr(CLI_basic):
         uuid = args.uuid or ''
         path = 'Snh_ServiceInstanceReq?uuid=%s' % (uuid)
         xpath = '//ServiceInstanceSandeshData'
+        if args.uuid: xpath += "[contains(., '%s')]" % args.uuid
         default_columns = ['uuid', 'service_type', 'virtualization_type',
                            'instance_id', 'vmi_inside', 'vmi_outside']
         self.IST.get(path)
@@ -1675,7 +1737,6 @@ class CLI_vr(CLI_basic):
     def SnhKInterfaceReq(self, args):
         path = 'Snh_KInterfaceReq'
         self.IST.get(path)
-        # import pdb; pdb.set_trace()
         xpath = "//KInterfaceInfo"
         if args.search: xpath += "[contains(., '%s')]" % args.search
 
@@ -1712,9 +1773,9 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath)
 
     def SnhAcl(self, args):
-        self.IST.get('Snh_AclReq?uuid=' + args.uuid)
+        self.IST.get('Snh_AclReq?uuid=' + args.search)
         xpath = "//AclSandeshData"
-        if args.uuid: xpath += "[contains(., '%s')]" % args.uuid
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         default_columns = ["uuid", "name", "dynamic_acl"]
         self.output_formatters(args, xpath, default_columns)
 
@@ -1749,18 +1810,28 @@ class CLI_vr(CLI_basic):
         if args.family == 'inet':
             p=args.prefix.split('/')
             if len(p) == 1: p.append('32')
-            path = ('Snh_Inet4UcRouteReq?vrf_index=' + str(args.vrf) +
-                   '&src_ip=' + p[0] + '&prefix_len=' + p[1] + '&stale=')
+            prefix_len = p[1]
+            src_ip = p[0]
+            # path = ('Snh_Inet4UcRouteReq?vrf_index=' + str(args.vrf) +
+            #        '&src_ip=' + p[0] + '&prefix_len=' + p[1] + '&stale=')
+            path = 'Inet4UcRouteReq?vrf_index=' + str(args.vrf)
             xpath = '//RouteUcSandeshData'
+            if not args.address:
+                args.address = src_ip
             if args.address and not is_ipv4(args.address):
                 xpath += "[contains(src_ip, '%s')]" % args.address
 
         elif args.family == 'inet6':
             p=args.prefix.split('/')
             if len(p) == 1: p.append('128')
-            path = ('Snh_Inet6UcRouteReq?vrf_index=' + str(args.vrf) +
-                   '&src_ip=' + p[0] + '&prefix_len=' + p[1] + '&stale=')
+            prefix_len = p[1]
+            src_ip = p[0]
+            # path = ('Snh_Inet6UcRouteReq?vrf_index=' + str(args.vrf) +
+            #        '&src_ip=' + p[0] + '&prefix_len=' + p[1] + '&stale=')
+            path = 'Inet6UcRouteReq?vrf_index=' + str(args.vrf)
             xpath = '//RouteUcSandeshData'
+            if not args.address:
+                args.address = src_ip
             if args.address and not is_ipv6(args.address):
                 xpath += "[contains(src_ip, '%s')]" % args.address
 
@@ -1770,12 +1841,14 @@ class CLI_vr(CLI_basic):
                            '//RouteL2SandeshData'],
                 'evpn': ['Snh_EvpnRouteReq?vrf_index=',
                          '//RouteEvpnSandeshData'],
-                'layer2': ['Snh_Layer2RouteReq?vrf_index=',
+                # 'layer2': ['Snh_Layer2RouteReq?vrf_index=',
+                'layer2': ['Layer2RouteReq?vrf_index=',
                            '//RouteL2SandeshData']
             }
             path = mapping.get(args.family, '')[0] + str(args.vrf)
             xpath = mapping.get(args.family, '')[1]
             if args.address: xpath += "[contains(mac, '%s')]" % args.address
+            prefix_len = None
 
         if args.detail:
             mode = 'detail'
@@ -1783,9 +1856,9 @@ class CLI_vr(CLI_basic):
             mode = 'raw'
         else:
             mode ='brief'
-
+        
         self.IST.get(path)
-        self.IST.showRoute_VR(xpath, args.family, args.address, mode)
+        self.IST.showRoute_VR(xpath, args.family, args.address, mode, prefix_len)
 
     def SnhAgentStats(self, args):
         StatsMap = {
@@ -1866,13 +1939,19 @@ class CLI_vr(CLI_basic):
         self.output_formatters(args, xpath)
 
     def SnhShowIFMap(self, args):
-        path = ('Snh_ShowIFMapAgentReq?table_name=%s&node_sub_string=%s'
-                '&link_type_sub_string=%slink_node_sub_string=%s' %
-                (args.table, args.node, args.link_type, args.link_node))
-
+        # path = ('Snh_ShowIFMapAgentReq?table_name=%s&node_sub_string=%s'
+                # '&link_type_sub_string=%slink_node_sub_string=%s' %
+                # (args.table, args.node, args.link_type, args.link_node))
+        path = 'Snh_ShowIFMapAgentReq?table_name='
         self.IST.get(path)
         args.format = 'text'
-        self.output_formatters(args, "//element")
+        if not args.search:
+            self.output_formatters(args, "//element")
+        else:
+            for tree in self.IST.output_etree:
+                for element in tree.xpath("//element"):
+                    if re.search("type:%s\n" %(args.search), element.text):
+                        print(Introspect.elementToStr('', element).rstrip())
 
 class CLI_collector(CLI_basic):
 
