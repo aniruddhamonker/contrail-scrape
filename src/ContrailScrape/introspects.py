@@ -13,6 +13,7 @@ class IntrospectClass(BaseClass):
         self.num_threads = num_threads # type: int
         self.errors = False
         self.debug = debug
+        self.url_filter = re.compile(r'(http.*/).*$')
         self.logfile = logger.handlers[0].__dict__['baseFilename']
         if self.debug:
             logger.setLevel(logging.DEBUG)
@@ -46,33 +47,58 @@ class IntrospectClass(BaseClass):
                 filename = tmp_dir+'/'+introspect.name
                 introspect_url = re.sub(r'(http.*/).*$', r'\1', \
                     index_page_node_url)+'Snh_'+introspect.name # type: str
-                try:                 
-                    introspect_response = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
+                try:           
+                    introspect_response, next_batch = self.parse_response(introspect_url) # type: bs4.BeautifulSoup
                 except ValueError:
                     logger.error("Failed to create output file for introspect: {}"\
                         .format(introspect.name))
                     self.errors = True
                     continue
                 self.create_and_write_files(filename, introspect_response.prettify())
+                if next_batch:
+                    self.fetch_batch_data(introspect_url, filename, next_batch)
                 if introspect.name == 'SandeshUVETypesReq':
                     self.fetch_all_uve_types(introspect_url, tmp_dir)
                 if introspect.name == 'VrfListReq':
-                    import pdb;pdb.set_trace()
-                    vrf_inet4uc_indexes = map(lambda vrf: vrf.text, introspect_response.findAll(name='ucindex'))
-                    self.fetch_routes_per_vrf(vrf_indexes, introspect_url, tmp_dir)
+                    vrf_indexes = list(map(lambda vrf: vrf.text, introspect_response.findAll(name='ucindex')))
+                    [self.fetch_routes_per_vrf(index, tmp_dir, introspect_url) for index in vrf_indexes]
+                if introspect.name == 'ShowMulticastManagerReq':
+                    self.fetch_mcast_tables(introspect_url, tmp_dir)
                 if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                     self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
             self.pbar.update()
             queue.task_done()
     
+    def fetch_batch_data(self, introspect_url, filepath, batch_data, batch_num=1):
+        batch_url = re.sub(self.url_filter, r'\1', introspect_url) +\
+            'Snh_{}?x={}'.format(batch_data['link'], batch_data['text'])
+        try:
+            batch_response, next_batch = self.parse_response(batch_url)
+            filename = filepath + '.{}'.format(batch_num)
+            self.create_and_write_files(filename, batch_response.prettify())
+        except ValueError:
+            logger.error("Failed to create output file for introspect: {}"\
+                        .format(batch_url))
+            self.errors = True
+        if next_batch:
+            batch_num += 1
+            self.fetch_batch_data(introspect_url, filepath, next_batch, batch_num)
+    
     def fetch_all_uve_types(self, introspect_url, filepath):
-        all_uve_types = self.parse_response(introspect_url)
+        all_uve_types, _ = self.parse_response(introspect_url)
         for uve in all_uve_types.findAll('type_name'):
             uve_name = 'SandeshUVECacheReq?tname=' + uve.text
             uve_url = re.sub(r'(http.*/).*$', r'\1', introspect_url) + 'Snh_' + uve_name
-            uve_response = self.parse_response(uve_url)
+            try:
+                uve_response, _ = self.parse_response(uve_url)
+            except ValueError:
+                logger.error("Failed to create output file for introspect: {}"\
+                        .format(uve_name))
+                self.errors = True
+                continue
             filename = filepath + '/' + uve.text
-            self.create_and_write_files(filename, str(uve_response))
+            # self.create_and_write_files(filename, str(uve_response))
+            self.create_and_write_files(filename, uve_response.prettify())
         return
 
     def fetch_sandesh_traces(self, introspect_response, filepath, url):
@@ -82,7 +108,7 @@ class IntrospectClass(BaseClass):
             introspect_url = re.sub(r'(http.*/).*$', r'\1', url)+\
                 'Snh_SandeshTraceRequest?x='+ "{}".format(sandesh_trace_buf.text)
             try:
-                sandesh_trace = self.parse_response(introspect_url)
+                sandesh_trace, _ = self.parse_response(introspect_url)
             except ValueError:
                 logger.error("Failed to create output file for introspect: {}"\
                         .format(sandesh_trace_buf.text.replace(" ", "_")))
@@ -90,18 +116,57 @@ class IntrospectClass(BaseClass):
             self.create_and_write_files(filename, sandesh_trace.prettify())
         return
 
-    def fetch_routes_per_vrf(self, vrf_index, filepath, url):
+    def fetch_routes_per_vrf(self, index, filepath, url):
         inet4uc_url = re.sub(r'(http.*/).*$', r'\1', url) + \
-            'Snh_Inet4UcRouteReq?vrf_index=' + vrf_index
-        inet4uc_response = self.parse_response(inet4uc_url)
-        filename = filepath + '/Inet4UcRouteReq?vrf_index=' + vrf_index
-        self.create_and_write_files(filename, inet4uc_response.prettify())
+            'Snh_Inet4UcRouteReq?vrf_index=' + index
+        try:
+            inet4uc_response, _ = self.parse_response(inet4uc_url)
+            filename = filepath + '/Inet4UcRouteReq?vrf_index=' + index
+            self.create_and_write_files(filename, inet4uc_response.prettify())
+        except ValueError:
+            logger.error("Failed to create output file for introspect:"
+                "Snh_Inet4UcRouteReq?vrf_index={}".format(index))
+            self.errors = True
         layer2rte_url = re.sub(r'(http.*/).*$', r'\1', url) + \
-            'Snh_Layer2RouteReq?vrf_index=' + vrf_index
-        layer2rte_res = self.parse_response(layer2rte_url)
-        filename = filepath + 'Snh_Layer2RouteReq?vrf_index=' + vrf_index
-        self.create_and_write_files(filename, layer2rte_res.prettify())
+            'Snh_Layer2RouteReq?vrf_index=' + index
+        try:
+            layer2rte_res, _ = self.parse_response(layer2rte_url)
+            filename = filepath + '/Layer2RouteReq?vrf_index=' + index
+            self.create_and_write_files(filename, layer2rte_res.prettify())
+        except:
+            logger.error("Failed to create output file for introspect:"
+                "Snh_Layer2RouteReq?vrf_index={}".format(index))
+            self.errors = True
+        inet6uc_url = re.sub(r'(http.*/).*$', r'\1', url) + \
+            'Snh_Inet6UcRouteReq?vrf_index=' + index
+        try:
+            inet6uc_response, _ = self.parse_response(inet6uc_url)
+            filename = filepath + '/Inet6UcRouteReq?vrf_index=' + index
+            self.create_and_write_files(filename, inet6uc_response.prettify())
+        except:
+            logger.error("Failed to create output file for introspect:"
+                "Inet6UcRouteReq?vrf_index={}".format(index))
+            self.errors = True
         return
+
+    def fetch_mcast_tables(self, url, filepath):
+        mcast_tree_url = re.sub(r'(http.*/).*$', r'\1', url) + 'Snh_ShowMulticastManagerDetailReq?x='
+        all_mcast_tables, next_batch = self.parse_response(url)
+        for table in all_mcast_tables.findAll('ShowMulticastManager'):
+            if table.total_trees.text != '0':
+                try:
+                    tree_name = table.find('name').text
+                    mcast_tree, _ = self.parse_response(mcast_tree_url+tree_name)
+                    filename = filepath + '/ShowMulticastManagerDetailReq.' + tree_name
+                    self.create_and_write_files(filename, mcast_tree.prettify())
+                except ValueError:
+                    logger.error("Failed to create output file for introspect: {}"\
+                        .format(mcast_tree_url))
+                    self.errors = True
+        if next_batch:
+            batch_url = re.sub(self.url_filter, r'\1', url) +\
+            'Snh_{}?x={}'.format(next_batch['link'], next_batch['text'])
+            self.fetch_mcast_tables(batch_url, filepath)    
 
     def fetch_all_introspects(self):
         # type: () -> None
@@ -122,8 +187,8 @@ class IntrospectClass(BaseClass):
             try:
                 introspect_thread = threading.Thread\
                     (target=self._fetch_introspect, args=(index_nodes_queue,)) # type: threading.Thread
-                introspect_thread.start() 
-                threads.append(introspect_thread)    
+                introspect_thread.start()
+                threads.append(introspect_thread)
             except threading.ThreadError as err:
                 logger.error("Failed to create thread {}\n{}\n{}"\
                     .format(threading.current_thread.__name__, type(err), err))
@@ -134,8 +199,8 @@ class IntrospectClass(BaseClass):
         self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
-            tqdm.write("Finishing introspection of all nodes with Errors\n \
-                Please check log file {} for details".format(self.logfile))
+            tqdm.write("Finishing introspection of all nodes with Errors\
+            \nPlease check log file {} for details".format(self.logfile))
         else:
             tqdm.write("Finishing introspection of all nodes \
                 \nNo Errors reported")
