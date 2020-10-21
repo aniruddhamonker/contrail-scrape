@@ -23,16 +23,24 @@ class BaseClass:
             .format(url, response.status_code))
             return response.text
         except requests.exceptions.ReadTimeout:
-            logger.error('Read Timeout Occurred for URL: {}'.format(url))
-        except requests.exceptions.ConnectionError:
             if retrcnt >=1:
-                logger.error("Error connecting url: {}, retry attempt: {}"\
-                    .format(url, 4-retrcnt))
+                # logger.error('Read Timeout Occurred for URL: {}, retry attempt: {}'\
+                #     .format(url, 4-retrcnt))
                 cls.get_request(url, retrcnt-1)
             else:
-                print("Error Connecting node: {}\tattempts tried: 3"\
+                logger.error("Skipping url: {}\t Multiple Read Timeouts Occurred , attempts tried: 3"\
                      .format(url))
-                print("Check if introspect port is correct")
+        except requests.exceptions.ConnectionError:
+            if retrcnt >=1:
+                # logger.error("Error connecting url: {}, retry attempt: {}"\
+                #     .format(url, 4-retrcnt))
+                cls.get_request(url, retrcnt-1)
+            else:
+                print("Error Connecting node: {} for introspect {}\tattempts tried: 3"\
+                     .format(url.split('/')[2], url.split('/')[3]))
+                print("Hint: Check if introspect port is correct")
+                logger.error("Error Connecting node: {} for introspect {}\tattempts tried: 3"\
+                     .format(url.split('/')[2], url.split('/')[3]))
         except requests.exceptions.HTTPError:
             logger.error("introspect returned error response {} for url {}"\
                 .format(response.status_code, url))
