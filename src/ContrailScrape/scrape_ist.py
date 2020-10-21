@@ -29,23 +29,32 @@ proxy = None
 token = None
 
 ServiceMap = {
-    "vr": "contrail-vrouter-agent",
-    "ctr": "contrail-control",
-    "cfg_api": "contrail-api",
-    "cfg_schema": "contrail-schema",
-    "cfg_svcmon": "contrail-svc-monitor",
-    "cfg_disc": "contrail-discovery",
+    # "vr": "contrail-vrouter-agent",
+    "vrouter": "contrail-vrouter-agent",
+    # "ctr": "contrail-control",
+    "control": "contrail-control",
+    # "cfg_api": "contrail-api",
+    "config": "contrail-api",
+    # "cfg_schema": "contrail-schema",
+    "schema": "contrail-schema",
+    # "cfg_svcmon": "contrail-svc-monitor",
+    "svc-monitor": "contrail-svc-monitor",
+    # "cfg_disc": "contrail-discovery",
+    "discovery": "contrail-discovery",
     "collector": "contrail-collector",
     "analytics": "contrail-analytics-api",
-    "alarm_gen": "contrail-alarm-gen",
+    # "alarm_gen": "contrail-alarm-gen",
+    "alarmgen": "contrail-alarm-gen",
     "dns": "contrail-dns",
-    "qe": "contrail-query-engine",
-    "dm": "contrail-device-manager",
-    "nodemgr_cfg": "contrail-config-nodemgr",
-    "nodemgr_db": "contrail-database-nodemgr",
-    "nodemgr_ctr": "contrail-control-nodemgr",
-    "nodemgr_vr": "contrail-vrouter-nodemgr",
-    "nodemgr_analytics": "contrail-analytics-nodemgr",
+    # "qe": "contrail-query-engine",
+    "query": "contrail-query-engine",
+    # "dm": "contrail-device-manager",
+    "devmgr": "contrail-device-manager",
+    # "nodemgr_cfg": "contrail-config-nodemgr",
+    # "nodemgr_db": "contrail-database-nodemgr",
+    # "nodemgr_ctr": "contrail-control-nodemgr",
+    # "nodemgr_vr": "contrail-vrouter-nodemgr",
+    # "nodemgr_analytics": "contrail-analytics-nodemgr",
 }
 
 class Introspect:
@@ -78,7 +87,7 @@ class Introspect:
                         elif file != self.filename and dup_count:
                             self.filename = os.path.join(root, file)
                             self.output_etree.append(etree.parse(self.filename))
-                            print("Appending data from multiple files: %s" % self.filename)
+                            print("Searching data from multiple files: %s" % self.filename)
                         else:
                             print("file {} not found under directory: {}\n"\
                                 .format(file, os.getcwd()))
@@ -708,25 +717,30 @@ class CLI_basic(object):
             self.IST.get(str(args.name))
             self.IST.printText('//*[@type="sandesh"]/data/*')
 
-class CLI_cfg_api(CLI_basic):
+# class CLI_cfg_api(CLI_basic):
+class CLI_config(CLI_basic):
     pass
 
-class CLI_cfg_disc(CLI_basic):
+# class CLI_cfg_disc(CLI_basic):
+class CLI_discovery(CLI_basic):
     pass
 
 class CLI_analytics(CLI_basic):
     pass
 
-class CLI_alarm_gen(CLI_basic):
+# class CLI_alarm_gen(CLI_basic):
+class CLI_alarmgen(CLI_basic):
     pass
 
 class CLI_dns(CLI_basic):
     pass
 
-class CLI_qe(CLI_basic):
+# class CLI_qe(CLI_basic):
+class CLI_query(CLI_basic):
     pass
 
-class CLI_dm(CLI_basic):
+# class CLI_dm(CLI_basic):
+class CLI_devmgr(CLI_basic):
     pass
 
 class CLI_nodemgr_cfg(CLI_basic):
@@ -744,7 +758,8 @@ class CLI_nodemgr_vr(CLI_basic):
 class CLI_nodemgr_analytics(CLI_basic):
     pass
 
-class CLI_cfg_schema(CLI_basic):
+# class CLI_cfg_schema(CLI_basic):
+class CLI_schema(CLI_basic):
 
     def __init__(self, parser, host, port, filename):
         CLI_basic.__init__(self, parser, host, port, filename)
@@ -836,7 +851,7 @@ class CLI_cfg_svcmon(CLI_basic):
         self.IST.get(path)
         self.output_formatters(args, xpath, default_columns)
 
-class CLI_ctr(CLI_basic):
+class CLI_control(CLI_basic):
 
     def __init__(self, parser, host, port, filename):
         CLI_basic.__init__(self, parser, host, port, filename)
@@ -977,7 +992,7 @@ class CLI_ctr(CLI_basic):
                                   parents = [self.common_parser],
                                   help='IFMAP xmpp clients info')
         subp.add_argument('client', nargs='?',
-                                  help='client index or name')
+                                  help='client index number')
         subp.add_argument('-t', '--type',
                                   choices=['node', 'link'],
                                   default='node',
@@ -995,14 +1010,14 @@ class CLI_ctr(CLI_basic):
         subp.add_argument('table', nargs='?', default='',
                           help='ifmap table e.g. access-control-list, '
                                'security-group etc')
-        subp.add_argument('-s', '--search', default='', help='search string')
+        # subp.add_argument('-s', '--search', default='', help='search string')
         subp.set_defaults(func=self.SnhIFMapTableShow)
 
         subp = p_ifmap.add_parser('node', parents = [self.common_parser],
                                   help='IFMAP node data info')
         subp.add_argument('search', nargs='?', default='',
-                          help='List matched fqn')
-        subp.add_argument('--fqn', default='', help='fq_node_name')
+                          help='search by node fqn')
+        # subp.add_argument('--fqn', default='', help='fq_node_name')
         subp.set_defaults(func=self.SnhIFMapNodeShow)
 
         subp = p_ifmap.add_parser('link', parents = [self.common_parser],
@@ -1110,7 +1125,7 @@ class CLI_ctr(CLI_basic):
                 args.max_width = 60
         elif args.type == 'tree' and args.table:
             # path = 'Snh_ShowMulticastManagerDetailReq?x=%s' % (args.table)
-            path = 'ShowMulticastManagerDetailReq.' + args.table
+            path = 'ShowMulticastManagerDetailReq.' + args.table[:200]
             xpath = '//ShowMulticastTree'
             # xpath = '//ShowMulticastTree[contains(., "%s")]' % (args.table)
         self.IST.get(path)
@@ -1123,7 +1138,7 @@ class CLI_ctr(CLI_basic):
             path = 'Snh_ShowRtGroupSummaryReq?search_string=%s' % (args.search)
         self.IST.get(path)
         xpath = '//ShowRtGroupInfo'
-
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         self.output_formatters(args, xpath)
 
     def SnhShowBgpNeighborConfigReq(self, args):
@@ -1131,6 +1146,7 @@ class CLI_ctr(CLI_basic):
                 % (args.search))
         self.IST.get(path)
         xpath = '//ShowBgpNeighborConfig'
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         if args.type == 'bgpaas':
             xpath += "[contains(router_type, '%s')]" % args.type
         elif args.type == 'fabric':
@@ -1147,12 +1163,14 @@ class CLI_ctr(CLI_basic):
                 % (args.search))
         self.IST.get(path)
         xpath = '//ShowBgpRoutingPolicyConfig'
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         self.output_formatters(args, xpath)
 
     def SnhShowBgpInstanceConfigReq(self, args):
-        path = 'Snh_ShowBgpInstanceConfigReq?search_string=%s' % (args.search)
+        path = 'Snh_ShowBgpInstanceConfigReq?'
         self.IST.get(path)
         xpath = '//ShowBgpInstanceConfig'
+        if args.search: xpath += "[contains(., '%s')]" % args.search
 
         default_columns = ['name', 'virtual_network_index', 'vxlan_id',
                            'import_target', 'export_target', 'has_pnf',
@@ -1162,6 +1180,7 @@ class CLI_ctr(CLI_basic):
     def SnhSC(self, args):
         self.IST.get('Snh_ShowServiceChainReq?search_string=' + args.search)
         xpath = '//ShowServicechainInfo'
+        if args.search: xpath += "[contains(., '%s')]" % args.search
         default_columns = ['src_virtual_network', 'dest_virtual_network',
                            'service_instance', 'src_rt_instance',
                            'dest_rt_instance', 'state']
@@ -1184,35 +1203,38 @@ class CLI_ctr(CLI_basic):
         self.output_formatters(args, xpath)
 
     def SnhIFMapTableShow(self, args):
-        if not args.table and not args.search:
+        if not args.table:
             path = 'Snh_IFMapNodeTableListShowReq'
             xpath = '//IFMapNodeTableListShowEntry'
             default_columns = []
         else:
-            path = ('Snh_IFMapTableShowReq?table_name=%s&search_string=%s' %
-                    (args.table, args.search))
-            xpath = '//IFMapNodeShowInfo'
+            # path = ('Snh_IFMapTableShowReq?table_name=%s&search_string=%s' %
+            #         (args.table, args.search))
+            path = 'Snh_IFMapTableShowReq?'
+            xpath = '//IFMapNodeShowInfo[contains(./node_name, "%s")]' %(args.table)
             default_columns = ['node_name', 'interests', 'advertised',
-                               'dbentryflags', 'last_modified']
+                               'dbentryflags', 'last_modified']                             
         self.IST.get(path)
         self.output_formatters(args, xpath, default_columns)
 
     def SnhIFMapLinkShow(self, args):
-        path = ('Snh_IFMapLinkTableShowReq?search_string=%s&metadata=%s' %
-                (args.search, args.metadata))
+        # path = ('Snh_IFMapLinkTableShowReq?search_string=%s&metadata=%s' %
+        #         (args.search, args.metadata))
+        path = 'Snh_IFMapLinkTableShowReq'
         self.IST.get(path)
-        xpath = "//IFMapLinkShowInfo"
+        # xpath = "//IFMapLinkShowInfo"
+        xpath = '//IFMapLinkShowInfo[contains(., "%s")]' %(args.search)
         self.output_formatters(args, xpath)
 
     def SnhIFMapNodeShow(self, args):
-        if args.fqn:
-            args.format = 'text'
-            path = 'Snh_IFMapNodeShowReq?fq_node_name=%s' % (args.fqn)
-            xpath = '//IFMapNodeShowInfo'
-        else:
-            args.format = 'text'
-            path = 'Snh_IFMapTableShowReq?search_string=%s' % (args.search)
-            xpath = '//node_name'
+        # if args.fqn:
+        #     args.format = 'text'
+        #     path = 'Snh_IFMapNodeShowReq?fq_node_name=%s' % (args.fqn)
+        #     xpath = '//IFMapNodeShowInfo'
+        # else:
+        args.format = 'text'
+        path = 'Snh_IFMapTableShowReq?'
+        xpath = '//node_name[contains(., "%s")]' %(args.search)
 
         self.IST.get(path)
         self.output_formatters(args, xpath)
@@ -1250,14 +1272,16 @@ class CLI_ctr(CLI_basic):
             xpath.append('//IFMapXmppClientInfo')
         else:
             if args.type == 'node':
-                path = ('Snh_IFMapPerClientNodesShowReq?'
-                         'client_index_or_name=%s&search_string=%s' %
-                         (args.client, args.search))
+                # path = ('Snh_IFMapPerClientNodesShowReq?'
+                #          'client_index_or_name=%s&search_string=%s' %
+                #          (args.client, args.search))
+                path = 'IFMapPerClientNodesShow.index.%s' %(args.client)
                 xpath.append('//IFMapPerClientNodesShowInfo')
             else:
-                path = ('Snh_IFMapPerClientLinksShowReq?'
-                         'client_index_or_name=%s&search_string=%s' %
-                         (args.client, args.search))
+                # path = ('Snh_IFMapPerClientLinksShowReq?'
+                #          'client_index_or_name=%s&search_string=%s' %
+                #          (args.client, args.search))
+                path = 'IFMapPerClientLinksShow.index.%s' %(args.client)
                 xpath.append('//IFMapPerClientLinksShowInfo')
 
         self.IST.get(path)
@@ -1371,7 +1395,7 @@ class CLI_ctr(CLI_basic):
         # to showrouter method
         self.IST.showRoute_CTR(args.last, mode, table, prefix)
 
-class CLI_vr(CLI_basic):
+class CLI_vrouter(CLI_basic):
     def __init__(self, parser, host, port, filename):
         CLI_basic.__init__(self, parser, host, port, filename)
         self.add_parse_args()
@@ -2110,7 +2134,7 @@ def main():
     if '--debug' in argv:
         debug = True
 
-    parser = argparse.ArgumentParser(prog='ist',
+    parser = argparse.ArgumentParser(prog='contrail-scrape-ist',
         description='A script to make Contrail Introspect output CLI friendly.')
     parser.add_argument('--version',  action="store_true",  help="Script version")
     parser.add_argument('--debug',    action="store_true",  help="Verbose mode")
