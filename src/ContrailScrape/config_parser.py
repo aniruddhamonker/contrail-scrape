@@ -25,6 +25,8 @@ class ConfigParser():
             help="turn on debug mode")
         conf_parser.add_argument('--version', action='store_true', \
             help="print the version number")
+        conf_parser.add_argument('--threads', type=int, default=50,\
+            help="control the number of threads, default=50")
         all_args = conf_parser.parse_args()
         if not any(all_args.__dict__.values()):
             print("No Valid Input Arguments provided \
@@ -77,6 +79,10 @@ class ConfigParser():
     @property
     def version(self):
         return self.__version
+    
+    @property
+    def thread_count(self):
+        return self.__all_args.threads
 
     def __call__(self):
         return self.construct_urls()
