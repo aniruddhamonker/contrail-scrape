@@ -19,14 +19,16 @@ def fetch_analytics_api(api_args, debug):
 
 def main():
     config_parser = ContrailScrape.ConfigParser()
-    all_args = config_parser()
+    all_urls = config_parser()
+    all_args = config_parser.all_args
     base = ContrailScrape.BaseClass()
+    base.timeout = all_args.api_timeout
     if config_parser.version:
         get_version()
     try:
-        introspect_args = list(filter(lambda arg: arg.get('type') == "introspect", all_args))
-        fetch_all_introspects(introspect_args, config_parser.thread_count, config_parser.debug)
-        analytics_api_args = list(filter(lambda arg: arg.get('type') == "analytics-api", all_args))
+        introspect_args = list(filter(lambda arg: arg.get('type') == "introspect", all_urls))
+        fetch_all_introspects(introspect_args, all_args.threads, config_parser.debug)
+        analytics_api_args = list(filter(lambda arg: arg.get('type') == "analytics-api", all_urls))
         fetch_analytics_api(analytics_api_args, config_parser.debug)
         base.archive_all_files()
     except KeyboardInterrupt:
