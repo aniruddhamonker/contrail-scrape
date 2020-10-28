@@ -18,3 +18,4 @@ src/contrail_scrape.egg-info/requires.txt
 src/contrail_scrape.egg-info/SOURCES.txt
 src/contrail_scrape.egg-info/top_level.txt
 src/ContrailScrape/data/metadata.yaml.bkp1
+src/ContrailScrape/introspects.py.bkp.2020-10-19T21-49
