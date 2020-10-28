@@ -1,11 +1,19 @@
 import pathlib
+import os, shutil
 from setuptools import setup
 
 # The directory containing this file
 HERE = pathlib.Path(__file__).parent
+HOME = str(pathlib.Path.home())
 
 # The text of the README file
 README = (HERE / "README.md").read_text()
+
+#copy over the config file to /etc/contrail-scrape
+if not os.path.isdir(HOME+'/contrail-scrape'):
+    os.mkdir(HOME+'/contrail-scrape')
+if os.path.isdir(HOME+'/contrail-scrape'):
+    shutil.copy(HERE / 'src/ContrailScrape/data/hosts.yaml', HOME+'/contrail-scrape')
 
 setup(
     name="contrail-scrape",
