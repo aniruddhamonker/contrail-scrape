@@ -11,36 +11,43 @@ from ContrailScrape import logger
 
 class BaseClass:
     def __init__(self):
+        self.__timeout = 10
         pass
+    
+    @property
+    def timeout(self):
+        return self.__timeout
+
+    @timeout.setter
+    def timeout(self, secs):
+        self.__timeout = secs
 
     @classmethod
     def get_request(cls, url, retrcnt=3):
         # type: (IntrospectBaseClass, str, int) -> str
         try:
-            response = requests.get(url, timeout=5) # type: requests.models.Response
+            response = requests.get(url, timeout=BaseClass().timeout) # type: requests.models.Response
             response.raise_for_status()
             logger.debug("Fetched url '{}' with response code: {}"\
             .format(url, response.status_code))
             return response.text
         except requests.exceptions.ReadTimeout:
             if retrcnt >=1:
-                # logger.error('Read Timeout Occurred for URL: {}, retry attempt: {}'\
-                #     .format(url, 4-retrcnt))
                 cls.get_request(url, retrcnt-1)
             else:
-                logger.error("Skipping url: {}\t Multiple Read Timeouts Occurred , attempts tried: 3"\
+                logger.error("Skipping url: {}; Multiple Read Timeouts Occurred, attempts tried: 3"\
                      .format(url))
         except requests.exceptions.ConnectionError:
-            if retrcnt >=1:
-                # logger.error("Error connecting url: {}, retry attempt: {}"\
-                #     .format(url, 4-retrcnt))
-                cls.get_request(url, retrcnt-1)
-            else:
-                print("Error Connecting node: {} for introspect {}\tattempts tried: 3"\
-                     .format(url.split('/')[2], url.split('/')[3]))
+            if len(url.split('/')) == 3:
+                print("Error Connecting node: {}".format(url))
                 print("Hint: Check if introspect port is correct")
-                logger.error("Error Connecting node: {} for introspect {}\tattempts tried: 3"\
-                     .format(url.split('/')[2], url.split('/')[3]))
+                logger.error("Error Connecting node: {}".format(url))
+            else:
+                if retrcnt >=1: 
+                    cls.get_request(url, retrcnt-1)
+                else:                
+                    logger.error("Error Connecting node: {} for introspect {}"\
+                    .format(url.split('/')[2], url.split('/')[-1]))
         except requests.exceptions.HTTPError:
             logger.error("introspect returned error response {} for url {}"\
                 .format(response.status_code, url))

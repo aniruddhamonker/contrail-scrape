@@ -20,15 +20,18 @@ class ConfigParser():
                                  help="path to YAML configuration file")                        
         for arg in self.margs['argparser'].values():
             conf_parser.add_argument(arg['option_name'], \
-            action='append', metavar="HOST", help=arg['help'])
-        conf_parser.add_argument("--debug", action='store_true', \
-            help="turn on debug mode")
+            action='append', metavar='HOST', help=arg['help'])
         conf_parser.add_argument('--version', action='store_true', \
             help="print the version number")
+        conf_parser.add_argument("--debug", action='store_true', \
+            help="turn on debug mode")
         conf_parser.add_argument('--threads', type=int, default=50,\
             help="control the number of threads, default=50")
+        conf_parser.add_argument('--api-timeout', type=int, default=10,\
+            help='set API requests timeout in secs, default=10sec')
         all_args = conf_parser.parse_args()
-        if not any(all_args.__dict__.values()):
+        arg_list = list(all_args.__dict__.values())
+        if not any(arg_list[:-3]):
             print("No Valid Input Arguments provided \
                 \nUse \"--help\" for available options\n")
             sys.exit(1)
@@ -44,9 +47,14 @@ class ConfigParser():
                     all_formatted_args.append(module_args(*mod_tuple))
         else:
             for key, val in self.__all_args.__dict__.items():
-                 if val is not None and isinstance(val, list):
-                     all_formatted_args.append(module_args(key, val, \
-                         self.margs['argparser'][key]['port']))
+                if val is not None and isinstance(val, list):
+                    #  if map(lambda host_ip: True if ':' in host_ip else None, val):
+                    if ':' in val[0]:
+                        port = re.split(':', val[0])[-1]
+                        val = list(map(lambda host: host.split(':')[0], val))
+                    else:
+                        port = self.margs['argparser'][key]['port']
+                    all_formatted_args.append(module_args(key, val, port))
         yield from all_formatted_args
     
     @classmethod
@@ -73,16 +81,16 @@ class ConfigParser():
         return introspect_urls
     
     @property
+    def all_args(self):
+        return self.__all_args
+    
+    @property
     def debug(self):
         return self.__debug
 
     @property
     def version(self):
         return self.__version
-    
-    @property
-    def thread_count(self):
-        return self.__all_args.threads
 
     def __call__(self):
         return self.construct_urls()
