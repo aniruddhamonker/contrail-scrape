@@ -3,7 +3,6 @@ import os, shutil
 from setuptools import setup
 
 # The directory containing this file
-import pdb; pdb.set_trace()
 HERE = str(pathlib.Path(__file__).parent)
 HOME = os.environ['HOME']
 
