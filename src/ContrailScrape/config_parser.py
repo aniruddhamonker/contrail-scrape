@@ -9,7 +9,7 @@ class ConfigParser():
     def __init__(self):
         metadata_file = str(pathlib.Path(__file__).parent) + "/data/metadata.yaml"
         with open(metadata_file) as meta:
-            self.margs = yaml.load(meta, Loader=yaml.FullLoader) 
+            self.margs = yaml.safe_load(meta) 
         self.__all_args = self.parse_all_args()
         self.__debug = True if self.__all_args.debug else False
         self.__version = True if self.__all_args.version else False
@@ -42,7 +42,7 @@ class ConfigParser():
         all_formatted_args = []
         if self.__all_args.yaml_config:
             with open(self.__all_args.yaml_config) as config:
-                yaml_to_dict = yaml.load(config, Loader=yaml.FullLoader)
+                yaml_to_dict = yaml.safe_load(config)
                 for mod_tuple in self.parse_yaml_config(yaml_to_dict):
                     all_formatted_args.append(module_args(*mod_tuple))
         else:
