@@ -29,8 +29,8 @@ setup(
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.4.3"
+        "Programming Language :: Python :: 3.5.2",
+        "Programming Language :: Python :: 3.6.9"
     ],
     package_dir={'': 'src'},
     packages=["ContrailScrape"],
