@@ -31,7 +31,7 @@ class ConfigParser():
             help='set API requests timeout in secs, default=10sec')
         all_args = conf_parser.parse_args()
         arg_list = list(all_args.__dict__.values())
-        if not any(arg_list[:-3]):
+        if not list(filter(lambda x: isinstance(x, list) or x is True, arg_list)):
             print("No Valid Input Arguments provided \
                 \nUse \"--help\" for available options\n")
             sys.exit(1)
