@@ -28,15 +28,13 @@ setup(
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5.2",
-        "Programming Language :: Python :: 3.6.9"
+        "Programming Language :: Python :: 3.6.8"
     ],
     package_dir={'': 'src'},
     packages=["ContrailScrape"],
     package_data = {'ContrailScrape': ['data/*.yaml']},
-    install_requires=["beautifulsoup4", "tqdm==4.48.2", "lxml", \
-        "PrettyTable", "html5lib", "requests"],
+    install_requires=["beautifulsoup4", "tqdm==4.48.2", "PrettyTable"],
     entry_points={
         "console_scripts": [
             "contrail-scrape = ContrailScrape.main:main",
