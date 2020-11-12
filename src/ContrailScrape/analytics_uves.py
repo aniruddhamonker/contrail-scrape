@@ -85,11 +85,11 @@ class AnalyticsApiClass(BaseClass):
         self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
-            self.pbar.write("Finishing api scraping of all analytics nodes with errors\n \
-                Please check log file {} for details".format(self.logfile))
+            tqdm.write("Finishing api scraping of all analytics nodes with errors \
+            \nPlease check log file {} for details".format(self.logfile))
         else:
-            self.pbar.write("Finishing api scraping of all analytics nodes\n \
-                No Errors reported")
+            tqdm.write("Finishing api scraping of all analytics nodes \
+            \nNo Errors reported")
         return
 
 

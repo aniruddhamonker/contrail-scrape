@@ -43,7 +43,7 @@ class BaseClass:
                 print("Hint: Check if introspect port is correct")
                 logger.error("Error Connecting node: {}".format(url))
             else:
-                if retrcnt >=1: 
+                if retrcnt >=1:   
                     cls.get_request(url, retrcnt-1)
                 else:                
                     logger.error("Error Connecting node: {} for introspect {}"\
