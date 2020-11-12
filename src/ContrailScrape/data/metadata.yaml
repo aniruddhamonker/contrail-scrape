@@ -35,7 +35,7 @@ argparser:
     short_name: -sch
     help: contrail-schema
     port: "8087"
-  svc-monitor:
+  svc_monitor:
     option_name: --svc-monitor
     short_name: -svc
     help: contrail-svc-monitor
@@ -45,17 +45,17 @@ argparser:
     short_name: -col
     help: contrail-analytics-collector
     port: "8089"
-  device-manager:
+  dev_mgr:
     option_name: --dev-mgr
     short_name: -dm
     help: contrail device manager
     port: "8096"
-  contrail-dns:
+  dns:
     option_name: --dns
     short_name: -dns
     help: contrail-dns
     port: "8092"
-  contrail-query:
+  query:
     option_name: --query
     short_name: -qe
     help: contrail-query-engine
