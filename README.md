@@ -30,7 +30,7 @@ $python3 -m venv ~/contrail-scrape --system-site-packages
 
 $source ~/contrail-scrape/bin/activate
 
-$pip install contrail-scrape
+##### $pip install contrail-scrape
 
 ## Usage
 ### Help
