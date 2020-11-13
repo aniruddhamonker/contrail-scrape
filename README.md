@@ -110,7 +110,7 @@ Begining archive process..
 ```
 
 # Analyzing Introspect Data
-All the introspect data collected by the tool is pretty formated as xml. The data is saved into a single tar.gz archive. The file is saved under local directory from where the tool is run.
+All the introspect data collected by the contrail-scrape is pretty formated as xml. The data is saved into a single tar.gz archive. The file is saved under local directory from where contrail-scrape is run.
 ```
 # ls -l contrail-scrape*
 -rwxrwxrwx 1 aniruddh aniruddh 242752 Nov 12 20:00 contrail-scrape.tgz
@@ -148,8 +148,78 @@ Although the data is pre-formatted as xml and can be directly printed from the c
 
 Ref IST: https://github.com/vcheny/contrail-introspect-cli/blob/master/ist.py
 
+```
+# contrail-scrape-ist --help
++ contrail-scrape-ist --help
+usage: contrail-scrape-ist [-h] [--version] [--debug]
+                           {alarmgen,analytics,collector,config,control,devmgr,discovery,dns,query,schema,svc-monitor,vrouter}
+                           ...
+
+A script to make Contrail Introspect output CLI friendly.
+
+positional arguments:
+  {alarmgen,analytics,collector,config,control,devmgr,discovery,dns,query,schema,svc-monitor,vrouter}
+    alarmgen            contrail-alarm-gen
+    analytics           contrail-analytics-api
+    collector           contrail-collector
+    config              contrail-api
+    control             contrail-control
+    devmgr              contrail-device-manager
+    discovery           contrail-discovery
+    dns                 contrail-dns
+    query               contrail-query-engine
+    schema              contrail-schema
+    svc-monitor         contrail-svc-monitor
+    vrouter             contrail-vrouter-agent
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             Script version
+  --debug               Verbose mode
+ ```
+
 ### Usage Contrail-scrape-ist
+To start analyzing data using contrail-scrape-ist, change the working directory to the introspect node that needs to be analyzed.
+```
+$cd scrape/
+scrape$ ls -l
+total 0
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.180.79-kernel
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.180.80-dpdk
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.101-analytics
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.101-config
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.101-control
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.102-analytics
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.102-config
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.102-control
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.103-analytics
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.103-config
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.103-control
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.104-kernel
+drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.105-kernel
 
+scrape$cd 10.85.188.101-control
+scrape/10.85.188.101-control$contrail-scrape-ist control --help
 
+positional arguments:
+  {status,cpu,trace,uve,nei,ri,route,mcast,bgp_stats,xmpp,ifmap,sc,config,rt}
+    status              Node/component status
+    cpu                 CPU load info
+    trace               Sandesh trace buffer
+    uve                 Sandesh UVE cache
+    nei                 Show BGP/XMPPP neighbors
+    ri                  Show routing instances
+    route               Show route info
+    mcast               Show multicast managers
+    bgp_stats           Show BGP server stats
+    xmpp                Show XMPP info
+    ifmap               Show IFMAP info
+    sc                  Show ServiceChain info
+    config              Show related config info
+    rt                  Show RtGroup info
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
 
 
