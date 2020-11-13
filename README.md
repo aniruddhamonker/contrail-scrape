@@ -9,7 +9,7 @@ In the current version, contrail-scrape supports introspect data collection of t
 + vrouter
 + analytics(api, collector, alarmgen, query)
 
-Besides introspect collection, contrail-scrape also supports API scraping of analytics-api's uves, uve alarms.
+Besides introspect collection, contrail-scrape also supports API scraping of analytics-api's uves and uve alarms.
 
 ## Platforms & Supportibility
 + Requires python version 3.5 and later.
