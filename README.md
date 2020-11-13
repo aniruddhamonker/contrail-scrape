@@ -69,9 +69,18 @@ $contrail-scrape --control 10.85.188.101 --config 10.85.188.102 --analytics 10.8
 
 API Scraping Progress: 100%|████████████████████████████████████| 55/55 [01:11<00:00,  1.30s/thread]
 
-Finishing introspection of all nodes with Errors
-Please check log file /var/log/scrape-2020-11-12-18:44:21-PST.log for details
+Finishing introspection of all nodes
+No Errors reported
 Begining archive process..
 ```
 
+####Example 2
+```
+$contrail-scrape --yaml-config ~/contrail-scrape/hosts.yaml
 
+API Scraping Progress: 100%|██████████████████████████████████| 186/186 [07:50<00:00,  2.53s/thread]
+
+Finishing introspection of all nodes with Errors
+Please check log file /var/log/scrape-2020-11-12-18:58:59-PST.log for details
+Begining archive process..
+```
