@@ -84,4 +84,4 @@ Finishing introspection of all nodes with Errors
 Please check log file /var/log/scrape-2020-11-12-18:58:59-PST.log for details
 Begining archive process..
 ```
-<script src="https://gist.github.com/aniruddhamonker/f49074b50b09ec89a0aec35505204b77.js"></script>
+ <script src="https://gist.github.com/aniruddhamonker/f49074b50b09ec89a0aec35505204b77.js"></script>
