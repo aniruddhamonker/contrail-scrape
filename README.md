@@ -18,11 +18,11 @@ Besides introspect collection, contrail-scrape also supports API scraping of ana
 + Runs on Red Hat RHEL 7.5 and later
 
 ## Installation
-+ contrail-scrape is packaged and available for installation using pip.
+contrail-scrape is packaged and available for installation using pip.
 
 $pip install contrail-scrape
 
-+ If installation inside virtualenv is desired:
+If installation inside virtualenv is desired:
 
 $mkdir ~/contrail-scrape
 
