@@ -29,6 +29,36 @@ $python3 -m venv ~/contrail-scrape --system-site-packages
 $source ~/contrail-scrape/bin/activate
 $pip install contrail-scrape
 
+## Usage
+### Help
+```
+$contrail-scrape --help
+
+A tool to scrape APIs and Introspects of various Contrail nodes
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --yaml-config FILE    path to YAML configuration file
+  --vrouter HOST        contrail-vrouter
+  --config HOST         contrail-config
+  --control HOST        contrail-control
+  --analytics HOST      contrail-analytics-api introspect
+  --alarmgen HOST       contrail-analytics-alarmgen
+  --discovery HOST      contrail-discovery
+  --schema HOST         contrail-schema
+  --svc-monitor HOST    contrail-svc-monitor
+  --collector HOST      contrail-analytics-collector
+  --dev-mgr HOST        contrail device manager
+  --dns HOST            contrail-dns
+  --query HOST          contrail-query-engine
+  --analytics-api HOST  contrail analytics uves and alarms
+  --version             print the version number
+  --debug               turn on debug mode
+  --threads THREADS     control the number of threads, default=50
+  --api-timeout API_TIMEOUT
+                        set API requests timeout in secs, default=10sec
+```
+
 
 
 
