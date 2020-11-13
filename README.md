@@ -63,7 +63,7 @@ optional arguments:
 ```
 
 ### Usage Examples
-#### Example 1
+#### Usage 1
 ```
 $contrail-scrape --control 10.85.188.101 --config 10.85.188.102 --analytics 10.85.188.103 --vrouter 10.85.180.79
 
@@ -74,7 +74,7 @@ No Errors reported
 Begining archive process..
 ```
 
-#### Example 2
+#### Usage 2 (Using YAML input)
 ```
 $contrail-scrape --yaml-config ~/contrail-scrape/hosts.yaml
 
@@ -86,3 +86,14 @@ Begining archive process..
 ```
 
 sample hosts.yaml : https://gist.github.com/aniruddhamonker/f49074b50b09ec89a0aec35505204b77
+
+#### Usage 3 (custom introspect ports)
+```
+$contrail-scrape --vrouter 10.85.180.80 --vrouter 10.85.180.79
+
+API Scraping Progress: 100%|████████████████████████████████████| 42/42 [01:30<00:00,  2.16s/thread]
+
+Finishing introspection of all nodes
+No Errors reported
+Begining archive process..
+```
