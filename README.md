@@ -110,13 +110,40 @@ Begining archive process..
 ```
 
 # Analyzing Introspect Data
-Contrail-scrape archives all the collected introspect data into a single tar.gz archive. The file is saved under local directory from where the tool is run.
-Once extracted, use **contrail-scrape-ist** which is a modified IST script for offline analysis of the data.
+All the introspect data collected by the tool is pretty formated as xml. The data is saved into a single tar.gz archive. The file is saved under local directory from where the tool is run.
 ```
 # ls -l contrail-scrape*
 -rwxrwxrwx 1 aniruddh aniruddh 242752 Nov 12 20:00 contrail-scrape.tgz
 ```
 
-# Contrail-scrape-ist
+Once the file is extracted, the data is saved under directory named **scrape** and structured into multiple sub-directories based on the type of introspect node.
+
+```
+# tree -L 2 scrape/
++ tree -L 2 scrape/
+scrape/
+├── 10.85.188.101-analytics
+│   ├── alarmgen_ctrl
+│   ├── analytics_api_info
+│   ├── cpuinfo
+│   ├── redis
+│   ├── sandesh_alarm
+│   ├── sandesh_ctrl
+│   ├── sandesh_trace
+│   └── sandesh_uve
+├── 10.85.188.101-config
+│   ├── cpuinfo
+│   ├── discovery_client_stats
+│   ├── greenlets
+│   ├── sandesh_alarm
+│   ├── sandesh_ctrl
+│   ├── sandesh_trace
+│   └── sandesh_uve
+------skipped----------
+```
+check https://gist.github.com/aniruddhamonker/81ed43dac81e77d4e7fd9be2e451b402 for the entire structure
+
+## Contrail-scrape-ist
+
 
 
