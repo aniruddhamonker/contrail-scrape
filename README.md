@@ -20,7 +20,7 @@ Besides introspect collection, contrail-scrape also supports API scraping of ana
 ## Installation
 contrail-scrape is packaged and available for installation using pip.
 
-$pip install contrail-scrape
+##### $pip install contrail-scrape
 
 If installation inside virtualenv is desired:
 
