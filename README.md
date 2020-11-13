@@ -18,11 +18,11 @@ Besides introspect collection, contrail-scrape also supports API scraping of ana
 + runs on Red Hat RHEL 7.5 and later
 
 ## Installation
-contrail-scrape is packaged and available for installation using pip.
++ contrail-scrape is packaged and available for installation using pip.
 
 $pip install contrail-scrape
 
-If installation inside virtualenv is desired:
++ If installation inside virtualenv is desired:
 
 $mkdir ~/contrail-scrape
 
@@ -62,7 +62,16 @@ optional arguments:
                         set API requests timeout in secs, default=10sec
 ```
 
+## Usage Examples
+### Example 1
+```
+$contrail-scrape --control 10.85.188.101 --config 10.85.188.102 --analytics 10.85.188.103 --vrouter 10.85.180.79
 
+API Scraping Progress: 100%|████████████████████████████████████| 55/55 [01:11<00:00,  1.30s/thread]
 
+Finishing introspection of all nodes with Errors
+Please check log file /var/log/scrape-2020-11-12-18:44:21-PST.log for details
+Begining archive process..
+```
 
 
