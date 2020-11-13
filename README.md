@@ -62,8 +62,8 @@ optional arguments:
                         set API requests timeout in secs, default=10sec
 ```
 
-## Usage Examples
-### Example 1
+### Usage Examples
+#### Example 1
 ```
 $contrail-scrape --control 10.85.188.101 --config 10.85.188.102 --analytics 10.85.188.103 --vrouter 10.85.180.79
 
