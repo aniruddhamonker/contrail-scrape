@@ -201,7 +201,7 @@ The following example shows the usage of contrail-scrape-ist script to analyze d
 The instructions to analyze the data from any other node are identical.
 ```
 scrape$cd 10.85.188.101-control
-scrape/10.85.188.101-control$contrail-scrape-ist control --help
+scrape/10.85.188.101-control$ contrail-scrape-ist control --help
 
 positional arguments:
   {status,cpu,trace,uve,nei,ri,route,mcast,bgp_stats,xmpp,ifmap,sc,config,rt}
@@ -223,8 +223,8 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
 
-scrape/10.85.188.101-control$contrail-scrape-ist control status
-Loading from introspect xml:  /mnt/c/Users/aamonker/Documents/Contrail/Repositories/contrail-introspect_scrapper/scrape/10.85.188.101-control/sandesh_uve/NodeStatus
+scrape/10.85.188.101-control$ contrail-scrape-ist control status
+Loading from introspect xml:  /root/scrape/10.85.188.101-control/sandesh_uve/NodeStatus
 module_id: contrail-control
 state: Functional
 description
@@ -237,5 +237,28 @@ description
 | Discovery | IfmapServer |   172.18.101.100:5998 | Up     | SubscribeResponse                    |
 | Discovery | xmpp-server |   172.18.101.100:5998 | Up     | Publish Response - HeartBeat         |
 +-----------+-------------+-----------------------+--------+--------------------------------------+
+
+scrape/10.85.188.101-control$ contrail-scrape-ist control nei
+Loading from introspect xml:  /root/scrape/10.85.188.101-control/bgp_peer/BgpNeighborReq
++--------------------------------------+----------------+----------+----------+-----------+-------------+-----------------+------------+-----------------------------+
+| peer                                 | peer_address   | peer_asn | encoding | peer_type | state       | send_state      | flap_count | flap_time                   |
++--------------------------------------+----------------+----------+----------+-----------+-------------+-----------------+------------+-----------------------------+
+| 61f75496-e2d0-4611-8f95-252490bfb5cf | 10.10.10.100   | 65513    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| 99ae7f6e-b5a3-4120-a173-de30944d636f | 10.0.1.3       | 65478    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| 76437055-f294-4640-ba8c-d9744c12d649 | 4.4.4.100      | 60101    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| d173cfb2-5752-4a99-bf8e-861e3c98a3d1 | 4.4.4.100      | 60101    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| camaro                               | 192.168.0.204  | 60100    | BGP      | internal  | Established | in sync         | 0          | n/a                         |
+| cont102                              | 172.18.101.102 | 60100    | BGP      | internal  | Established | in sync         | 1          | 2020-Nov-12 11:07:13.036137 |
+| cont103                              | 172.18.101.103 | 60100    | BGP      | internal  | Established | in sync         | 0          | n/a                         |
+| vmx                                  | 192.168.0.250  | 60100    | BGP      | internal  | Established | in sync         | 0          | n/a                         |
+| e7ef3ea8-8ed3-4b4d-b48e-72a84cef50d2 | 66.0.0.4       | 60066    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| 7a93d6d0-77c8-4bee-adca-ab4ef1f14bce | 10.0.1.3       | 65478    | BGP      | external  | Active      | not advertising | 0          | n/a                         |
+| bcomp79                              | 172.18.79.79   | 0        | XMPP     | internal  | Established | in sync         | 0          | n/a                         |
+| bcomp80                              | 172.18.102.80  | 0        | XMPP     | internal  | Established | in sync         | 2          | 2020-Nov-11 13:45:55.916819 |
+| comp104                              | 172.18.101.104 | 0        | XMPP     | internal  | Established | in sync         | 2          | 2020-Nov-11 13:45:55.958485 |
+| comp105                              | 172.18.101.105 | 0        | XMPP     | internal  | Established | in sync         | 2          | 2020-Nov-11 13:45:56.069561 |
+| comp106                              | 172.18.102.106 | 0        | XMPP     | internal  | Established | in sync         | 2          | 2020-Nov-11 13:45:55.966067 |
++--------------------------------------+----------------+----------+----------+-----------+-------------+-----------------+------------+-----------------------------+
+
 ```
 The output also displays the target introspect file that is being used to populate the above data. This is helpful if any data required from an introspect is missing in the output displayed by contrail-scrape-ist script.
