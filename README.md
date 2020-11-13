@@ -99,6 +99,7 @@ Begining archive process..
 ```
 
 #### Usage 4 (Analytics-api uves and alarms)
+```
 $contrail-scrape --analytics-api 10.85.188.101
 
 Analytics-api Progress: 100%|█████████████████████████████████████| 28/28 [00:56<00:00,  2.02s/uves]
@@ -106,4 +107,11 @@ Analytics-api Progress: 100%|█████████████████
 Finishing api scraping of all analytics nodes
 No Errors reported
 Begining archive process..
+```
 
+#Analyzing Introspect Data
+Contrail-scrape archives all the collected introspect data into a single tar.gz archive. The file is saved under local directory from where the tool is run.
+```
+# ls -l contrail-scrape*
+-rwxrwxrwx 1 aniruddh aniruddh 242752 Nov 12 20:00 contrail-scrape.tgz
+```
