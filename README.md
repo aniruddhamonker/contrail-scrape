@@ -150,7 +150,6 @@ Ref IST: https://github.com/vcheny/contrail-introspect-cli/blob/master/ist.py
 
 ```
 # contrail-scrape-ist --help
-+ contrail-scrape-ist --help
 usage: contrail-scrape-ist [-h] [--version] [--debug]
                            {alarmgen,analytics,collector,config,control,devmgr,discovery,dns,query,schema,svc-monitor,vrouter}
                            ...
@@ -197,7 +196,10 @@ drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.103-config
 drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.103-control
 drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.104-kernel
 drwxrwxrwx 1 root root 4096 Nov 12 20:18 10.85.188.105-kernel
-
+```
+The following example shows the usage of contrail-scrape-ist script to analyze data of a contrail control node.
+The instructions to analyze the data from any other node are identical.
+```
 scrape$cd 10.85.188.101-control
 scrape/10.85.188.101-control$contrail-scrape-ist control --help
 
@@ -220,6 +222,20 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+
+scrape/10.85.188.101-control$contrail-scrape-ist control status
+Loading from introspect xml:  /mnt/c/Users/aamonker/Documents/Contrail/Repositories/contrail-introspect_scrapper/scrape/10.85.188.101-control/sandesh_uve/NodeStatus
+module_id: contrail-control
+state: Functional
+description
++-----------+-------------+-----------------------+--------+--------------------------------------+
+| type      | name        | server_addrs          | status | description                          |
++-----------+-------------+-----------------------+--------+--------------------------------------+
+| IFMap     | IFMapServer |   172.18.101.101:8443 | Up     | Connection with IFMap Server (irond) |
+| Collector | n/a         |   172.18.101.101:8086 | Up     | Established                          |
+| Discovery | Collector   |   172.18.101.100:5998 | Up     | SubscribeResponse                    |
+| Discovery | IfmapServer |   172.18.101.100:5998 | Up     | SubscribeResponse                    |
+| Discovery | xmpp-server |   172.18.101.100:5998 | Up     | Publish Response - HeartBeat         |
++-----------+-------------+-----------------------+--------+--------------------------------------+
 ```
-
-
+The output also displays the target introspect file that is being used to populate the above data. This is helpful if any data required from an introspect is missing in the output displayed by contrail-scrape-ist script.
