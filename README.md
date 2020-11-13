@@ -12,10 +12,10 @@ In the current version, contrail-scrape supports introspect data collection of t
 Besides introspect collection, contrail-scrape also supports API scraping of analytics-api's uves, uve alarms.
 
 ## Platforms & Supportibility
-+ contrail-scrape requires python version 3.5 and later.
-+ requires a linux system pre-installed with python3-pip.
-+ runs on Ubuntu 16.04 and later
-+ runs on Red Hat RHEL 7.5 and later
++ Requires python version 3.5 and later.
++ Requires a linux system pre-installed with python3-pip.
++ Runs on Ubuntu 16.04 and later
++ Runs on Red Hat RHEL 7.5 and later
 
 ## Installation
 + contrail-scrape is packaged and available for installation using pip.
@@ -89,7 +89,7 @@ sample hosts.yaml : https://gist.github.com/aniruddhamonker/f49074b50b09ec89a0ae
 
 #### Usage 3 (custom introspect ports)
 ```
-$contrail-scrape --vrouter 10.85.180.80 --vrouter 10.85.180.79
+$contrail-scrape --vrouter 10.85.180.80:8096 --vrouter 10.85.180.79:8096
 
 API Scraping Progress: 100%|████████████████████████████████████| 42/42 [01:30<00:00,  2.16s/thread]
 
@@ -97,3 +97,13 @@ Finishing introspection of all nodes
 No Errors reported
 Begining archive process..
 ```
+
+#### Usage 4 (Analytics-api uves and alarms)
+$contrail-scrape --analytics-api 10.85.188.101
+
+Analytics-api Progress: 100%|█████████████████████████████████████| 28/28 [00:56<00:00,  2.02s/uves]
+
+Finishing api scraping of all analytics nodes
+No Errors reported
+Begining archive process..
+
