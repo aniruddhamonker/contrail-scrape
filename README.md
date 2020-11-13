@@ -117,10 +117,10 @@ All the introspect data collected by the tool is pretty formated as xml. The dat
 ```
 
 Once the file is extracted, the data is saved under directory named **scrape** and structured into multiple sub-directories based on the type of introspect node.
+Each of the sub-directory corresponds to introspect type for each type of node(control, config, etc..)
 
 ```
 # tree -L 2 scrape/
-+ tree -L 2 scrape/
 scrape/
 ├── 10.85.188.101-analytics
 │   ├── alarmgen_ctrl
