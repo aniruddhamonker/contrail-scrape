@@ -25,8 +25,11 @@ $pip install contrail-scrape
 If installation inside virtualenv is desired:
 
 $mkdir ~/contrail-scrape
+
 $python3 -m venv ~/contrail-scrape --system-site-packages
+
 $source ~/contrail-scrape/bin/activate
+
 $pip install contrail-scrape
 
 ## Usage
