@@ -109,9 +109,14 @@ No Errors reported
 Begining archive process..
 ```
 
-#Analyzing Introspect Data
+# Analyzing Introspect Data
 Contrail-scrape archives all the collected introspect data into a single tar.gz archive. The file is saved under local directory from where the tool is run.
+Once extracted, use **contrail-scrape-ist** which is a modified IST script for offline analysis of the data.
 ```
 # ls -l contrail-scrape*
 -rwxrwxrwx 1 aniruddh aniruddh 242752 Nov 12 20:00 contrail-scrape.tgz
 ```
+
+# Contrail-scrape-ist
+
+
