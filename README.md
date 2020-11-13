@@ -1,7 +1,7 @@
 # contrail-scrape
 Contrail-scrape is an introspect and API scraping tool for contrail versions 3.2 and later.
-It uses threads for concurrency and the number of threads can be adjusted based on the cluster environment and API utilization.
-contrail-scrape also has a built in analyzer component which is a modified IST script for offline analysis of introspect data.
+It also has a built in analyzer component which is a modified IST script for offline analysis of introspect data.
+contrail-scrape uses threads for concurrency and the number of threads can be adjusted based on the cluster environment and API utilization.
 
 In the current version, contrail-scrape supports introspect data collection of the following contrail nodes
 + control(contrail-control, dns)
