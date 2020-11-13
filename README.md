@@ -262,3 +262,5 @@ Loading from introspect xml:  /root/scrape/10.85.188.101-control/bgp_peer/BgpNei
 
 ```
 The output also displays the target introspect file that is being used to populate the above data. This is helpful if any data required from an introspect is missing in the output displayed by contrail-scrape-ist script.
+
+see gist: https://gist.github.com/aniruddhamonker/ce4f6943c65ec5b0bf5e9e8069c65dbd for more examples on using contrail-scrape-ist
