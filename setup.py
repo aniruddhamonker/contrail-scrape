@@ -27,7 +27,7 @@ setup(
     author_email="aamonker@juniper.net",
     license="MIT",
     classifiers=[
-        "License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python :: 3.5.2",
         "Programming Language :: Python :: 3.6.8"
     ],
