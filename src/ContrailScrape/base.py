@@ -66,7 +66,7 @@ class BaseClass:
                 if parsed_response.find("PageReqData").find("next_page").text:
                     all_pages = parsed_response.find("PageReqData").find("all").text
                     url = re.sub(r'(http:.*/).*$',r'\1Snh_PageReq?x=', url) + all_pages
-                    cls.parse_response(url)
+                    parsed_response, next_batch = cls.parse_response(url)
             if parsed_response.find("next_batch"):
                 next_batch = {
                     'link': parsed_response.find("next_batch").attrs['link'],
