@@ -10,7 +10,7 @@ HOME = os.environ['HOME']
 README_FILE= HERE+'/README.md'
 README = open(README_FILE).read()
 
-#copy over the config file to /etc/contrail-scrape
+#copy over the config file to HOME/contrail-scrape
 if not os.path.isdir(HOME+'/contrail-scrape'):
     os.mkdir(HOME+'/contrail-scrape')
 if os.path.isdir(HOME+'/contrail-scrape'):
