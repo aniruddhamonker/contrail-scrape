@@ -200,7 +200,7 @@ class IntrospectClass(BaseClass):
         self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
-            tqdm.write("Finishing introspection of all nodes with Errors\
+            tqdm.write("Finishing introspection of all nodes\
             \nPlease check log file {} for details".format(self.logfile))
         else:
             tqdm.write("Finishing introspection of all nodes \
