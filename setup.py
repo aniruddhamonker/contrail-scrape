@@ -35,7 +35,8 @@ setup(
     package_dir={'': 'src'},
     packages=["ContrailScrape"],
     package_data = {'ContrailScrape': ['data/*.yaml']},
-    install_requires=["beautifulsoup4", "tqdm==4.48.2", "PrettyTable==0.7.2"],
+    install_requires=["beautifulsoup4", "tqdm==4.48.2", "PrettyTable==0.7.2"\
+        , "lxml", "html5lib"],
     entry_points={
         "console_scripts": [
             "contrail-scrape = ContrailScrape.main:main",
