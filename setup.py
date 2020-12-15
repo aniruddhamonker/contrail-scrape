@@ -18,7 +18,7 @@ if os.path.isdir(HOME+'/contrail-scrape'):
 
 setup(
     name="contrail-scrape",
-    version="0.1.9",
+    version="0.1.10",
     description="crawler for all the APIs of Juniper Contrail nodes",
     long_description=README,
     long_description_content_type="text/markdown",
