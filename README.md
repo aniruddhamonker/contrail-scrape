@@ -3,7 +3,7 @@ Contrail-scrape is an introspect and API scraping tool for contrail versions 3.2
 It also has a built in analyzer component which is a modified IST script for offline analysis of introspect data.
 contrail-scrape uses threads for concurrency and the number of threads can be adjusted based on the cluster environment and API utilization.
 
-In the current version, contrail-scrape supports introspect data collection of the following contrail nodes
+In the current version, contrail-scrape supports introspect API collection of the following contrail nodes
 + control(contrail-control, dns)
 + config(api, schema, discovery, svc-monitor, device-manager)
 + vrouter
@@ -12,15 +12,17 @@ In the current version, contrail-scrape supports introspect data collection of t
 Besides introspect collection, contrail-scrape also supports API scraping of analytics-api's uves and uve alarms.
 
 ## Platforms & Supportibility
-+ Requires python version 3.5 and later.
++ Requires python version 3.5 and later
 + Requires a linux system pre-installed with python3-pip.
 + Runs on Ubuntu 16.04 and later
 + Runs on Red Hat RHEL 7.5 and later
 
+NOTE: Support Ubuntu14.04 with installation of additional dependencies.
+
 ## Installation
 contrail-scrape is packaged and available for installation using pip.
 
-##### $pip install contrail-scrape
+##### $pip3 install contrail-scrape
 
 If installation inside virtualenv is desired:
 
