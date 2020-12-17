@@ -20,10 +20,14 @@ Besides introspect collection, contrail-scrape also supports API scraping of ana
 NOTE: Support Ubuntu14.04 with installation of additional dependencies.
 
 ## Installation
+### Method 1
 contrail-scrape is packaged and available for installation using pip.
+
+$apt-get install python3-pip
 
 ##### $pip3 install contrail-scrape
 
+### Method 2
 If installation inside virtualenv is desired:
 
 $mkdir ~/contrail-scrape
@@ -33,6 +37,13 @@ $python3 -m venv ~/contrail-scrape --system-site-packages
 $source ~/contrail-scrape/bin/activate
 
 ##### $pip install contrail-scrape
+
+### Method 3
+contrail-scrape is also available as a container image
+
+$docker run -it contrailsupport/contrail-scrape:latest /bin/sh
+
+/ # contrail-scrape --help
 
 ## Usage
 ### Help
@@ -78,7 +89,7 @@ Begining archive process..
 
 #### Usage 2 (Using YAML input)
 ```
-$contrail-scrape --yaml-config ~/contrail-scrape/hosts.yaml
+$contrail-scrape --yaml-config ~/hosts.yaml
 
 API Scraping Progress: 100%|██████████████████████████████████| 186/186 [07:50<00:00,  2.53s/thread]
 
@@ -89,7 +100,7 @@ Begining archive process..
 
 sample hosts.yaml : https://gist.github.com/aniruddhamonker/f49074b50b09ec89a0aec35505204b77
 
-#### Usage 3 (custom introspect ports)
+#### Usage 3 (non-default introspect ports)
 ```
 $contrail-scrape --vrouter 10.85.180.80:8096 --vrouter 10.85.180.79:8096
 
