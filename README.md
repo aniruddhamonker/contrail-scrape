@@ -12,7 +12,7 @@ In the current version, contrail-scrape supports introspect API collection of th
 Besides introspect collection, contrail-scrape also supports analytics-api's uves and uve alarms.
 
 ## Platforms & Supportibility
-+ Requires python version 3.5 and later
++ Requires python version 3.4 and above
 + Requires a linux system pre-installed with python3-pip.
 + Runs on Ubuntu 16.04 and later
 + Runs on Red Hat RHEL 7.5 and later
