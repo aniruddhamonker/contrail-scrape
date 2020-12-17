@@ -76,7 +76,7 @@ optional arguments:
 ```
 
 ### Usage Examples
-#### Usage 1
+#### Usage 1 (Basic)
 ```
 $contrail-scrape --control 10.85.188.101 --config 10.85.188.102 --analytics 10.85.188.103 --vrouter 10.85.180.79
 
