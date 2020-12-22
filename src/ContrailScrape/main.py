@@ -1,7 +1,7 @@
 import sys
 import ContrailScrape
 
-version = "0.1.11"
+version = "0.1.12"
 
 def get_version():
     print("CONTRAIL-SCRAPE\nVERSION: {}".format(version))

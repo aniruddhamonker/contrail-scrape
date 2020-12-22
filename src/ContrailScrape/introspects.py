@@ -95,7 +95,10 @@ class IntrospectClass(BaseClass):
             self._fetch_batch_data(introspect_url, filepath, next_batch, batch_num)
     
     def fetch_all_uve_types(self, uve_req_url, filepath):
-        all_uve_types, _ = self.parse_response(uve_req_url)
+        try:
+            all_uve_types, _ = self.parse_response(uve_req_url)
+        except ValueError:
+            return
         for uve in all_uve_types.findAll('type_name'):
             uve_name = 'SandeshUVECacheReq?tname=' + uve.text
             uve_url = re.sub(r'(http.*/).*$', r'\1', uve_req_url) +\
@@ -134,7 +137,10 @@ class IntrospectClass(BaseClass):
     def fetch_mcast_tables(self, url, filepath):
         mcast_tree_url = re.sub(r'(http.*/).*$', r'\1', url) +\
              'Snh_ShowMulticastManagerDetailReq?x='
-        all_mcast_tables, next_batch = self.parse_response(url)
+        try:
+            all_mcast_tables, next_batch = self.parse_response(url)
+        except ValueError:
+            return
         for table in all_mcast_tables.findAll('ShowMulticastManager'):
             if table.total_trees.text != '0':
                 tree_name = table.find('name').text
@@ -153,7 +159,10 @@ class IntrospectClass(BaseClass):
         links_filename = filepath + '/IFMapPerClientLinksShow.index.'  
         ifmap_links_url = re.sub(self.url_filter, r'\1', url) + \
             'Snh_IFMapPerClientLinksShowReq?client_index_or_name='
-        ifmap_clients, next_batch = self.parse_response(url)
+        try:
+            ifmap_clients, next_batch = self.parse_response(url)
+        except ValueError:
+            return
         for client in ifmap_clients.findAll('IFMapXmppClientInfo'):
             index = client.client_index.text
             nodes_url = ifmap_nodes_url + index
