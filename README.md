@@ -21,7 +21,7 @@ Besides introspect collection, contrail-scrape also supports analytics-api's uve
     + 4G RAM
     + 4G Disk Space
 
-NOTE: Support Ubuntu14.04 with installation of additional dependencies.
+NOTE: Support Ubuntu14.04 is possible with installation of additional dependencies.
 
 ## Installation
 ### Method 1
