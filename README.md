@@ -16,6 +16,10 @@ Besides introspect collection, contrail-scrape also supports analytics-api's uve
 + Requires a linux system pre-installed with python3-pip.
 + Runs on Ubuntu 16.04 and later
 + Runs on Red Hat RHEL 7.5 and later
++ Virtual Machine Requirements:
+    + 2 VCPUs
+    + 4G RAM
+    + 4G Disk Space
 
 NOTE: Support Ubuntu14.04 with installation of additional dependencies.
 
