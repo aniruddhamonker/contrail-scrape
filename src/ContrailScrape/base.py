@@ -60,7 +60,13 @@ class BaseClass:
         text_response = cls.get_request(url) # type: str
         if not text_response:
             raise ValueError
-        parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
+        #handling memory leak in Beautifulsoup xml parser with large payload
+        #using lxml parser for large payloads
+        if len(text_response) > 200000000:
+            logger.debug("{} has payload larger than 200MB, using lxml parser".format(url))
+            parsed_response = bs(text_response, 'lxml')
+        else:
+            parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
         if attrs is None:
             if 'Snh_PageReq?x=' not in url and parsed_response.find("PageReqData"):
                 if parsed_response.find("PageReqData").find("next_page").text:
