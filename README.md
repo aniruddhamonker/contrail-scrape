@@ -1,4 +1,7 @@
 # contrail-scrape
+https://pypi.org/project/contrail-scrape
+
+
 Contrail-scrape is an introspect and API scraping tool for contrail versions 3.2 and later.
 It also has a built in analyzer component which is a modified IST script for offline analysis of introspect data.
 contrail-scrape uses threads for concurrency and the number of threads can be adjusted based on the cluster environment and API utilization.
