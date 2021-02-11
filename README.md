@@ -30,8 +30,6 @@ NOTE: Support Ubuntu14.04 and python3.4 is possible with installation of additio
 ### Method 1
 contrail-scrape is packaged and available for installation using pip.
 
-$apt-get install python3-pip
-
 ##### $pip3 install contrail-scrape
 
 ### Method 2
