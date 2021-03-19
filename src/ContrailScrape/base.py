@@ -54,7 +54,7 @@ class BaseClass:
         except requests.exceptions.RequestException:
             logger.error("OOps: Something Else")
 
-    @classmethod  
+    @classmethod
     def parse_response(cls, url, attrs=None):
         # type: (IntrospectBaseClass, str, Optional[str]) -> Optional[str, Iterator[str]]
         text_response = cls.get_request(url) # type: str

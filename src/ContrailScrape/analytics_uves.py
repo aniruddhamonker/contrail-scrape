@@ -26,6 +26,9 @@ class AnalyticsApiClass(BaseClass):
                 # yield (api_node_url, node_dir_path)
                 api_response_txt = self.get_request(api_node_url)
                 self.pbar.update()
+                #api resonse is none if alarms module is missing issue#4
+                if not api_response_txt:
+                    continue
                 api_response_json = json.loads(api_response_txt)
                 self.parse_json(api_response_json, node_dir_path)
             queue.task_done()
