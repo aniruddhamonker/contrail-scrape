@@ -8,6 +8,8 @@ import queue
 import threading
 from bs4 import BeautifulSoup as bs
 from ContrailScrape import BaseClass, logger
+import gevent
+from gevent.queue import Queue
 
 class AnalyticsApiClass(BaseClass):
     def __init__(self, debug=False):
@@ -31,7 +33,6 @@ class AnalyticsApiClass(BaseClass):
                     continue
                 api_response_json = json.loads(api_response_txt)
                 self.parse_json(api_response_json, node_dir_path)
-            queue.task_done()
     
     def get_output_dir(self,api_node_url, analytics_api_node):
         module_ip = re.search(r'//(?P<IP>.*):', api_node_url).group('IP') # type: str
@@ -61,30 +62,23 @@ class AnalyticsApiClass(BaseClass):
                 self.parse_json(api_response_json, dir_path, filename)
 
     def fetch_all_analytics_apis(self, api_args):
-        analytics_api_queue = queue.Queue()
+        analytics_api_queue = Queue()
         for arg in api_args:
             analytics_api_queue.put(arg)
         logger.debug("total number of analytics api nodes in the queue: {}"\
             .format(analytics_api_queue.qsize()))
-        threads = [] # type: List[threading.Thread]
+        greenlets = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch apis of {} analytics nodes from the queue"\
             .format(analytics_api_queue.qsize()))
         self.pbar = tqdm(total=28*len(api_args), ncols=100, \
             unit='uves', desc="Analytics-api Progress", position=1)
         for _ in range(analytics_api_queue.qsize()):
-            try:
-                analytics_api_thread = threading.Thread\
-                    (target=self.get_api_nodes, args=(analytics_api_queue,)) # type: threading.Thread
-                threads.append(analytics_api_thread) 
-                analytics_api_thread.start()    
-            except threading.ThreadError as err:
-                logger.error("Failed to create thread {}\n{}\n{}"\
-                    .format(threading.current_thread.__name__, type(err), err))
-                self.errors = True
-        logger.debug("Current active thread count is {}\n"\
-            .format(threading.active_count()))
-        for analytics_api_thread in threads:
-            analytics_api_thread.join()
+            greenlet = gevent.spawn(self.get_api_nodes, analytics_api_queue)
+            greenlets.append(greenlet)
+        # check for total greenlets
+        greenlets_count =  len([True for greenlet in greenlets if greenlet.started])
+        tqdm.write('total greenlets started = {}'.format(greenlets_count))
+        gevent.joinall(greenlets)
         self.pbar.clear()
         self.pbar.close()
         if self.errors == True:

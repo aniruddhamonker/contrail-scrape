@@ -2,7 +2,9 @@ from tqdm import tqdm
 import logging
 import queue
 import re
-import threading
+# import threading
+import gevent
+from gevent.queue import Queue
 import sys
 from ContrailScrape import BaseClass, logger
 
@@ -10,7 +12,8 @@ class IntrospectClass(BaseClass):
     def __init__(self, introspect_args, num_threads, debug=False):
     # type: (List[str, str], int) -> None
         self.introspect_args = introspect_args # type: List[Dict[str, str]]
-        self.num_threads = num_threads # type: int
+        # self.num_threads = num_threads # type: int
+        self.num_of_greenlets = num_threads
         self.errors = False
         self.debug = debug
         self.url_filter = re.compile(r'(http.*/).*$')
@@ -77,7 +80,7 @@ class IntrospectClass(BaseClass):
                 if introspect_response.findAll(attrs={"link":"SandeshTraceRequest"}):
                     self.fetch_sandesh_traces(introspect_response, tmp_dir, index_page_node_url)
             self.pbar.update()
-            queue.task_done()
+            # queue.task_done()
     
     def _fetch_batch_data(self, introspect_url, filepath, batch_data, batch_num=1):
         batch_url = re.sub(self.url_filter, r'\1', introspect_url) +\
@@ -180,7 +183,7 @@ class IntrospectClass(BaseClass):
 
     def fetch_all_introspects(self):
         # type: () -> None
-        index_nodes_queue = queue.Queue() # type: queue.Queue
+        index_nodes_queue = Queue() # type: queue.Queue
         for node in self._get_index_page_nodes_url():
             index_nodes_queue.put(node)
         logger.debug("total number of introspect urls in the queue: {}"\
@@ -188,24 +191,20 @@ class IntrospectClass(BaseClass):
         if index_nodes_queue.empty():
             print("No introspect nodes found. Check connectivity to introspect nodes\n")
             sys.exit(0)
-        threads = [] # type: List[threading.Thread]
+        greenlets = [] # type: List[threading.Thread]
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
             .format(index_nodes_queue.qsize()))
         self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \
-            unit='thread', desc="API Scraping Progress", position=1, leave=True)
-        for _ in range(self.num_threads):
-            try:
-                introspect_thread = threading.Thread\
-                    (target=self._fetch_introspect, args=(index_nodes_queue,)) # type: threading.Thread
-                introspect_thread.start()
-                threads.append(introspect_thread)
-            except threading.ThreadError as err:
-                logger.error("Failed to create thread {}\n{}\n{}"\
-                    .format(threading.current_thread.__name__, type(err), err))
-        logger.debug("Current active thread count is {}"\
-            .format(threading.active_count()))
-        for introspect_thread in threads:
-            introspect_thread.join()
+            unit='introspect-module', desc="API Scraping Progress", position=1, leave=True)
+        if index_nodes_queue.qsize() < self.num_of_greenlets:
+            self.num_of_greenlets = index_nodes_queue.qsize()
+        for _ in range(self.num_of_greenlets):
+            greenlet = gevent.spawn(self._fetch_introspect, index_nodes_queue)
+            greenlets.append(greenlet)
+        # check for total greenlets
+        # greenlets_count =  len([True for greenlet in greenlets if greenlet.started])
+        # logger.debug('total greenlets started = {}'.format(greenlets_count))
+        gevent.joinall(greenlets)
         self.pbar.clear()
         self.pbar.close()
         if self.errors == True:
@@ -214,4 +213,4 @@ class IntrospectClass(BaseClass):
         else:
             tqdm.write("Finishing introspection of all nodes \
                 \nNo Errors reported")
-        return
+        return   
