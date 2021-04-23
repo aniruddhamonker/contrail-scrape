@@ -29,6 +29,12 @@ class ConfigParser():
             help="control the number of threads, default=50")
         conf_parser.add_argument('--api-timeout', type=int, default=10,\
             help='set API requests timeout in secs, default=10sec')
+        conf_parser.add_argument('--key', metavar='PATH', default=None, \
+            help="contrail node private key file path \
+                E.g /etc/contrail/ssl/private/server-privkey.pem")
+        conf_parser.add_argument('--cert', metavar='PATH', default=None,\
+            help='contrail node certificate file path \
+                E.g /etc/contrail/ssl/certs/server/pem')
         all_args = conf_parser.parse_args()
         arg_list = list(all_args.__dict__.values())
         if not list(filter(lambda x: isinstance(x, (list, str)) or x is True, arg_list)):

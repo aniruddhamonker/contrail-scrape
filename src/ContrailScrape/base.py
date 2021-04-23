@@ -12,21 +12,34 @@ from ContrailScrape import logger
 class BaseClass:
     def __init__(self):
         self.__timeout = 10
+        self.__cert = ()
         pass
     
     @property
     def timeout(self):
         return self.__timeout
 
+    @property
+    def cert(self):
+        return self.__cert
+
     @timeout.setter
     def timeout(self, secs):
         self.__timeout = secs
+
+    @cert.setter
+    def cert(self, cert_and_key):
+        self.__cert = cert_and_key
 
     @classmethod
     def get_request(cls, url, retrcnt=3):
         # type: (IntrospectBaseClass, str, int) -> str
         try:
-            response = requests.get(url, timeout=BaseClass().timeout) # type: requests.models.Response
+            client_cert = BaseClass().cert
+            if client_cert:
+                url = url.replace('http', 'https', 1)
+            response = requests.get(url, timeout=BaseClass().timeout, \
+                cert=client_cert) # type: requests.models.Response
             response.raise_for_status()
             logger.debug("Fetched url '{}' with response code: {}"\
             .format(url, response.status_code))

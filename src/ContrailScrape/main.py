@@ -23,6 +23,7 @@ def main():
     all_args = config_parser.all_args
     base = ContrailScrape.BaseClass()
     base.timeout = all_args.api_timeout
+    base.cert = (all_args.cert, all_args.key)
     if config_parser.version:
         get_version()
     try:
