@@ -8,6 +8,7 @@ import time
 import subprocess
 from collections import defaultdict
 from ContrailScrape import logger
+from typing import Iterator, Optional
 
 class BaseClass:
     def __init__(self):
@@ -31,22 +32,21 @@ class BaseClass:
     def cert(self, cert_and_key):
         self.__cert = cert_and_key
 
-    @classmethod
-    def get_request(cls, url, retrcnt=3):
-        # type: (IntrospectBaseClass, str, int) -> str
+    def get_request(self, url, retrcnt=3):
+        # type: (BaseClass, str, int) -> str
         try:
-            client_cert = BaseClass().cert
-            if client_cert:
+            # import pdb; pdb.set_trace()
+            if not self.cert == 'no-ssl':
                 url = url.replace('http', 'https', 1)
-            response = requests.get(url, timeout=BaseClass().timeout, \
-                cert=client_cert) # type: requests.models.Response
+            response = requests.get(url, timeout=self.timeout, \
+                verify=self.cert) # type: requests.models.Response
             response.raise_for_status()
             logger.debug("Fetched url '{}' with response code: {}"\
             .format(url, response.status_code))
             return response.text
         except requests.exceptions.ReadTimeout:
             if retrcnt >=1:
-                cls.get_request(url, retrcnt-1)
+                self.get_request(url, retrcnt-1)
             else:
                 logger.error("Skipping url: {}; Multiple Read Timeouts Occurred, attempts tried: 3"\
                      .format(url))
@@ -57,7 +57,7 @@ class BaseClass:
                 logger.error("Error Connecting node: {}".format(url))
             else:
                 if retrcnt >=1:   
-                    cls.get_request(url, retrcnt-1)
+                    self.get_request(url, retrcnt-1)
                 else:                
                     logger.error("Error Connecting node: {} for introspect {}"\
                     .format(url.split('/')[2], url.split('/')[-1]))
@@ -66,11 +66,12 @@ class BaseClass:
                 .format(response.status_code, url))
         except requests.exceptions.RequestException:
             logger.error("OOps: Something Else")
+        except requests.exceptions.SSLError:
+            logger.error("SSL Certificate Verification Failed")
 
-    @classmethod
-    def parse_response(cls, url, attrs=None):
-        # type: (IntrospectBaseClass, str, Optional[str]) -> Optional[str, Iterator[str]]
-        text_response = cls.get_request(url) # type: str
+    def parse_response(self, url, attrs=None):
+        # type: (BaseClass, str, Optional[str]) -> Optional[Iterator[str]]
+        text_response = self.get_request(url) # type: str
         if not text_response:
             raise ValueError
         #handling memory leak in Beautifulsoup xml parser with large payload
@@ -79,13 +80,13 @@ class BaseClass:
             logger.debug("{} has payload larger than 200MB, using lxml parser".format(url))
             parsed_response = bs(text_response, 'lxml')
         else:
-            parsed_response = bs(text_response, 'xml') # type: bs4.BeautifulSoup
+            parsed_response = bs(text_response, 'xml') # type: bs.BeautifulSoup
         if attrs is None:
             if 'Snh_PageReq?x=' not in url and parsed_response.find("PageReqData"):
                 if parsed_response.find("PageReqData").find("next_page").text:
                     all_pages = parsed_response.find("PageReqData").find("all").text
                     url = re.sub(r'(http:.*/).*$',r'\1Snh_PageReq?x=', url) + all_pages
-                    parsed_response, next_batch = cls.parse_response(url)
+                    parsed_response, next_batch = self.parse_response(url)
             if parsed_response.find("next_batch"):
                 next_batch = {
                     'link': parsed_response.find("next_batch").attrs['link'],

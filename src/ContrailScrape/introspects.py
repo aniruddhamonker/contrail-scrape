@@ -5,21 +5,24 @@ import re
 import threading
 import sys
 from ContrailScrape import BaseClass, logger
+from typing import Iterator
 
 class IntrospectClass(BaseClass):
-    def __init__(self, introspect_args, num_threads, debug=False):
-    # type: (List[str, str], int) -> None
-        self.introspect_args = introspect_args # type: List[Dict[str, str]]
+    def __init__(self, introspect_args, num_threads, cert, debug=False):
+    # type: (IntrospectClass, list[str, str], int, str) -> None
+        self.introspect_args = introspect_args # type: list[dict[str, str]]
         self.num_threads = num_threads # type: int
         self.errors = False
         self.debug = debug
         self.url_filter = re.compile(r'(http.*/).*$')
         self.logfile = logger.handlers[0].__dict__['baseFilename']
+        super().__init__()
+        self.cert = cert
         if self.debug:
             logger.setLevel(logging.DEBUG)
 
     def _get_index_page_nodes_url(self):
-    # type: () -> Iterator[Tuple[str, str]]
+    # type: () -> Iterator[tuple[str, str]]
         for node in self.introspect_args:
             url = node['url'] # type: str
             try:
@@ -46,9 +49,9 @@ class IntrospectClass(BaseClass):
 
     def _fetch_introspect(self, queue):
         # type: (queue.Queue) -> None
-        sandesh_attrs = {'type': 'sandesh'} #type: Dict[str, str]
+        sandesh_attrs = {'type': 'sandesh'} #type: dict[str, str]
         while not queue.empty():
-            index_page_node = queue.get() # type: Tuple[str, str]
+            index_page_node = queue.get() # type: tuple[str, str]
             index_page_node_url = index_page_node[1] # type: str
             tmp_dir = self.get_output_dir(index_page_node)
             for introspect in self.parse_response(index_page_node_url, \
@@ -188,7 +191,7 @@ class IntrospectClass(BaseClass):
         if index_nodes_queue.empty():
             print("No introspect nodes found. Check connectivity to introspect nodes\n")
             sys.exit(0)
-        threads = [] # type: List[threading.Thread]
+        threads = [] # type: list[threading.Thread]
         logger.debug("Initiating threads to fetch {} introspects from the queue"\
             .format(index_nodes_queue.qsize()))
         self.pbar = tqdm(total=index_nodes_queue.qsize(), ncols=100, \

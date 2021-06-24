@@ -7,9 +7,9 @@ def get_version():
     print("CONTRAIL-SCRAPE\nVERSION: {}".format(version))
     sys.exit()
 
-def fetch_all_introspects(introspect_args, thread_count, debug):
+def fetch_all_introspects(introspect_args, thread_count, cert, debug):
     if introspect_args:
-        introspect = ContrailScrape.IntrospectClass(introspect_args, thread_count, debug)
+        introspect = ContrailScrape.IntrospectClass(introspect_args, thread_count, cert, debug)
         return introspect.fetch_all_introspects()
 
 def fetch_analytics_api(api_args, debug):
@@ -23,12 +23,12 @@ def main():
     all_args = config_parser.all_args
     base = ContrailScrape.BaseClass()
     base.timeout = all_args.api_timeout
-    base.cert = (all_args.cert, all_args.key)
+    cert = all_args.ssl
     if config_parser.version:
         get_version()
     try:
         introspect_args = list(filter(lambda arg: arg.get('type') == "introspect", all_urls))
-        fetch_all_introspects(introspect_args, all_args.threads, config_parser.debug)
+        fetch_all_introspects(introspect_args, all_args.threads, cert, config_parser.debug)
         analytics_api_args = list(filter(lambda arg: arg.get('type') == "analytics-api", all_urls))
         fetch_analytics_api(analytics_api_args, config_parser.debug)
         base.archive_all_files()
